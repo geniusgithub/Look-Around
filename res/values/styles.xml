@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -13,8 +13,41 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="AppTheme" parent="@style/Theme.Sherlock.Light">
     </style>
 
+    
+    <style name="NavigationTextStyle" >
+      <item name="android:textSize">16sp</item>
+      <item name="android:textColor">@color/gainsboro</item>
+    </style>
+    
+       	
+    <style name="leba_bg_base_layout">
+       	<item name="android:layout_width">fill_parent</item>
+      	<item name="android:layout_height">wrap_content</item>
+      	<item name="android:gravity">center_vertical</item>
+       	<item name="android:paddingTop">10.0dip</item>
+       	<item name="android:paddingBottom">10.0dip</item>
+       	<item name="android:focusable">true</item>
+       	<item name="android:clickable">true</item>   
+   </style>
+   
+   <style name="leba_bg_single_layout" parent="@style/leba_bg_base_layout">
+       	<item name="android:background">@drawable/leba_bg_single_selector</item>  
+   </style>
+
+   <style name="NavRadioStyle">
+        <item name="android:layout_width">fill_parent</item>
+      	<item name="android:layout_height">wrap_content</item>
+      	<item name="android:paddingLeft">15.0dip</item>
+        <item name="android:paddingTop">10.0dip</item>
+       	<item name="android:paddingBottom">10.0dip</item>
+        <item name="android:textAppearance">@style/NavigationTextStyle</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/left_nav_channel_item</item>
+        <item name="android:button">@null</item>
+    </style>
+       
 </resources>

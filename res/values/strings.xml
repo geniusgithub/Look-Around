@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LookAround</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+   <string name="app_name">LookAround</string>
 
+    
+   <string name="lookaround">随便看看</string>
+   <string name="mirror">写真</string>
+   <string name="constellation">星座</string>
+   <string name="women">美女</string>
+   <string name="food">美食</string>
+    
+   <string name="setting">设置</string>
+   
+   <string name="collect">我的收藏</string>
+   <string name="flow">节省流量模式</string>
+   <string name="clear_cache">清除缓存</string>
+   <string name="grade">给应用加分</string>
+   <string name="check_update">检查更新</string>
+   <string name="about">关于</string>  
+    
 </resources>
