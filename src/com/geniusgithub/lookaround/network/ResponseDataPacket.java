@@ -28,7 +28,10 @@ public class ResponseDataPacket implements IParseJson{
 		JSONObject resultJsonObject = jsonObject.getJSONObject(KEY_RESULT);
 		code = resultJsonObject.getString(KEY_CODE);
 		msg = resultJsonObject.getString(KEY_MSG);	
-		data = resultJsonObject.getJSONObject(KEY_DATA);
+		data = resultJsonObject.optJSONObject(KEY_DATA);
+		if (data == null){
+			data = new JSONObject();
+		}
 		
 		return true;
 	}

@@ -39,7 +39,7 @@ public class ClientEngine {
 			log.e("can't get serverURL by action : " + action);
 			return false;
 		}
-		
+		log.e("httpGetRequest url = " + url);
 		RequestParams param = new RequestParams(object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(action, callback);	

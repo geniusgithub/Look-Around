@@ -5,6 +5,7 @@ import java.net.NetworkInterface;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
+import com.geniusgithub.lookaround.model.PublicType.GetTypeList;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
@@ -27,8 +28,14 @@ public class TestActivity extends Activity implements OnClickListener, IRequestC
 	
 	private Button mBtnRegiste;
 	private Button mBtnLogin;
-	private Button mBtn3;
-
+	private Button mBtnBindToken;
+	private Button mBtnAdClick;
+	private Button mBtnAbout;
+	private Button mBtnGetTypeList;
+	private Button mBtnGetinfo;
+	private Button mBtnDelinfo;
+	
+	
 	private ClientEngine mClientEngine;
 	
 	@Override
@@ -55,11 +62,21 @@ public class TestActivity extends Activity implements OnClickListener, IRequestC
 		
 		mBtnRegiste = (Button) findViewById(R.id.btnRegister);
 		mBtnLogin = (Button) findViewById(R.id.btnLogin);
-		mBtn3 = (Button) findViewById(R.id.button3);
+		mBtnBindToken = (Button) findViewById(R.id.btnBindToken);
+		mBtnAdClick = (Button) findViewById(R.id.btnAdClick);
+		mBtnAbout = (Button) findViewById(R.id.btnAbout);
+		mBtnGetTypeList = (Button) findViewById(R.id.btnGetTypeList);
+		mBtnGetinfo = (Button) findViewById(R.id.btnGetInfo);
+		mBtnDelinfo = (Button) findViewById(R.id.btnDelInfo);
 		
 		mBtnRegiste.setOnClickListener(this);
 		mBtnLogin.setOnClickListener(this);
-		mBtn3.setOnClickListener(this);
+		mBtnBindToken.setOnClickListener(this);
+		mBtnAdClick.setOnClickListener(this);
+		mBtnAbout.setOnClickListener(this);
+		mBtnGetTypeList.setOnClickListener(this);
+		mBtnGetinfo.setOnClickListener(this);
+		mBtnDelinfo.setOnClickListener(this);
 	}
 	
 	private void initData(){
@@ -75,7 +92,22 @@ public class TestActivity extends Activity implements OnClickListener, IRequestC
 			case R.id.btnLogin:
 				login();
 				break;
-			case R.id.button3:
+			case R.id.btnBindToken:
+				bindtoken();
+				break;
+			case R.id.btnAdClick:
+				adClilck();
+				break;
+			case R.id.btnAbout:
+				about();
+				break;
+			case R.id.btnGetTypeList:
+				break;
+			case R.id.btnGetInfo:
+				getInfo();
+				break;
+			case R.id.btnDelInfo:
+				delInfo();
 				break;
 		}
 	}
@@ -95,8 +127,41 @@ public class TestActivity extends Activity implements OnClickListener, IRequestC
 		mClientEngine.httpGetRequest(PublicType.USER_LOGIN_MASID, object, this);
 	}
 	
+	private void bindtoken(){
+		log.e("bindtoken");
+		PublicType.BindToken object = PublicTypeBuilder.buildBindToken(this);
+		
+		mClientEngine.httpGetRequest(PublicType.BIND_TOKEN_MSGID, object, this);
+	}
 	
-
+	private void adClilck(){
+		log.e("adClilck");
+		PublicType.AdClick object = PublicTypeBuilder.buildAdClick(this);
+		
+		mClientEngine.httpGetRequest(PublicType.AD_CLICK_MSGID, object, this);
+	}
+	
+	private void about(){
+		log.e("about");
+		PublicType.AboutPage object = PublicTypeBuilder.buildAboutPage(this);
+		
+		mClientEngine.httpGetRequest(PublicType.ABOUT_MSGID, object, this);
+	}
+	
+	
+	private void getInfo(){
+		log.e("getInfo");
+		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(this);
+		
+		mClientEngine.httpGetRequest(PublicType.GET_INFO_MSGID, object, this);
+	}
+	
+	private void delInfo(){
+		log.e("delInfo");
+		PublicType.DeleteInfo object = PublicTypeBuilder.buildDeleteInfo(this);
+		
+		mClientEngine.httpGetRequest(PublicType.DELETE_INFO_MSGID, object, this);
+	}
 
 	@Override
 	public void onSuccess(int requestAction, ResponseDataPacket dataPacket) {
