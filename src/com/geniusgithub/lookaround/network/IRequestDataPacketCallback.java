@@ -2,7 +2,7 @@ package com.geniusgithub.lookaround.network;
 
 
 
-public interface IRequestCallback {
+public interface IRequestDataPacketCallback {
 
 	public void  onSuccess(int requestAction, ResponseDataPacket dataPacket);
 	public void  onRequestFailure(int requestAction, String content);

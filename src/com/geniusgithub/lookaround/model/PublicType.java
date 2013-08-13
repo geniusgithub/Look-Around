@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,6 +56,22 @@ public class PublicType {
 	}
 	
 	
+	// 用户注册回应
+	public static class UserRegisterResult implements IParseJson{
+
+		public final static String KEY_KEYS = "keys";
+		
+		public String mKeys = "";
+
+		@Override
+		public boolean parseJson(JSONObject jsonObject) throws JSONException {
+				
+			mKeys = jsonObject.getString(KEY_KEYS);
+			return true;
+
+		}	
+	}
+	
 	// 用户登录
 	public final static int USER_LOGIN_MASID = 0x0003;
 	public static class UserLogin extends AbstractBaseProtocol
@@ -85,6 +102,44 @@ public class PublicType {
 			return mapValue;
 		}
 	}
+	
+	// 用户登录回应
+	public static class UserLoginResult implements IParseJson{
+
+
+		public final static String KEY_DATALIST = "DataList";
+		public final static String KEY_ADMIN = "isAdmin";
+		public final static String KEY_ADTYPE = "adType";
+		
+		
+	
+		public List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
+		public int mIsAdmin = 0;
+		public int mAdType = 0;
+		
+		@Override
+		public boolean parseJson(JSONObject jsonObject) throws JSONException {
+
+			mIsAdmin = jsonObject.getInt(KEY_ADMIN);
+			mAdType = jsonObject.getInt(KEY_ADTYPE);
+			
+			JSONArray jsonArray = jsonObject.getJSONArray(KEY_DATALIST);
+			int size = jsonArray.length();
+			for(int i = 0; i < size; i++){
+				JSONObject tmp = jsonArray.getJSONObject(0);
+				BaseType.ListItem item = new BaseType.ListItem();
+				try {
+					item.parseJson(tmp);
+					mDataList.add(item);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}							
+			}
+			return true;
+
+		}	
+	}
+	
 	
 	// 绑定TOKEN
 	public final static int BIND_TOKEN_MSGID  = 0x0005;
@@ -153,20 +208,46 @@ public class PublicType {
 	{
 		public final static String KEY_ARCTYPEID = "arcTypeID";	
 		public final static String KEY_PAGE = "page";	
-		public final static String KEY_COUNT = "count";	
+
 		
 		public String mArcTypeID = "";
 		public String mPage = "";
-		public String mCount = "";
+
 		
 		@Override
 		public Map<String, String> toStringMap() {
 			super.toStringMap();
 			mapValue.put(KEY_ARCTYPEID, mArcTypeID);	
 			mapValue.put(KEY_PAGE, mPage);	
-			mapValue.put(KEY_COUNT, mCount);	
 			return mapValue;
 		}
+	}
+	
+	// 获取资讯回应
+	public static class GetInfoResult  implements IParseJson{
+
+		public final static String KEY_DATALIST = "DataList";
+		
+		public List<BaseType.InfoItem> mDataList = new ArrayList<BaseType.InfoItem>();
+
+		@Override
+		public boolean parseJson(JSONObject jsonObject) throws JSONException {
+			
+			JSONArray jsonArray = jsonObject.getJSONArray(KEY_DATALIST);
+			int size = jsonArray.length();
+			for(int i = 0; i < size; i++){
+				JSONObject tmp = jsonArray.getJSONObject(0);
+				BaseType.InfoItem item = new BaseType.InfoItem();
+				try {
+					item.parseJson(tmp);
+					mDataList.add(item);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}							
+			}
+			return true;
+		}
+	
 	}
 	
 	// 删除资讯

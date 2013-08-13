@@ -32,7 +32,7 @@ public class ClientEngine {
 		mContext = context;
 	}
 
-	public boolean httpGetRequest(int action, IToStringMap object, IRequestCallback callback)
+	public boolean httpGetRequestEx(int action, IToStringMap object, IRequestDataPacketCallback callback)
 	{
 		String url = ServerUrlBuilder.getServerURL(action);
 		if (url.equals("")){
@@ -42,13 +42,13 @@ public class ClientEngine {
 		log.e("httpGetRequest url = " + url);
 		RequestParams param = new RequestParams(object.toStringMap());
 		
-		HttpResponseHandler handler = new HttpResponseHandler(action, callback);	
+		HttpResponseHandler handler = new HttpResponseHandler(action, callback, null);	
 		client.get(url,  param, handler);
 		
 		return true;
 	}
 	
-	public boolean httpPostRequest(int action, IToStringMap object, IRequestCallback callback)
+	public boolean httpPostRequestEx(int action, IToStringMap object, IRequestDataPacketCallback callback)
 	{
 		String url = ServerUrlBuilder.getServerURL(action);
 		if (url.equals("")){
@@ -57,8 +57,24 @@ public class ClientEngine {
 		
 		RequestParams param = new RequestParams(object.toStringMap());
 		
-		HttpResponseHandler handler = new HttpResponseHandler(action, callback);	
+		HttpResponseHandler handler = new HttpResponseHandler(action, callback, null);	
 		client.post(url,  param, handler);
+		
+		return true;
+	}
+	
+	public boolean httpGetRequest(int action, IToStringMap object, IRequestContentCallback callback)
+	{
+		String url = ServerUrlBuilder.getServerURL(action);
+		if (url.equals("")){
+			log.e("can't get serverURL by action : " + action);
+			return false;
+		}
+		log.e("httpGetRequest url = " + url);
+		RequestParams param = new RequestParams(object.toStringMap());
+		
+		HttpResponseHandler handler = new HttpResponseHandler(action, null, callback);	
+		client.get(url,  param, handler);
 		
 		return true;
 	}

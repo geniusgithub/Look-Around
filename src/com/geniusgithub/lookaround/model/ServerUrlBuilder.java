@@ -54,7 +54,7 @@ public class ServerUrlBuilder {
 	}
 	
 	public static String getAdClickURL(){
-		return baseURL + bindtokenURL;
+		return baseURL + adclickURL;
 	}
 	
 	public static String getAboutPageURL(){

@@ -12,11 +12,13 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 	private static final CommonLog log = LogFactory.createLog();
 	
 	private int mAction = 0;
-	private IRequestCallback mCallback;
+	private IRequestDataPacketCallback mDataPacketCallback;
+	private IRequestContentCallback mContentCallback;
 	
-	public HttpResponseHandler(int action, IRequestCallback callback){
-		mCallback = callback;
+	public HttpResponseHandler(int action, IRequestDataPacketCallback callback1, IRequestContentCallback callback2){
+		mDataPacketCallback = callback1;
 		mAction = action;
+		mContentCallback = callback2;
 	}
 	
 	@Override
@@ -35,16 +37,27 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 	public void onSuccess(int statusCode, String content) {
 		
 		log.d("mAction = " + mAction + ", onSuccess! statusCode = " + statusCode + "\ncontent = " + content);
-		ResponseDataPacket dataPacket = new ResponseDataPacket();
-		JSONObject jsonObject;
-		try {
-			jsonObject = new JSONObject(content);
-			dataPacket.parseJson(jsonObject);
-			mCallback.onSuccess(mAction, dataPacket);
-		} catch (JSONException e) {
-			e.printStackTrace();
-			mCallback.onAnylizeFailure(mAction, content);
+		if (isDataPacketAction(mAction)){
+			if (mDataPacketCallback == null){
+				return ;
+			}
+			ResponseDataPacket dataPacket = new ResponseDataPacket();
+			JSONObject jsonObject;
+			try {
+				jsonObject = new JSONObject(content);
+				dataPacket.parseJson(jsonObject);
+				mDataPacketCallback.onSuccess(mAction, dataPacket);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				mDataPacketCallback.onAnylizeFailure(mAction, content);
+			}
+		}else{
+			if (mContentCallback == null){
+				return ;
+			}
+			mContentCallback.onResult(mAction, true, content);
 		}
+		
 	
 	}
 
@@ -52,11 +65,27 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 	public void onFailure(Throwable error, String content) {
 		
 		log.d("mAction = " + mAction + ", onFailure! error = " + error.getMessage() + "\ncontent = " + content);
-		mCallback.onRequestFailure(mAction, content);
+		if (isDataPacketAction(mAction)){
+			if (mDataPacketCallback == null){
+				return ;
+			}
+			mDataPacketCallback.onRequestFailure(mAction, content);
+		}else{
+			if (mContentCallback == null){
+				return ;
+			}
+			mContentCallback.onResult(mAction, false, content);
+		}
+		
+		
 	}
 	
 	
 	
+	
+	private boolean isDataPacketAction(int action){
+		return true;
+	}
 
 	
 }
