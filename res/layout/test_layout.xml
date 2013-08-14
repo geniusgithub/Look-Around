@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="register" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="login" />
+
+    <Button
+        android:id="@+id/btnBindToken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="bindtoken" />
+    
+     <Button
+       android:id="@+id/btnAdClick"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="adclick" />
+      
+      <Button
+      android:id="@+id/btnAbout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="about" />
+      
+          
+      <Button
+      android:id="@+id/btnGetInfo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="getinfo" />
+              
+      <Button
+      android:id="@+id/btnDelInfo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="delInfo" />
+
+</LinearLayout>

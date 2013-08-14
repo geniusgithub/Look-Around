@@ -3,6 +3,9 @@
 
    <string name="app_name">LookAround</string>
 
+   
+   <string name="toast_register_fail">注册失败</string>  
+   <string name="toast_login_fail">登录失败</string>  
     
    <string name="lookaround">随便看看</string>
    <string name="mirror">写真</string>

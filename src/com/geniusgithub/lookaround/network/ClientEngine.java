@@ -31,8 +31,17 @@ public class ClientEngine {
 	{	
 		mContext = context;
 	}
+	
+	public void cancelTask(Context context){
+		client.cancelRequests(context, true);
+	}
 
 	public boolean httpGetRequestEx(int action, IToStringMap object, IRequestDataPacketCallback callback)
+	{
+		return httpGetRequestEx(null, action, object, callback);
+	}
+	
+	public boolean httpGetRequestEx(Context context, int action, IToStringMap object, IRequestDataPacketCallback callback)
 	{
 		String url = ServerUrlBuilder.getServerURL(action);
 		if (url.equals("")){
@@ -43,12 +52,18 @@ public class ClientEngine {
 		RequestParams param = new RequestParams(object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(action, callback, null);	
-		client.get(url,  param, handler);
+		client.get(context, url,  param, handler);
 		
 		return true;
 	}
 	
 	public boolean httpPostRequestEx(int action, IToStringMap object, IRequestDataPacketCallback callback)
+	{
+		return httpPostRequestEx(null, action, object, callback);
+	}
+	
+	
+	public boolean httpPostRequestEx(Context context, int action, IToStringMap object, IRequestDataPacketCallback callback)
 	{
 		String url = ServerUrlBuilder.getServerURL(action);
 		if (url.equals("")){
@@ -58,12 +73,17 @@ public class ClientEngine {
 		RequestParams param = new RequestParams(object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(action, callback, null);	
-		client.post(url,  param, handler);
+		client.post(context, url,  param, handler);
 		
 		return true;
 	}
 	
 	public boolean httpGetRequest(int action, IToStringMap object, IRequestContentCallback callback)
+	{
+		return httpGetRequest(null, action, object, callback);
+	}
+	
+	public boolean httpGetRequest(Context context, int action, IToStringMap object, IRequestContentCallback callback)
 	{
 		String url = ServerUrlBuilder.getServerURL(action);
 		if (url.equals("")){
@@ -74,9 +94,8 @@ public class ClientEngine {
 		RequestParams param = new RequestParams(object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(action, null, callback);	
-		client.get(url,  param, handler);
+		client.get(context,url,  param, handler);
 		
 		return true;
 	}
-	
 }

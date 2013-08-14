@@ -11,8 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 public class PublicType {
 
+	private static final CommonLog log = LogFactory.createLog();
+	
 	// 用户注册
 	public final static int USER_REGISTER_MASID = 0x0001;
 	public static class UserRegister extends AbstractBaseProtocol
@@ -126,11 +131,12 @@ public class PublicType {
 			JSONArray jsonArray = jsonObject.getJSONArray(KEY_DATALIST);
 			int size = jsonArray.length();
 			for(int i = 0; i < size; i++){
-				JSONObject tmp = jsonArray.getJSONObject(0);
+				JSONObject tmp = jsonArray.getJSONObject(i);
 				BaseType.ListItem item = new BaseType.ListItem();
 				try {
 					item.parseJson(tmp);
 					mDataList.add(item);
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}							

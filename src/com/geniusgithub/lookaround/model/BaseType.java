@@ -30,6 +30,16 @@ public class BaseType {
 			return true;
 
 		}	
+		
+		public String getShowString(){
+			StringBuffer stringBuffer = new StringBuffer();
+			stringBuffer.append("mTypeIntro = " + mTypeIntro + 
+								"\nmTopicName = " + mTopicName + 
+								"\nmTitle = " + mTitle + 
+								"\nmTypeID = " + mTypeID + 
+								"\nmTypeAd = " + mTypeAd);
+			return stringBuffer.toString();
+		}
 	}
 	
 	

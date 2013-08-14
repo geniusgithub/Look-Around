@@ -20,9 +20,9 @@ public class PublicTypeBuilder {
 		return object;
 	}
 	
-	public static  PublicType.UserLogin buildUserLogin(Context context){
+	public static  PublicType.UserLogin buildUserLogin(Context context, String keys){
 		PublicType.UserLogin object = new PublicType.UserLogin();
-		object.mKeys = "0";
+		object.mKeys = keys;
 		object.mConn = "Wifi";
 		object.mStd = "A1.0";		
 		object.mTimeStamp = String.valueOf(System.currentTimeMillis());

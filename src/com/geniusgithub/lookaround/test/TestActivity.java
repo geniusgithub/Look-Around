@@ -117,7 +117,7 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 	
 	private void login(){
 		log.e("login");
-		PublicType.UserLogin object = PublicTypeBuilder.buildUserLogin(this);
+		PublicType.UserLogin object = PublicTypeBuilder.buildUserLogin(this, "0");
 		
 		mClientEngine.httpGetRequestEx(PublicType.USER_LOGIN_MASID, object, this);
 	}

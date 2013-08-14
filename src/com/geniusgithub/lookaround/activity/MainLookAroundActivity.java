@@ -1,4 +1,7 @@
-package com.geniusgithub.lookaround;
+package com.geniusgithub.lookaround.activity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,8 +12,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.geniusgithub.lookaround.FragmentControlCenter;
+import com.geniusgithub.lookaround.FragmentModel;
+import com.geniusgithub.lookaround.LAroundApplication;
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.R.dimen;
+import com.geniusgithub.lookaround.R.drawable;
+import com.geniusgithub.lookaround.R.id;
+import com.geniusgithub.lookaround.R.layout;
+import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
+import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
+import com.geniusgithub.lookaround.fragment.NavigationFragment;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
 import com.geniusgithub.lookaround.fragment.SettingFragment;
+import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -21,8 +36,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 
 	private static final CommonLog log = LogFactory.createLog();
 	
-	private String mTitle;
-	private Fragment mContent;
+	private CommonFragmentEx mContentFragment;
 	
 	private ImageView mLeftIcon;
 	private ImageView mRightIcon;
@@ -30,12 +44,15 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	
 	private FragmentControlCenter mControlCenter;
 	
+	private List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
+	private NavChannelAdapter mAdapter;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		mControlCenter = FragmentControlCenter.getInstance(this);
 		
 		setupViews();
 		
@@ -55,10 +72,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	}
 	
 	private void initSlideMenu(){
-		FragmentModel fragmentModel = mControlCenter.getMirrorFragmentModel();
-		switchContent(fragmentModel);
 
-		
 		SlidingMenu sm = getSlidingMenu();
 		sm.setMode(SlidingMenu.LEFT_RIGHT);
 
@@ -100,17 +114,24 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	}
 	
 	private void initData(){
+		mDataList = LAroundApplication.getInstance().getUserLoginResult().mDataList;
+		mControlCenter = FragmentControlCenter.getInstance(this);
 		
+		
+		int size = mDataList.size();
+		if (size > 0){
+			mContentFragment = mControlCenter.getCommonFragmentEx(mDataList.get(0));
+			switchContent(mContentFragment);
+		}
 	}
 	
 	
-	public void switchContent(final FragmentModel fragment) {
-		mTitle = fragment.mTitle;
-		mContent = fragment.mFragment;
+	public void switchContent(final CommonFragmentEx fragment) {
+		mContentFragment = fragment;
 
 		getSupportFragmentManager()
 		.beginTransaction()
-		.replace(R.id.content_frame, mContent)
+		.replace(R.id.content_frame, mContentFragment)
 		.commit();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
@@ -119,7 +140,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 			}
 		}, 50);
 		
-		mTitleTextView.setText(mTitle);
+		mTitleTextView.setText(mContentFragment.getData().mTitle);
 	}
 
 

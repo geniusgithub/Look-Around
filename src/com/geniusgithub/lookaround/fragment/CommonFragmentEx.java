@@ -1,18 +1,20 @@
 package com.geniusgithub.lookaround.fragment;
 
+import com.geniusgithub.lookaround.model.BaseType;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
+public class CommonFragmentEx extends CommonFragment{
 
-public class MirrorFragment extends CommonFragment{
-
-	private static final CommonLog log = LogFactory.createLog();
+	private BaseType.ListItem mData;
+	
+	public CommonFragmentEx(BaseType.ListItem data){
+		mData = data;
+	}
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,4 +47,8 @@ public class MirrorFragment extends CommonFragment{
 		super.onDestroy();
 	}
 	
+	
+	public BaseType.ListItem getData(){
+		return mData;
+	}
 }

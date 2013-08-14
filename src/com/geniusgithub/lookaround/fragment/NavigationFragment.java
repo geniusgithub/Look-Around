@@ -1,30 +1,40 @@
 package com.geniusgithub.lookaround.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 
-
-
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
 
 import com.geniusgithub.lookaround.FragmentControlCenter;
 import com.geniusgithub.lookaround.FragmentModel;
-import com.geniusgithub.lookaround.MainLookAroundActivity;
+import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
+import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
+import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.model.BaseType.ListItem;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-public class NavigationFragment extends Fragment implements OnCheckedChangeListener{
+public class NavigationFragment extends Fragment implements OnItemClickListener{
 
-	private static final CommonLog log = LogFactory.createLog();
+private static final CommonLog log = LogFactory.createLog();
 	
+    private Context mContext;
 	private View mView;
-	private RadioGroup  m_radioGroup;
+	private ListView mListView;
+	
+	private List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
+	private NavChannelAdapter mAdapter;
 	
 	private FragmentControlCenter mControlCenter;
 	
@@ -34,18 +44,16 @@ public class NavigationFragment extends Fragment implements OnCheckedChangeListe
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		log.e("NavigationFragment onCreate");
-		
+		mContext = LAroundApplication.getInstance();
 		mControlCenter = FragmentControlCenter.getInstance(getActivity());
 	}
 
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		
 		log.e("NavigationFragment onDestroy");
@@ -55,7 +63,7 @@ public class NavigationFragment extends Fragment implements OnCheckedChangeListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		log.e("NavigationFragment onCreateView");
 		
-		mView = inflater.inflate(R.layout.navitation_channel_layout, null);
+		mView = inflater.inflate(R.layout.listview_layout, null);
 		return mView;	
 	}
 
@@ -65,80 +73,41 @@ public class NavigationFragment extends Fragment implements OnCheckedChangeListe
 		log.e("NavigationFragment onActivityCreated");
 		
 		setupViews();
+		initData();
 	}
 	
 	
 	private void setupViews(){
-		m_radioGroup = (RadioGroup) mView.findViewById(R.id.nav_radiogroup);
-		((RadioButton) m_radioGroup.getChildAt(0)).toggle();
+		mListView = (ListView) mView.findViewById(R.id.listview);
+		mListView.setOnItemClickListener(this);
+	}
+	
+	
+	private void initData(){
+		mDataList = LAroundApplication.getInstance().getUserLoginResult().mDataList;
 		
-		m_radioGroup.setOnCheckedChangeListener(this);
-
+		mAdapter = new NavChannelAdapter(mContext, mDataList);
+		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(this);
 	}
 
+	
 	@Override
-	public void onCheckedChanged(RadioGroup arg0, int id) {
-		switch(id){
-		case R.id.rb_mirror:
-			goMirrorFragment();
-			break;
-		case R.id.rb_constellation:
-			goConstellationFragment();
-			break;
-		case R.id.rb_women:
-			goWomenFragment();
-			break;
-		case R.id.rb_food:
-			goFoodFragment();
-			break;
-		}
-	}
-	
-	
-	private void goMirrorFragment(){
+	public void onItemClick(AdapterView<?> adapter, View view, int pos, long arg3) {
+		
+		BaseType.ListItem item = (ListItem) adapter.getItemAtPosition(pos);
+		log.e("pos = " + pos + ", item = " + "\n" + item.getShowString());
+		
+		CommonFragmentEx fragmentEx = mControlCenter.getCommonFragmentEx(item);
 		if (getActivity() == null)
 			return;
 
-		FragmentModel fragmentModel = mControlCenter.getMirrorFragmentModel();
 		if (getActivity() instanceof MainLookAroundActivity) {
 			MainLookAroundActivity ra = (MainLookAroundActivity) getActivity();
-			ra.switchContent(fragmentModel);
-		}
-	}
-	
-	private void goConstellationFragment(){
-		if (getActivity() == null)
-			return;
-
-		FragmentModel fragmentModel = mControlCenter.getConstellationFragmentModel();
-		if (getActivity() instanceof MainLookAroundActivity) {
-			MainLookAroundActivity ra = (MainLookAroundActivity) getActivity();
-			ra.switchContent(fragmentModel);
-		}
-	}
-	
-	private void goWomenFragment(){
-		if (getActivity() == null)
-			return;
-
-		FragmentModel fragmentModel = mControlCenter.getWomenFragmentModel();
-		if (getActivity() instanceof MainLookAroundActivity) {
-			MainLookAroundActivity ra = (MainLookAroundActivity) getActivity();
-			ra.switchContent(fragmentModel);
-		}
-	}
-	
-	private void goFoodFragment(){
-		if (getActivity() == null)
-			return;
-
-		FragmentModel fragmentModel = mControlCenter.getFoodFragmentModel();
-		if (getActivity() instanceof MainLookAroundActivity) {
-			MainLookAroundActivity ra = (MainLookAroundActivity) getActivity();
-			ra.switchContent(fragmentModel);
+			ra.switchContent(fragmentEx);
 		}
 	}
 
 
-	
+
 }

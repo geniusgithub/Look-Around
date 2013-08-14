@@ -15,6 +15,11 @@
  */
 package com.geniusgithub.lookaround;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
@@ -26,6 +31,8 @@ public class LAroundApplication extends Application{
 	
 	private static LAroundApplication mInstance;
 
+	private PublicType.UserLoginResult mUserLoginResult;
+	
 	public synchronized static LAroundApplication getInstance(){
 		return mInstance;
 	}
@@ -37,7 +44,13 @@ public class LAroundApplication extends Application{
 		mInstance = this;
 	}
 	
+	public void setUserLoginResult(PublicType.UserLoginResult object){
+		mUserLoginResult = object;
+	}
 	
+	public PublicType.UserLoginResult getUserLoginResult(){
+		return mUserLoginResult;
+	}
 	
 	
 
