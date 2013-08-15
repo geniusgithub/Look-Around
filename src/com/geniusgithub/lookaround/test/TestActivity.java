@@ -146,7 +146,7 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 	
 	private void getInfo(){
 		log.e("getInfo");
-		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(this);
+		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(this, "1");
 		
 		mClientEngine.httpGetRequestEx(PublicType.GET_INFO_MSGID, object, this);
 	}

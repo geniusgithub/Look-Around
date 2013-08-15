@@ -60,10 +60,10 @@ public class PublicTypeBuilder {
 	}
 	
 	
-	public static  PublicType.GetInfo buildGetInfo(Context context){
+	public static  PublicType.GetInfo buildGetInfo(Context context, String arcTypeID){
 		PublicType.GetInfo object = new PublicType.GetInfo();
 		object.mKeys = "0c7742fef985a8245a62b41b7e0debfa";
-		object.mArcTypeID = "1";
+		object.mArcTypeID = arcTypeID;
 		object.mPage = "0";
 		object.mStd = "A1.0";		
 		object.mTimeStamp = String.valueOf(System.currentTimeMillis());

@@ -3,6 +3,7 @@ package com.geniusgithub.lookaround.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,6 @@ import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
-import com.geniusgithub.lookaround.fragment.SettingFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -74,7 +74,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	private void initSlideMenu(){
 
 		SlidingMenu sm = getSlidingMenu();
-		sm.setMode(SlidingMenu.LEFT_RIGHT);
+		sm.setMode(SlidingMenu.LEFT);
 
 		setBehindContentView(R.layout.left_menu_frame);
 		sm.setSlidingEnabled(true);
@@ -91,12 +91,6 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		sm.setFadeDegree(0.25f);
 
 		
-		sm.setSecondaryMenu(R.layout.right_menu_frame);
-		sm.setSecondaryShadowDrawable(R.drawable.shadow);
-		getSupportFragmentManager()
-		.beginTransaction()
-		.replace(R.id.right_menu_frame, new SettingFragment())
-		.commit();
 	}
 	
 	private void initActionBar(){
@@ -152,10 +146,16 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 			toggle();
 			break;
 		case R.id.iv_right_icon:
-			showSecondaryMenu();
+			goSettingActivity();
 			break;
 		}
 	}	
 
+	
+	private void goSettingActivity(){
+		Intent intent = new Intent();
+		intent.setClass(this, SettingActivity.class);
+		startActivity(intent);
+	}
 }
 

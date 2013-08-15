@@ -138,6 +138,7 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 		PublicType.UserRegisterResult object = new PublicType.UserRegisterResult();
 		try {
 			object.parseJson(dataPacket.data);
+			LocalConfigSharePreference.commintKeys(this, object.mKeys);
 			requestLogin(object.mKeys);
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -31,7 +31,7 @@ public class LAroundApplication extends Application{
 	
 	private static LAroundApplication mInstance;
 
-	private PublicType.UserLoginResult mUserLoginResult;
+	private PublicType.UserLoginResult mUserLoginResult = new PublicType.UserLoginResult();
 	
 	public synchronized static LAroundApplication getInstance(){
 		return mInstance;

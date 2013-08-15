@@ -15,7 +15,7 @@ import com.geniusgithub.lookaround.util.LogFactory;
 public class CommonFragment  extends Fragment{
 
 	public static final CommonLog log = LogFactory.createLog();
-	public ImageView mImageView;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,10 +27,9 @@ public class CommonFragment  extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View view = inflater.inflate(R.layout.common_layout, null);
-		mImageView = (ImageView) view.findViewById(R.id.imageView);
+	
 		
-		return view;
+		return null;
 	}
 
 	@Override
