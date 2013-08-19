@@ -242,7 +242,7 @@ public class PublicType {
 			JSONArray jsonArray = jsonObject.getJSONArray(KEY_DATALIST);
 			int size = jsonArray.length();
 			for(int i = 0; i < size; i++){
-				JSONObject tmp = jsonArray.getJSONObject(0);
+				JSONObject tmp = jsonArray.getJSONObject(i);
 				BaseType.InfoItem item = new BaseType.InfoItem();
 				try {
 					item.parseJson(tmp);
