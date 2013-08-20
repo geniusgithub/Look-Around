@@ -1,5 +1,8 @@
 package com.geniusgithub.lookaround.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,8 +71,12 @@ public class BaseType {
 		public String mLinkCount = "";
 		public String mUserName = "";
 		public String mHeadPath = "";
-		public String mImageURL = "";
-		public String mThumbnaiURL = "";
+		public String mImageURL_STRING = "";
+		public String mThumbnaiURL_STRING = "";
+		
+		public List<String> mImageUrlList = new ArrayList<String>();
+		public List<String> mThumbnaiURLList = new ArrayList<String>();
+		
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
 				
@@ -83,10 +90,72 @@ public class BaseType {
 			mUserName = jsonObject.getString(KEY_USERNAME);
 			
 			mHeadPath = jsonObject.getString(KEY_HEADPATH);
-			mImageURL = jsonObject.getString(KEY_IMAGES);
-			mThumbnaiURL = jsonObject.getString(KEY_IMAGESTHUMBANIL);
+			mImageURL_STRING = jsonObject.getString(KEY_IMAGES);
+			mThumbnaiURL_STRING = jsonObject.getString(KEY_IMAGESTHUMBANIL);
+			updateImageURL(mImageURL_STRING);
+			updateThumbnaiURL(mThumbnaiURL_STRING);
+			updateBannerType();
 			return true;
 
 		}	
+		
+		private void updateImageURL(String url){
+			if (url == null || url.length() < 1){
+				return ;
+			}
+			
+			try {
+				String []str = url.split(",");
+				int size = str.length;
+				for(int i = 0; i < size; i++){
+					if (str[i].length() > 0){
+						mImageUrlList.add(str[i]);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		private void updateThumbnaiURL(String url){
+			if (url == null || url.length() < 1){
+				return ;
+			}
+			
+			try {
+				String []str = url.split(",");
+				int size = str.length;
+				for(int i = 0; i < size; i++){
+					if (str[i].length() > 0){
+						mThumbnaiURLList.add(str[i]);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		private void updateBannerType(){
+			boolean isHasContent = mContent.length() > 0 ? true : false;
+			boolean isHasThumail = mThumbnaiURLList.size() == 0 ? false : true;
+			mBannerType = -1;
+			if (isHasContent){
+				if (isHasThumail){
+					mBannerType = 1;
+				}else{
+					mBannerType = 0;
+				}
+			}else{
+				if (isHasThumail){
+					mBannerType = 2;
+				}else{
+
+				}			
+			}
+		}
+		
 	}
 }
