@@ -11,7 +11,7 @@
       android:text="getinfo" />
    
 
-	    <ListView
+	    <com.geniusgithub.lookaround.widget.RefreshListView
 	    android:id="@+id/listview"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
@@ -20,6 +20,5 @@
 		android:layout_marginRight="10.0dip"
 	    android:dividerHeight="5dp"
 	    android:cacheColorHint="@color/transparent"
-	    android:scrollbars="none"
 	    android:clickable="true"/>
 </LinearLayout>

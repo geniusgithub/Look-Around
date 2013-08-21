@@ -77,7 +77,7 @@ public class InfoContentAdapter extends BaseAdapter{
 
 		BaseType.InfoItem item = data.get(pos); 
 		int type = item.mBannerType;
-		log.e("pos = " + pos + ", type = " + type);
+	
 		switch (type) {
 		case 0:
 			return getBanner_0_View(pos, view);
