@@ -99,6 +99,19 @@ public class BaseType {
 
 		}	
 		
+		public String getThumnaiImageURL(int pos){
+			if (pos >= mThumbnaiURLList.size()){
+				return null;
+			}
+			
+			return mThumbnaiURLList.get(pos);
+		}
+
+		
+		public int getThumnaiImageCount(){
+			return mThumbnaiURLList.size();
+		}
+		
 		private void updateImageURL(String url){
 			if (url == null || url.length() < 1){
 				return ;

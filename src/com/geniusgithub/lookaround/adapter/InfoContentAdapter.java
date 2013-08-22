@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.cache.ImageLoader;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -21,13 +22,15 @@ public class InfoContentAdapter extends BaseAdapter{
 	private static final CommonLog log = LogFactory.createLog();
 	
 	private List<BaseType.InfoItem> data = new ArrayList<BaseType.InfoItem>();
-	
 	private Context mContext;
+	private boolean mBusy = false;
+	private ImageLoader mImageLoader;
 	
 	public InfoContentAdapter(Context context, List<BaseType.InfoItem> data)
 	{
 		mContext = context;
 		this.data = data;
+		mImageLoader = new ImageLoader(context);
 	}
 	
 	public void refreshData(List<BaseType.InfoItem> data)
@@ -35,6 +38,10 @@ public class InfoContentAdapter extends BaseAdapter{
 		this.data = data;
 		notifyDataSetChanged();
 		
+	}
+	
+	public ImageLoader getImageLoader(){
+		return mImageLoader;
 	}
 	
 	@Override
@@ -136,9 +143,18 @@ public class InfoContentAdapter extends BaseAdapter{
 		BaseType.InfoItem item = data.get(pos);
 		holder.tvTitle.setText(item.mTitle);
 		holder.tvContent.setText(item.mContent);
-		
-		holder.tvImageCount.setText("1");
 		holder.tvArtist.setText(item.mUserName);
+		
+		int thumailImageCount = item.getThumnaiImageCount();
+		holder.tvImageCount.setText(String.valueOf(thumailImageCount));
+	
+	
+		holder.ivContent.setImageResource(R.drawable.load_img);
+		if (!mBusy) {
+			mImageLoader.DisplayImage(item.getThumnaiImageURL(0), holder.ivContent, false);
+		} else {
+			mImageLoader.DisplayImage(item.getThumnaiImageURL(0),  holder.ivContent, true);		
+		}
 
 		return view;
 	}
@@ -153,6 +169,9 @@ public class InfoContentAdapter extends BaseAdapter{
 			holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
 			holder.tvImageCount = (TextView) view.findViewById(R.id.tv_imagecount);
 			holder.tvArtist = (TextView) view.findViewById(R.id.tv_artist);
+			holder.ivContent1 = (ImageView) view.findViewById(R.id.iv_content1);
+			holder.ivContent2 = (ImageView) view.findViewById(R.id.iv_content2);
+			holder.ivContent3 = (ImageView) view.findViewById(R.id.iv_content3);
 			view.setTag(holder);
 		}else{
 			
@@ -161,9 +180,35 @@ public class InfoContentAdapter extends BaseAdapter{
 		
 		BaseType.InfoItem item = data.get(pos);
 		holder.tvTitle.setText(item.mTitle);	
-		holder.tvImageCount.setText("2");
 		holder.tvArtist.setText(item.mUserName);
-
+				
+		int thumailImageCount = item.getThumnaiImageCount();
+		holder.tvImageCount.setText(String.valueOf(thumailImageCount));
+		
+		if (thumailImageCount == 1){
+			holder.ivContent1.setVisibility(View.VISIBLE);
+			holder.ivContent2.setVisibility(View.GONE);
+			holder.ivContent3.setVisibility(View.GONE);
+			holder.ivContent1.setImageResource(R.drawable.load_img);	
+		}else if (thumailImageCount == 2){		
+			holder.ivContent1.setVisibility(View.VISIBLE);
+			holder.ivContent2.setVisibility(View.VISIBLE);
+			holder.ivContent3.setVisibility(View.GONE);
+			holder.ivContent1.setImageResource(R.drawable.load_img);
+			holder.ivContent2.setImageResource(R.drawable.load_img);
+		}else{
+			holder.ivContent1.setVisibility(View.VISIBLE);
+			holder.ivContent2.setVisibility(View.VISIBLE);
+			holder.ivContent3.setVisibility(View.VISIBLE);
+			holder.ivContent1.setImageResource(R.drawable.load_img);
+			holder.ivContent2.setImageResource(R.drawable.load_img);
+			holder.ivContent3.setImageResource(R.drawable.load_img);
+		}
+		
+		mImageLoader.DisplayImage(item.getThumnaiImageURL(0), holder.ivContent1, mBusy);
+		mImageLoader.DisplayImage(item.getThumnaiImageURL(1), holder.ivContent2, mBusy);
+		mImageLoader.DisplayImage(item.getThumnaiImageURL(2), holder.ivContent3, mBusy);
+		
 		return view;
 	}
 	

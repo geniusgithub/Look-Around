@@ -239,7 +239,10 @@ public class PublicType {
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
 			
-			JSONArray jsonArray = jsonObject.getJSONArray(KEY_DATALIST);
+			JSONArray jsonArray = jsonObject.optJSONArray(KEY_DATALIST);
+			if (jsonArray == null){
+				return true;
+			}
 			int size = jsonArray.length();
 			for(int i = 0; i < size; i++){
 				JSONObject tmp = jsonArray.getJSONObject(i);

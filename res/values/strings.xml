@@ -3,10 +3,13 @@
 
    <string name="app_name">LookAround</string>
 
+   <string name="getdata_fail">获取数据失败,请稍后再试</string>  
    
    <string name="toast_register_fail">注册失败</string>  
    <string name="toast_login_fail">登录失败</string>  
-    
+   <string name="toast_getdata_fail">获取数据失败</string>  
+      <string name="toast_anylizedata_fail">解析数据失败</string> 
+   
    <string name="lookaround">随便看看</string>  
     
    <string name="setting">设置</string>
