@@ -8,6 +8,7 @@ import com.geniusgithub.lookaround.R.string;
 import com.geniusgithub.lookaround.datastore.LocalConfigSharePreference;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
+import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
@@ -55,7 +56,14 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 		String keys = LocalConfigSharePreference.getKeys(this);
 		if (keys.equals("")){
 			PublicType.UserRegister object = PublicTypeBuilder.buildUserRegister(this);		
-			mClientEngine.httpGetRequestEx(this, PublicType.USER_REGISTER_MASID, object, this);
+			
+			
+			BaseRequestPacket packet = new BaseRequestPacket();
+			packet.context = this;
+			packet.action = PublicType.USER_REGISTER_MASID;
+			packet.object = object;
+			
+			mClientEngine.httpGetRequestEx(packet, this);
 		}else{
 			requestLogin(keys);
 		}
@@ -64,7 +72,13 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 	private void requestLogin(String keys){
 		PublicType.UserLogin object = PublicTypeBuilder.buildUserLogin(this, keys);
 		
-		mClientEngine.httpGetRequestEx(this, PublicType.USER_LOGIN_MASID, object, this);
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.context = this;
+		packet.action = PublicType.USER_LOGIN_MASID;
+		packet.object = object;
+		
+		
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 
 	@Override
@@ -79,7 +93,7 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 	}
 
 	@Override
-	public void onSuccess(int requestAction, ResponseDataPacket dataPacket) {
+	public void onSuccess(int requestAction, ResponseDataPacket dataPacket, Object extra) {
 		switch (requestAction) {
 		case PublicType.USER_REGISTER_MASID:
 			onTransdelRegister(dataPacket);
@@ -93,7 +107,7 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 	}
 
 	@Override
-	public void onRequestFailure(int requestAction, String content) {
+	public void onRequestFailure(int requestAction, String content, Object extra) {
 		log.e("WelcomActivity --> onRequestFailure \nrequestAction = " + requestAction + "\ncontent = " + content);
 		
 		switch (requestAction) {
@@ -112,7 +126,7 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 	}
 
 	@Override
-	public void onAnylizeFailure(int requestAction, String content) {
+	public void onAnylizeFailure(int requestAction, String content, Object extra) {
 		log.e("WelcomActivity --> onAnylizeFailure \nrequestAction = " + requestAction + "\ncontent = " + content);
 		
 		switch (requestAction) {

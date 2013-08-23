@@ -15,10 +15,13 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 	private IRequestDataPacketCallback mDataPacketCallback;
 	private IRequestContentCallback mContentCallback;
 	
-	public HttpResponseHandler(int action, IRequestDataPacketCallback callback1, IRequestContentCallback callback2){
+	private Object mExtra;
+	
+	public HttpResponseHandler(int action, IRequestDataPacketCallback callback1, IRequestContentCallback callback2, Object extra){
 		mDataPacketCallback = callback1;
 		mAction = action;
 		mContentCallback = callback2;
+		mExtra = extra;
 	}
 	
 	@Override
@@ -46,16 +49,16 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 			try {
 				jsonObject = new JSONObject(content);
 				dataPacket.parseJson(jsonObject);
-				mDataPacketCallback.onSuccess(mAction, dataPacket);
+				mDataPacketCallback.onSuccess(mAction, dataPacket, mExtra);
 			} catch (JSONException e) {
 				e.printStackTrace();
-				mDataPacketCallback.onAnylizeFailure(mAction, content);
+				mDataPacketCallback.onAnylizeFailure(mAction, content, mExtra);
 			}
 		}else{
 			if (mContentCallback == null){
 				return ;
 			}
-			mContentCallback.onResult(mAction, true, content);
+			mContentCallback.onResult(mAction, true, content, mExtra);
 		}
 		
 	
@@ -69,12 +72,12 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 			if (mDataPacketCallback == null){
 				return ;
 			}
-			mDataPacketCallback.onRequestFailure(mAction, content);
+			mDataPacketCallback.onRequestFailure(mAction, content, mExtra);
 		}else{
 			if (mContentCallback == null){
 				return ;
 			}
-			mContentCallback.onResult(mAction, false, content);
+			mContentCallback.onResult(mAction, false, content, mExtra);
 		}
 		
 		

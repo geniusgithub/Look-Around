@@ -8,6 +8,7 @@ import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
 import com.geniusgithub.lookaround.model.PublicType.GetTypeList;
+import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestContentCallback;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
@@ -22,7 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class TestActivity extends Activity implements OnClickListener, IRequestDataPacketCallback, IRequestContentCallback{
+public class TestProtocolActivity extends Activity implements OnClickListener, IRequestDataPacketCallback, IRequestContentCallback{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
@@ -112,35 +113,56 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 		log.e("register");
 		PublicType.UserRegister object = PublicTypeBuilder.buildUserRegister(this);
 		
-		mClientEngine.httpGetRequestEx(PublicType.USER_REGISTER_MASID, object, this);
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.USER_REGISTER_MASID;
+		packet.object = object;
+	
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 	
 	private void login(){
 		log.e("login");
 		PublicType.UserLogin object = PublicTypeBuilder.buildUserLogin(this, "0");
+
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.USER_LOGIN_MASID;
+		packet.object = object;
 		
-		mClientEngine.httpGetRequestEx(PublicType.USER_LOGIN_MASID, object, this);
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 	
 	private void bindtoken(){
 		log.e("bindtoken");
 		PublicType.BindToken object = PublicTypeBuilder.buildBindToken(this);
 		
-		mClientEngine.httpGetRequestEx(PublicType.BIND_TOKEN_MSGID, object, this);
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.BIND_TOKEN_MSGID;
+		packet.object = object;
+		
+		
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 	
 	private void adClilck(){
 		log.e("adClilck");
 		PublicType.AdClick object = PublicTypeBuilder.buildAdClick(this);
 		
-		mClientEngine.httpGetRequestEx(PublicType.AD_CLICK_MSGID, object, this);
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.AD_CLICK_MSGID;
+		packet.object = object;
+		
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 	
 	private void about(){
 		log.e("about");
 		PublicType.AboutPage object = PublicTypeBuilder.buildAboutPage(this);
 		
-		mClientEngine.httpGetRequest(PublicType.ABOUT_MSGID, object, this);
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.ABOUT_MSGID;
+		packet.object = object;
+		
+		mClientEngine.httpGetRequest(packet, this);
 	}
 	
 	
@@ -148,7 +170,11 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 		log.e("getInfo");
 		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(this, "1");
 		
-		mClientEngine.httpGetRequestEx(PublicType.GET_INFO_MSGID, object, this);
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.GET_INFO_MSGID;
+		packet.object = object;
+		
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 	
 	private void delInfo(){
@@ -159,7 +185,7 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 	}
 
 	@Override
-	public void onSuccess(int requestAction, ResponseDataPacket dataPacket) {
+	public void onSuccess(int requestAction, ResponseDataPacket dataPacket, Object extra) {
 		log.e("onSuccess! requestAction = " + requestAction + ", dataPacket ==> \n" + dataPacket.toString());
 		
 		switch(requestAction){
@@ -180,20 +206,20 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 	}
 
 	@Override
-	public void onRequestFailure(int requestAction, String content) {
+	public void onRequestFailure(int requestAction, String content, Object extra) {
 	//	log.e("onRequestFailure! requestAction = " + requestAction + "\ncontent = " + content);
 		
 		
 	}
 
 	@Override
-	public void onAnylizeFailure(int requestAction, String content) {
+	public void onAnylizeFailure(int requestAction, String content, Object extra) {
 		log.e("onAnylizeFailure! requestAction = " + requestAction + "\ncontent = " + content);
 		
 	}
 	
 	@Override
-	public void onResult(int requestAction, Boolean isSuccess, String content) {
+	public void onResult(int requestAction, Boolean isSuccess, String content, Object extra) {
 		log.e("onResult!isSuccess = " + isSuccess + "\n requestAction = " + + requestAction  + "\n dataPacket ==> \n" + content);
 		
 	}
@@ -236,4 +262,6 @@ public class TestActivity extends Activity implements OnClickListener, IRequestD
 		}
 		
 	}
+
+
 }

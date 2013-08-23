@@ -8,17 +8,27 @@ import org.json.JSONException;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
+import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
 
 import android.content.Context;
 
 public class InfoRequestProxy implements IRequestDataPacketCallback{
 	
+	private static final CommonLog log = LogFactory.createLog();
+	
+	private final static int FLAG_REFRESH = 0;
+	private final static int FLAG_LOADMORE = 1;
+	
 	public static interface IRequestResult{
-		public void refreshOnComplete(boolean isSuccess);
-		public void loadMoreOnComplete(boolean isSuccess);
+		
+		public void onSuccess(boolean isLoadMore);
+		public void onRequestFailure(boolean isLoadMore);
+		public void onAnylizeFailure(boolean isLoadMore);
 	}
 
 	private Context mContext;
@@ -40,27 +50,42 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 	}
 	
 	public void requestRefreshInfo(){
-		getInfoByPage(0);
+		getInfoByPage(0, FLAG_REFRESH);
 	}
 	
 	public void requestMoreInfo(){
-		getInfoByPage(mPage + 1);
+		getInfoByPage(mPage + 1, FLAG_LOADMORE);
+	}
+	
+	public void cancelRequest(){
+		mClientEngine.cancelTask(mContext);
+	}
+	
+	public List<BaseType.InfoItem> getData(){
+		return mContentData;
 	}
 	
 
-	private void getInfoByPage(int page){
+	private void getInfoByPage(int page,int requestType){
 	
 		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(mContext, mTypeData.mTypeID);
 		object.mPage = String.valueOf(page);
-		mClientEngine.httpGetRequestEx(PublicType.GET_INFO_MSGID, object, this);
+		
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.GET_INFO_MSGID;
+		packet.object = object;
+		packet.extra = new Integer(requestType);
+
+		
+		mClientEngine.httpGetRequestEx(packet, this);
 	}
 
 	@Override
-	public void onSuccess(int requestAction, ResponseDataPacket dataPacket) {
+	public void onSuccess(int requestAction, ResponseDataPacket dataPacket, Object extra) {
 		
 		switch(requestAction){	
 			case PublicType.GET_INFO_MSGID:{
-				onGetInfoResult(dataPacket);
+				onGetInfoResult(dataPacket,extra);
 			}
 			break;
 			
@@ -68,34 +93,46 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 	}
 
 	@Override
-	public void onRequestFailure(int requestAction, String content) {
-		
+	public void onRequestFailure(int requestAction, String content, Object extra) {
+		int type = (Integer) extra;
+		if (type == FLAG_REFRESH){
+			mCallback.onRequestFailure(false);
+		}else if (type == FLAG_LOADMORE){
+			mCallback.onRequestFailure(true);
+		}
 	}
 
 	@Override
-	public void onAnylizeFailure(int requestAction, String content) {
-		
+	public void onAnylizeFailure(int requestAction, String content, Object extra) {
+		int type = (Integer) extra;
+		if (type == FLAG_REFRESH){
+			mCallback.onAnylizeFailure(false);
+		}else if (type == FLAG_LOADMORE){
+			mCallback.onAnylizeFailure(true);
+		}
 	}
 	
-	private void onGetInfoResult( ResponseDataPacket dataPacket){
+	private void onGetInfoResult( ResponseDataPacket dataPacket, Object extra){
 		PublicType.GetInfoResult object = new PublicType.GetInfoResult();
+		
+		int type = (Integer) extra;
+	
 		
 		try {
 			object.parseJson(dataPacket.data);
 			log.e("mDataList.size = " + object.mDataList.size());
-			if (isLoadMore){
-				mData.addAll(object.mDataList);
-				mListView.onLoadMoreComplete(false);
-
-			}else{
-				mData = object.mDataList;
-				mListView.onRefreshComplete();
+			
+			if (type == FLAG_REFRESH){
+				mContentData = object.mDataList;
+				mPage = 0;
+				mCallback.onSuccess(false);
+			}else if (type == FLAG_LOADMORE){
+				mContentData.addAll(object.mDataList);
+				mPage++;
+				mCallback.onSuccess(true);
 			}
-		
-			curPage = tmpPage;
-			updateUI();
+
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

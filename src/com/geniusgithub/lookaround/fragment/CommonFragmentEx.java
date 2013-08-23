@@ -13,17 +13,19 @@ import com.geniusgithub.lookaround.model.PublicTypeBuilder;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
+import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.widget.RefreshListView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class CommonFragmentEx extends CommonFragment implements IRequestDataPacketCallback,
+public class CommonFragmentEx extends CommonFragment implements InfoRequestProxy.IRequestResult,
 							RefreshListView.IOnRefreshListener, RefreshListView.IOnLoadMoreListener{
 
 	private BaseType.ListItem mTypeData;
@@ -31,18 +33,16 @@ public class CommonFragmentEx extends CommonFragment implements IRequestDataPack
 	public View mLoadView;
 	public View mContentView;
 	private RefreshListView mListView;
-	
-	
 	private InfoContentAdapter mAdapter;	
+	
 	
 	private Context mContext;
 	private List<BaseType.InfoItem> mContentData = new ArrayList<BaseType.InfoItem>();
+	private InfoRequestProxy mInfoRequestProxy;
 	
-	
+	private Handler mHandler;
 	public CommonFragmentEx(BaseType.ListItem data){
-		mTypeData = data;
-		mContext = getActivity();
-		
+		mTypeData = data;	
 	}
 	
 	
@@ -50,6 +50,7 @@ public class CommonFragmentEx extends CommonFragment implements IRequestDataPack
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+	
 	}
 
 	@Override
@@ -76,23 +77,35 @@ public class CommonFragmentEx extends CommonFragment implements IRequestDataPack
 		
 		initData();
 		
-		requestFirstInfo();
+		mInfoRequestProxy.requestRefreshInfo();
+	
 	}
 	
 	private void setupViews(){
 		switchToLoadView();
+	
 	}
 	
 	private void initData(){
+
+		mContext = getActivity();
+	
 		mAdapter = new InfoContentAdapter(mContext, mContentData);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnRefreshListener(this);
 		mListView.setOnLoadMoreListener(this);
+		mInfoRequestProxy = new InfoRequestProxy(mContext, mTypeData, this);
+		
+		mHandler = new Handler(){
+			
+		};
 	}
 
 	@Override
 	public void onDestroy() {
 		
+		mInfoRequestProxy.cancelRequest();
+	
 		super.onDestroy();
 	}
 	
@@ -119,91 +132,71 @@ public class CommonFragmentEx extends CommonFragment implements IRequestDataPack
 		mContentView.setVisibility(View.VISIBLE);
 	}
 
-	
-	private void requestFirstInfo(){
-		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(mContext, mTypeData.mTypeID);
-		
-		mClientEngine.httpGetRequestEx(PublicType.GET_INFO_MSGID, object, this);
+
+	@Override
+	public void OnLoadMore() {
+		mInfoRequestProxy.requestMoreInfo();
 	}
 
 
 	@Override
-	public void onSuccess(int requestAction, ResponseDataPacket dataPacket) {
-		log.e("onSuccess! requestAction = " + requestAction + ", dataPacket ==> \n" + dataPacket.toString());
+	public void OnRefresh() {
+		mInfoRequestProxy.requestRefreshInfo();
+	}
+
+
+	@Override
+	public void onSuccess(boolean isLoadMore) {
+
+		switchToContentView();
+		mContentData = mInfoRequestProxy.getData();
+		mAdapter.refreshData(mContentData);
 		
-		if (mContentData.size() == 0){
-			switchToContentView();
-			onGetInfoResult(dataPacket);
-			return ;
+		
+		if (isLoadMore){
+			mListView.onLoadMoreComplete(false);
+		}else{
+			mListView.onRefreshComplete();
 		}
-		
-		onGetInfoResult(dataPacket);
-		
 	}
 
 
 	@Override
-	public void onRequestFailure(int requestAction, String content) {
-		log.e("onRequestFailure! requestAction = " + requestAction + "\ncontent = " + content);
+	public void onRequestFailure(boolean isLoadMore) {
 		CommonUtil.showToast(R.string.toast_getdata_fail, mContext);
 		
 		if (mContentData.size() == 0){
 			switchToFailView();
 			return ;
 		}
+		
+		switchToContentView();
+		if (isLoadMore){
+			mListView.onLoadMoreComplete(false);
+		}else{
+			mListView.onRefreshComplete();
+		}
 	}
 
 
 	@Override
-	public void onAnylizeFailure(int requestAction, String content) {
-		log.e("onAnylizeFailure! requestAction = " + requestAction + "\ncontent = " + content);
+	public void onAnylizeFailure(boolean isLoadMore) {
 		CommonUtil.showToast(R.string.toast_anylizedata_fail, mContext);
 		
 		if (mContentData.size() == 0){
 			switchToFailView();
 			return ;
 		}
-	}
-
-
-	@Override
-	public void OnLoadMore() {
-		// TODO Auto-generated method stub
 		
-	}
-
-
-	@Override
-	public void OnRefresh() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	private void onGetInfoResult( ResponseDataPacket dataPacket){
-		PublicType.GetInfoResult object = new PublicType.GetInfoResult();
-		
-		try {
-			object.parseJson(dataPacket.data);
-			log.e("mDataList.size = " + object.mDataList.size());
-			if (isLoadMore){
-				mData.addAll(object.mDataList);
-				mListView.onLoadMoreComplete(false);
-
-			}else{
-				mData = object.mDataList;
-				mListView.onRefreshComplete();
-			}
-		
-			curPage = tmpPage;
-			updateUI();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		switchToContentView();
+		if (isLoadMore){
+			mListView.onLoadMoreComplete(false);
+		}else{
+			mListView.onRefreshComplete();
 		}
-		
 	}
 	
+
 	
 	
 }

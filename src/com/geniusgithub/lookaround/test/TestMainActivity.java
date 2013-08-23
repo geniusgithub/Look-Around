@@ -17,16 +17,20 @@ import com.geniusgithub.lookaround.adapter.InfoContentAdapter;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
+import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestContentCallback;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
+import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
 import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.widget.RefreshListView;
 
 
-public class TestMainActivity extends Activity implements OnClickListener, IRequestDataPacketCallback,
+public class TestMainActivity extends Activity implements OnClickListener,
+											InfoRequestProxy.IRequestResult,
 			RefreshListView.IOnRefreshListener, RefreshListView.IOnLoadMoreListener{
 
 	private static final CommonLog log = LogFactory.createLog();
@@ -36,13 +40,10 @@ public class TestMainActivity extends Activity implements OnClickListener, IRequ
 	private RefreshListView mListView;
 	private InfoContentAdapter mAdapter;
 	
-	private List<BaseType.InfoItem> mData = new ArrayList<BaseType.InfoItem>();
+	private List<BaseType.InfoItem> mData = new ArrayList<BaseType.InfoItem>();	
+	private InfoRequestProxy mInfoRequestProxy;
 	
-	private ClientEngine mClientEngine;
 	
-	private int curPage = 0;
-	private int tmpPage = 0;
-	private boolean isLoadMore = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -73,12 +74,14 @@ public class TestMainActivity extends Activity implements OnClickListener, IRequ
 	}
 	
 	private void initData(){
-		mClientEngine=  ClientEngine.getInstance(this);
-		
 		mAdapter = new InfoContentAdapter(this, mData);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnRefreshListener(this);
 		mListView.setOnLoadMoreListener(this);
+		
+		 BaseType.ListItem item = new BaseType.ListItem();
+		 item.mTypeID = "1";
+		mInfoRequestProxy = new InfoRequestProxy(this, item, this);
 	}
 
 	
@@ -90,81 +93,58 @@ public class TestMainActivity extends Activity implements OnClickListener, IRequ
 	
 	@Override
 	public void OnRefresh() {
-		isLoadMore = false;
-		getInfo(0);
+		mInfoRequestProxy.requestRefreshInfo();
 	}
 	
 	@Override
 	public void OnLoadMore() {
-		isLoadMore = true;
-		getInfo(curPage + 1);
+		mInfoRequestProxy.requestMoreInfo();
 	}
 	
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()){
 			case R.id.btnGetInfo:
-				getInfo(0);
+				mInfoRequestProxy.requestRefreshInfo();
 		
 		}
 	}
+
+	@Override
+	public void onSuccess(boolean isLoadMore) {
 	
-	private void getInfo(int page){
-		log.e("getInfo");
-		PublicType.GetInfo object = PublicTypeBuilder.buildGetInfo(this, "1");
-		object.mPage = String.valueOf(page);
-		mClientEngine.httpGetRequestEx(PublicType.GET_INFO_MSGID, object, this);
-		tmpPage = page;
-	}
-	
-	@Override
-	public void onSuccess(int requestAction, ResponseDataPacket dataPacket) {
-		log.e("onSuccess! requestAction = " + requestAction + ", dataPacket ==> \n" + dataPacket.toString());
+		mData = mInfoRequestProxy.getData();
+		mAdapter.refreshData(mData);
 		
-		switch(requestAction){	
-			case PublicType.GET_INFO_MSGID:{
-				onGetInfoResult(dataPacket);
-			}
-				break;
-				
+		
+		if (isLoadMore){
+			mListView.onLoadMoreComplete(false);
+		}else{
+			mListView.onRefreshComplete();
 		}
 	}
 
 	@Override
-	public void onRequestFailure(int requestAction, String content) {
-	//	log.e("onRequestFailure! requestAction = " + requestAction + "\ncontent = " + content);
+	public void onRequestFailure(boolean isLoadMore) {
+	CommonUtil.showToast(R.string.toast_getdata_fail, this);
 		
 		
+		if (isLoadMore){
+			mListView.onLoadMoreComplete(false);
+		}else{
+			mListView.onRefreshComplete();
+		}
 	}
 
 	@Override
-	public void onAnylizeFailure(int requestAction, String content) {
-		log.e("onAnylizeFailure! requestAction = " + requestAction + "\ncontent = " + content);
-		
-	}
+	public void onAnylizeFailure(boolean isLoadMore) {
+		CommonUtil.showToast(R.string.toast_getdata_fail, this);
 
-	private void onGetInfoResult( ResponseDataPacket dataPacket){
-		PublicType.GetInfoResult object = new PublicType.GetInfoResult();
-		
-		try {
-			object.parseJson(dataPacket.data);
-			log.e("mDataList.size = " + object.mDataList.size());
-			if (isLoadMore){
-				mData.addAll(object.mDataList);
-				mListView.onLoadMoreComplete(false);
-
-			}else{
-				mData = object.mDataList;
-				mListView.onRefreshComplete();
-			}
-		
-			curPage = tmpPage;
-			updateUI();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (isLoadMore){
+			mListView.onLoadMoreComplete(false);
+		}else{
+			mListView.onRefreshComplete();
 		}
-		
 	}
 
 

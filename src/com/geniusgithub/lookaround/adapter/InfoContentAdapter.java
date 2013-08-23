@@ -187,13 +187,13 @@ public class InfoContentAdapter extends BaseAdapter{
 		
 		if (thumailImageCount == 1){
 			holder.ivContent1.setVisibility(View.VISIBLE);
-			holder.ivContent2.setVisibility(View.GONE);
-			holder.ivContent3.setVisibility(View.GONE);
+			holder.ivContent2.setVisibility(View.INVISIBLE);
+			holder.ivContent3.setVisibility(View.INVISIBLE);
 			holder.ivContent1.setImageResource(R.drawable.load_img);	
 		}else if (thumailImageCount == 2){		
 			holder.ivContent1.setVisibility(View.VISIBLE);
 			holder.ivContent2.setVisibility(View.VISIBLE);
-			holder.ivContent3.setVisibility(View.GONE);
+			holder.ivContent3.setVisibility(View.INVISIBLE);
 			holder.ivContent1.setImageResource(R.drawable.load_img);
 			holder.ivContent2.setImageResource(R.drawable.load_img);
 		}else{

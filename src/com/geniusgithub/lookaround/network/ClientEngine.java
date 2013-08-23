@@ -35,67 +35,94 @@ public class ClientEngine {
 	public void cancelTask(Context context){
 		client.cancelRequests(context, true);
 	}
+	
+	public boolean httpGetRequestEx(BaseRequestPacket packet, IRequestDataPacketCallback callback)
+	{
+		String url = ServerUrlBuilder.getServerURL(packet.action);
+		if (url.equals("")){
+			log.e("can't get serverURL by action : " + packet.action);
+			return false;
+		}
+		
+		if (packet.object == null){
+			log.e("BaseRequestPacket.object = null!!!");
+			return false;
+		}
+		
+		log.e("httpGetRequest url = " + url);
+		RequestParams param = new RequestParams(packet.object.toStringMap());
+		
+		HttpResponseHandler handler = new HttpResponseHandler(packet.action, callback, null, packet.extra);	
+		client.get(packet.context, url,  param, handler);
+		
+		return true;
+	}
+	
+	public boolean httpPostRequestEx(BaseRequestPacket packet, IRequestDataPacketCallback callback)
+	{
+		String url = ServerUrlBuilder.getServerURL(packet.action);
+		if (url.equals("")){
+			log.e("can't get serverURL by action : " + packet.action);
+			return false;
+		}
+		
+		if (packet.object == null){
+			log.e("BaseRequestPacket.object = null!!!");
+			return false;
+		}
+		
+		log.e("httpPostRequestEx url = " + url);
+		RequestParams param = new RequestParams(packet.object.toStringMap());
+		
+		HttpResponseHandler handler = new HttpResponseHandler(packet.action, callback, null, packet.extra);	
+		client.post(packet.context, url,  param, handler);
+		
+		return true;
+	}
+		
 
-	public boolean httpGetRequestEx(int action, IToStringMap object, IRequestDataPacketCallback callback)
+	public boolean httpGetRequest(BaseRequestPacket packet,  IRequestContentCallback callback)
 	{
-		return httpGetRequestEx(null, action, object, callback);
-	}
-	
-	public boolean httpGetRequestEx(Context context, int action, IToStringMap object, IRequestDataPacketCallback callback)
-	{
-		String url = ServerUrlBuilder.getServerURL(action);
+		String url = ServerUrlBuilder.getServerURL(packet.action);
 		if (url.equals("")){
-			log.e("can't get serverURL by action : " + action);
+			log.e("can't get serverURL by action : " + packet.action);
 			return false;
 		}
+		
+		if (packet.object == null){
+			log.e("BaseRequestPacket.object = null!!!");
+			return false;
+		}
+		
 		log.e("httpGetRequest url = " + url);
-		RequestParams param = new RequestParams(object.toStringMap());
+		RequestParams param = new RequestParams(packet.object.toStringMap());
 		
-		HttpResponseHandler handler = new HttpResponseHandler(action, callback, null);	
-		client.get(context, url,  param, handler);
+		HttpResponseHandler handler = new HttpResponseHandler(packet.action, null, callback, packet.extra);	
+		client.get(packet.context, url,  param, handler);
 		
 		return true;
 	}
 	
-	public boolean httpPostRequestEx(int action, IToStringMap object, IRequestDataPacketCallback callback)
+	public boolean httpPostRequest(BaseRequestPacket packet,  IRequestContentCallback callback)
 	{
-		return httpPostRequestEx(null, action, object, callback);
-	}
-	
-	
-	public boolean httpPostRequestEx(Context context, int action, IToStringMap object, IRequestDataPacketCallback callback)
-	{
-		String url = ServerUrlBuilder.getServerURL(action);
+		String url = ServerUrlBuilder.getServerURL(packet.action);
 		if (url.equals("")){
+			log.e("can't get serverURL by action : " + packet.action);
 			return false;
 		}
 		
-		RequestParams param = new RequestParams(object.toStringMap());
-		
-		HttpResponseHandler handler = new HttpResponseHandler(action, callback, null);	
-		client.post(context, url,  param, handler);
-		
-		return true;
-	}
-	
-	public boolean httpGetRequest(int action, IToStringMap object, IRequestContentCallback callback)
-	{
-		return httpGetRequest(null, action, object, callback);
-	}
-	
-	public boolean httpGetRequest(Context context, int action, IToStringMap object, IRequestContentCallback callback)
-	{
-		String url = ServerUrlBuilder.getServerURL(action);
-		if (url.equals("")){
-			log.e("can't get serverURL by action : " + action);
+		if (packet.object == null){
+			log.e("BaseRequestPacket.object = null!!!");
 			return false;
 		}
-		log.e("httpGetRequest url = " + url);
-		RequestParams param = new RequestParams(object.toStringMap());
 		
-		HttpResponseHandler handler = new HttpResponseHandler(action, null, callback);	
-		client.get(context,url,  param, handler);
+		log.e("httpPostRequestEx url = " + url);
+		RequestParams param = new RequestParams(packet.object.toStringMap());
+		
+		HttpResponseHandler handler = new HttpResponseHandler(packet.action, null, callback, packet.extra);	
+		client.post(packet.context, url,  param, handler);
 		
 		return true;
 	}
+
 }

@@ -35,6 +35,7 @@ public class FragmentControlCenter {
 		CommonFragmentEx fragment = mFragmentModelMaps.get(object.mTypeID);
 		if (fragment == null){
 			fragment = new CommonFragmentEx(object);
+			mFragmentModelMaps.put(object.mTypeID, fragment);
 		}
 		
 		return fragment;
