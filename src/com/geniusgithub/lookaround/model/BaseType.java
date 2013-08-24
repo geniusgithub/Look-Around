@@ -112,6 +112,14 @@ public class BaseType {
 			return mThumbnaiURLList.size();
 		}
 		
+		public String getImageURL(int pos){
+			if (pos >= mImageUrlList.size()){
+				return null;
+			}
+			
+			return mImageUrlList.get(pos);
+		}
+		
 		private void updateImageURL(String url){
 			if (url == null || url.length() < 1){
 				return ;

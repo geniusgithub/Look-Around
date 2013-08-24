@@ -8,10 +8,14 @@
    <string name="toast_register_fail">注册失败</string>  
    <string name="toast_login_fail">登录失败</string>  
    <string name="toast_getdata_fail">获取数据失败</string>  
-      <string name="toast_anylizedata_fail">解析数据失败</string> 
+   <string name="toast_anylizedata_fail">解析数据失败</string> 
    
    <string name="lookaround">随便看看</string>  
     
+   <string name="clect">收藏</string>
+   <string name="read_orign">阅读原文</string>
+      
+      
    <string name="setting">设置</string>
    <string name="back">返回</string>
    

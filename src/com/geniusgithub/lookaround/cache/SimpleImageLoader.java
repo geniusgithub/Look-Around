@@ -14,7 +14,6 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,42 +21,31 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class ImageLoader {
 
-	private MemoryCache memoryCache = new MemoryCache();
+public class SimpleImageLoader {
+
+
 	private AbstractFileCache fileCache;
-	private Map<ImageView, String> imageViews = Collections
-			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	// 线程池
 	private ExecutorService executorService;
 
-	public ImageLoader(Context context) {
+	public SimpleImageLoader(Context context) {
 		fileCache = new FileCache(context);
-		executorService = Executors.newFixedThreadPool(5);
+		executorService = Executors.newFixedThreadPool(1);
 	}
 
 	// 最主要的方法
-	public void DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache) {
+	public void DisplayImage(String url, ImageView imageView) {
 		if (url == null || url.length() < 1 || imageView == null){
 			return ;
 		}
-		
-		
-		imageViews.put(imageView, url);
-		// 先从内存缓存中查找
 
-		Bitmap bitmap = memoryCache.get(url);
-		if (bitmap != null)
-			imageView.setImageBitmap(bitmap);
-		else if (!isLoadOnlyFromCache){
-			
-			// 若没有的话则开启新线程加载图片
-			queuePhoto(url, imageView);
-		}
+		queuePhoto(url, imageView);
 	}
 
 	private void queuePhoto(String url, ImageView imageView) {
 		PhotoToLoad p = new PhotoToLoad(url, imageView);
+
 		executorService.submit(new PhotosLoader(p));
 	}
 
@@ -102,7 +90,7 @@ public class ImageLoader {
 			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
 			// Find the correct scale value. It should be the power of 2.
-			final int REQUIRED_SIZE = 120;
+			final int REQUIRED_SIZE = 360;
 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
 			Log.e("", "w = " + width_tmp + ", h = " + height_tmp);
 			int scale = 1;
@@ -144,12 +132,7 @@ public class ImageLoader {
 
 		@Override
 		public void run() {
-			if (imageViewReused(photoToLoad))
-				return;
 			Bitmap bmp = getBitmap(photoToLoad.url);
-			memoryCache.put(photoToLoad.url, bmp);
-			if (imageViewReused(photoToLoad))
-				return;
 			BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
 			// 更新的操作放在UI线程中
 			Activity a = (Activity) photoToLoad.imageView.getContext();
@@ -157,18 +140,6 @@ public class ImageLoader {
 		}
 	}
 
-	/**
-	 * 防止图片错位
-	 * 
-	 * @param photoToLoad
-	 * @return
-	 */
-	boolean imageViewReused(PhotoToLoad photoToLoad) {
-		String tag = imageViews.get(photoToLoad.imageView);
-		if (tag == null || !tag.equals(photoToLoad.url))
-			return true;
-		return false;
-	}
 
 	// 用于在UI线程中更新界面
 	class BitmapDisplayer implements Runnable {
@@ -181,17 +152,10 @@ public class ImageLoader {
 		}
 
 		public void run() {
-			if (imageViewReused(photoToLoad))
-				return;
 			if (bitmap != null)
 				photoToLoad.imageView.setImageBitmap(bitmap);
 	
 		}
-	}
-
-	public void clearCache() {
-		memoryCache.clear();
-		fileCache.clear();
 	}
 
 	public static void CopyStream(InputStream is, OutputStream os) {

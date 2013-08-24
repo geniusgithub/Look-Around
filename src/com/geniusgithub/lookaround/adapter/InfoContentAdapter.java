@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.cache.ImageLoader;
+import com.geniusgithub.lookaround.cache.ImageLoaderEx;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -24,13 +24,13 @@ public class InfoContentAdapter extends BaseAdapter{
 	private List<BaseType.InfoItem> data = new ArrayList<BaseType.InfoItem>();
 	private Context mContext;
 	private boolean mBusy = false;
-	private ImageLoader mImageLoader;
+	private ImageLoaderEx mImageLoader;
 	
 	public InfoContentAdapter(Context context, List<BaseType.InfoItem> data)
 	{
 		mContext = context;
 		this.data = data;
-		mImageLoader = new ImageLoader(context);
+		mImageLoader = new ImageLoaderEx(context);
 	}
 	
 	public void refreshData(List<BaseType.InfoItem> data)
@@ -40,7 +40,7 @@ public class InfoContentAdapter extends BaseAdapter{
 		
 	}
 	
-	public ImageLoader getImageLoader(){
+	public ImageLoaderEx getImageLoader(){
 		return mImageLoader;
 	}
 	

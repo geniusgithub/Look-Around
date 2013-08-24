@@ -7,7 +7,10 @@ import org.json.JSONException;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.adapter.InfoContentAdapter;
+import com.geniusgithub.lookaround.content.ContentActivity;
+import com.geniusgithub.lookaround.content.ContentCache;
 import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.model.BaseType.InfoItem;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
 import com.geniusgithub.lookaround.network.ClientEngine;
@@ -18,15 +21,19 @@ import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.widget.RefreshListView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class CommonFragmentEx extends CommonFragment implements InfoRequestProxy.IRequestResult,
-							RefreshListView.IOnRefreshListener, RefreshListView.IOnLoadMoreListener{
+public  class CommonFragmentEx extends CommonFragment implements InfoRequestProxy.IRequestResult,
+							RefreshListView.IOnRefreshListener, RefreshListView.IOnLoadMoreListener,
+							OnItemClickListener{
 
 	private BaseType.ListItem mTypeData;
 	public View mInvalidView;
@@ -94,6 +101,7 @@ public class CommonFragmentEx extends CommonFragment implements InfoRequestProxy
 		mListView.setAdapter(mAdapter);
 		mListView.setOnRefreshListener(this);
 		mListView.setOnLoadMoreListener(this);
+		mListView.setOnItemClickListener(this);
 		mInfoRequestProxy = new InfoRequestProxy(mContext, mTypeData, this);
 		
 		mHandler = new Handler(){
@@ -195,8 +203,24 @@ public class CommonFragmentEx extends CommonFragment implements InfoRequestProxy
 			mListView.onRefreshComplete();
 		}
 	}
+
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {
+
+		BaseType.InfoItem item = (InfoItem) adapter.getItemAtPosition(pos);
+		ContentCache.getInstance().setTypeItem(mTypeData);
+		ContentCache.getInstance().setInfoItem(item);
+		
+		goContentActivity();
+	}
 	
 
+	private void goContentActivity(){
+		Intent intent = new Intent();
+		intent.setClass(mContext, ContentActivity.class);
+		startActivity(intent);
+	}
 	
 	
 }
