@@ -41,16 +41,19 @@
         android:background="@drawable/selector_btn_right"/>
 
 	</RelativeLayout>
-
-    <ScrollView 
+	
+    <FrameLayout 
+        android:layout_width="fill_parent" 
+    	android:layout_height="fill_parent">
+       
+        <ScrollView 
         android:scrollbarThumbVertical="@drawable/scrollbar_handle_vertical" 
         android:focusable="true" 
         android:focusableInTouchMode="true" 
         android:visibility="visible" 
         android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" >    
-        
-        <LinearLayout 
+        android:layout_height="wrap_content" >           
+       		<LinearLayout 
             android:layout_width="fill_parent" 
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -58,73 +61,78 @@
             android:orientation="vertical">  
             
             
-            <TextView
-	        android:id="@+id/tv_title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="10dp"
-	        android:textSize="20sp" />
-            
-            <LinearLayout 
-            android:layout_width="fill_parent" 
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-               
-                <TextView
-		        android:id="@+id/tv_artist"
+	            <TextView
+		        android:id="@+id/tv_title"
 		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textSize="18sp" />
-                
-                <TextView
-		        android:id="@+id/tv_time"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="15dp"
-		        android:textSize="18sp" />
-            </LinearLayout>
-            
-            <View android:background="@color/black" android:layout_width="fill_parent" android:layout_height="1.0px" />
-                 
-            <ImageView
-                android:id="@+id/iv_content"
-		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="10dp"
-		        android:layout_marginBottom="15dp"
-		        android:src="@drawable/load_img">
-                
-            </ImageView>
+		        android:textSize="20sp" />
+	            
+	            <LinearLayout 
+	            android:layout_width="fill_parent" 
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dp">
+	               
+	                <TextView
+			        android:id="@+id/tv_artist"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="18sp" />
+	                
+	                <TextView
+			        android:id="@+id/tv_time"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="15dp"
+			        android:textSize="18sp" />
+	            </LinearLayout>
             
-           <View android:background="@color/black" android:layout_width="fill_parent" android:layout_height="1.0px" />
+            	<View android:background="@color/black" android:layout_width="fill_parent" android:layout_height="1.0px" />
+                 
+	            <ImageView
+	                android:id="@+id/iv_content"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="10dp"
+			        android:layout_marginBottom="15dp"
+			        android:src="@drawable/load_img">
+	                
+	            </ImageView>
+            
+           		<View android:background="@color/black" android:layout_width="fill_parent" android:layout_height="1.0px" />
              
-            <RelativeLayout 
-            android:layout_width="fill_parent" 
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-               
-                <TextView
-		        android:id="@+id/tv_source"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_centerVertical="true"
-		        android:text="来源:未知"
-		        android:textSize="18sp" />
+	            <RelativeLayout 
+	            android:layout_width="fill_parent" 
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dp">
+	               
+	                <TextView
+			        android:id="@+id/tv_source"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerVertical="true"
+			        android:text="来源:未知"
+			        android:textSize="18sp" />
+	                
+	                <Button
+			        android:id="@+id/btn_readorign"
+			        android:layout_width="100dp"
+			        android:layout_height="30dp"
+			        android:layout_marginRight="10dp"
+					android:layout_alignParentRight="true"
+			        android:layout_centerVertical="true"
+			        android:text="@string/read_orign"
+			        android:background="@drawable/selector_btn_white"/>
+	            </RelativeLayout>
                 
-                <Button
-		        android:id="@+id/btn_readorign"
-		        android:layout_width="100dp"
-		        android:layout_height="30dp"
-		        android:layout_marginRight="10dp"
-				android:layout_alignParentRight="true"
-		        android:layout_centerVertical="true"
-		        android:text="@string/read_orign"
-		        android:background="@drawable/selector_btn_white"/>
-            </RelativeLayout>
-                
-        </LinearLayout>   
-          
-    </ScrollView>
+       		 </LinearLayout>         
+   		 </ScrollView>
+   		 
+         <include layout="@layout/path_layout"/>
+   		 
+    </FrameLayout>
+
+   
     
 </LinearLayout>
 

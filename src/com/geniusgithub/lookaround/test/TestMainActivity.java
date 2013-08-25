@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.adapter.InfoContentAdapter;
@@ -70,6 +72,7 @@ public class TestMainActivity extends Activity implements OnClickListener,
 		mBtnGetinfo.setOnClickListener(this);
 		
 		mListView = (RefreshListView) findViewById(R.id.listview);
+		
 
 	}
 	

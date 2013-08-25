@@ -5,6 +5,7 @@ import java.net.NetworkInterface;
 import org.json.JSONException;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.animation.MyAnimations;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
 import com.geniusgithub.lookaround.model.PublicType.GetTypeList;
@@ -22,6 +23,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class TestProtocolActivity extends Activity implements OnClickListener, IRequestDataPacketCallback, IRequestContentCallback{
 
@@ -37,6 +40,13 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	
 	
 	private ClientEngine mClientEngine;
+	
+	
+	private boolean areButtonsShowing;
+	private RelativeLayout composerButtonsWrapper;
+	private ImageView composerButtonsShowHideButtonIcon;
+
+	private RelativeLayout composerButtonsShowHideButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	
 	private void setupViews(){
 		setContentView(R.layout.test_layout);
+		MyAnimations.initOffset(TestProtocolActivity.this);
 		
 		mBtnRegiste = (Button) findViewById(R.id.btnRegister);
 		mBtnLogin = (Button) findViewById(R.id.btnLogin);
@@ -75,10 +86,46 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnAbout.setOnClickListener(this);
 		mBtnGetinfo.setOnClickListener(this);
 		mBtnDelinfo.setOnClickListener(this);
+		
+		
+		composerButtonsWrapper = (RelativeLayout) findViewById(R.id.composer_buttons_wrapper);
+		composerButtonsShowHideButton = (RelativeLayout) findViewById(R.id.composer_buttons_show_hide_button);
+		composerButtonsShowHideButtonIcon = (ImageView) findViewById(R.id.composer_buttons_show_hide_button_icon);
+		composerButtonsShowHideButton.setOnClickListener(this);
 	}
 	
 	private void initData(){
 		mClientEngine=  ClientEngine.getInstance(this);
+		
+		areButtonsShowing = false;
+		
+		// 加号的动画
+		composerButtonsShowHideButton.startAnimation(MyAnimations.getRotateAnimation(0, 360, 200));
+		
+		// 给小图标设置点击事件
+		for (int i = 0; i < composerButtonsWrapper.getChildCount(); i++) {
+			final ImageView smallIcon = (ImageView) composerButtonsWrapper.getChildAt(i);
+			final int position = i;
+			smallIcon.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// 这里写各个item的点击事件
+					// 1.加号按钮缩小后消失 缩小的animation
+					// 2.其他按钮缩小后消失 缩小的animation
+					// 3.被点击按钮放大后消失 透明度渐变 放大渐变的animation
+					//composerButtonsShowHideButton.startAnimation(MyAnimations.getMiniAnimation(300));
+					composerButtonsShowHideButtonIcon.startAnimation(MyAnimations.getRotateAnimation(-225, 0, 300));
+					areButtonsShowing = !areButtonsShowing;
+					smallIcon.startAnimation(MyAnimations.getMaxAnimation(400));
+					for (int j = 0; j < composerButtonsWrapper.getChildCount(); j++) {
+						if (j != position) {
+							final ImageView smallIcon = (ImageView) composerButtonsWrapper.getChildAt(j);
+							smallIcon.startAnimation(MyAnimations.getMiniAnimation(300));
+						}
+					}
+				}
+			});
+		}
 	}
 
 	@Override
@@ -104,6 +151,9 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 				break;
 			case R.id.btnDelInfo:
 				delInfo();
+				break;
+			case R.id.composer_buttons_show_hide_button:
+				toggle();
 				break;
 		}
 	}
@@ -184,6 +234,22 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 //		mClientEngine.httpGetRequestEx(PublicType.DELETE_INFO_MSGID, object, this);
 	}
 
+	private void toggle(){
+		log.e("toggle areButtonsShowing = " + areButtonsShowing);
+		if (!areButtonsShowing) {
+			// 图标的动画
+			MyAnimations.startAnimationsIn(composerButtonsWrapper, 300);
+			// 加号的动画
+			composerButtonsShowHideButtonIcon.startAnimation(MyAnimations.getRotateAnimation(0, -225, 300));
+		} else {
+			// 图标的动画
+			MyAnimations.startAnimationsOut(composerButtonsWrapper, 300);
+			// 加号的动画
+			composerButtonsShowHideButtonIcon.startAnimation(MyAnimations.getRotateAnimation(-225, 0, 300));
+		}
+		areButtonsShowing = !areButtonsShowing;
+	}
+	
 	@Override
 	public void onSuccess(int requestAction, ResponseDataPacket dataPacket, Object extra) {
 		log.e("onSuccess! requestAction = " + requestAction + ", dataPacket ==> \n" + dataPacket.toString());
