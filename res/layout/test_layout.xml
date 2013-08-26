@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-   android:background="@drawable/default_homebg">
+       			xmlns:sat="http://schemas.android.com/apk/res/com.geniusgithub.lookaround"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:background="@drawable/default_homebg">
 
 	<LinearLayout 
     android:layout_width="match_parent"
@@ -54,6 +55,17 @@
 
 	</LinearLayout>
 
-	<include layout="@layout/path_layout"/>
+	
+    <android.view.ext.SatelliteMenu
+       android:id="@+id/SatelliteMenu"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_margin="8dp"
+       sat:satelliteDistance="170dp"
+       sat:mainImage="@drawable/ic_launcher"
+       sat:totalSpacingDegree="90"
+       sat:closeOnClick="true"
+       sat:expandDuration="500"/>
     
 </RelativeLayout>

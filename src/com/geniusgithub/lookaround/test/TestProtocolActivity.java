@@ -1,14 +1,26 @@
 package com.geniusgithub.lookaround.test;
 
-import java.net.NetworkInterface;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ext.SatelliteMenu;
+import android.view.ext.SatelliteMenu.SateliteClickedListener;
+import android.view.ext.SatelliteMenuItem;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.animation.MyAnimations;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
-import com.geniusgithub.lookaround.model.PublicType.GetTypeList;
 import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestContentCallback;
@@ -16,15 +28,6 @@ import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-
-import android.app.Activity;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 public class TestProtocolActivity extends Activity implements OnClickListener, IRequestDataPacketCallback, IRequestContentCallback{
 
@@ -37,17 +40,10 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	private Button mBtnAbout;
 	private Button mBtnGetinfo;
 	private Button mBtnDelinfo;
-	
-	
+		
 	private ClientEngine mClientEngine;
-	
-	
-	private boolean areButtonsShowing;
-	private RelativeLayout composerButtonsWrapper;
-	private ImageView composerButtonsShowHideButtonIcon;
 
-	private RelativeLayout composerButtonsShowHideButton;
-	
+	private SatelliteMenu SatelliteMenu; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -87,45 +83,30 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnGetinfo.setOnClickListener(this);
 		mBtnDelinfo.setOnClickListener(this);
 		
-		
-		composerButtonsWrapper = (RelativeLayout) findViewById(R.id.composer_buttons_wrapper);
-		composerButtonsShowHideButton = (RelativeLayout) findViewById(R.id.composer_buttons_show_hide_button);
-		composerButtonsShowHideButtonIcon = (ImageView) findViewById(R.id.composer_buttons_show_hide_button_icon);
-		composerButtonsShowHideButton.setOnClickListener(this);
+		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);	    
+		  
 	}
 	
 	private void initData(){
-		mClientEngine=  ClientEngine.getInstance(this);
-		
-		areButtonsShowing = false;
-		
-		// 加号的动画
-		composerButtonsShowHideButton.startAnimation(MyAnimations.getRotateAnimation(0, 360, 200));
-		
-		// 给小图标设置点击事件
-		for (int i = 0; i < composerButtonsWrapper.getChildCount(); i++) {
-			final ImageView smallIcon = (ImageView) composerButtonsWrapper.getChildAt(i);
-			final int position = i;
-			smallIcon.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// 这里写各个item的点击事件
-					// 1.加号按钮缩小后消失 缩小的animation
-					// 2.其他按钮缩小后消失 缩小的animation
-					// 3.被点击按钮放大后消失 透明度渐变 放大渐变的animation
-					//composerButtonsShowHideButton.startAnimation(MyAnimations.getMiniAnimation(300));
-					composerButtonsShowHideButtonIcon.startAnimation(MyAnimations.getRotateAnimation(-225, 0, 300));
-					areButtonsShowing = !areButtonsShowing;
-					smallIcon.startAnimation(MyAnimations.getMaxAnimation(400));
-					for (int j = 0; j < composerButtonsWrapper.getChildCount(); j++) {
-						if (j != position) {
-							final ImageView smallIcon = (ImageView) composerButtonsWrapper.getChildAt(j);
-							smallIcon.startAnimation(MyAnimations.getMiniAnimation(300));
-						}
-					}
-				}
-			});
-		}
+		mClientEngine=  ClientEngine.getInstance(this);	
+		   
+	
+        List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
+        items.add(new SatelliteMenuItem(4, R.drawable.ic_1));
+        items.add(new SatelliteMenuItem(4, R.drawable.ic_3));
+        items.add(new SatelliteMenuItem(4, R.drawable.ic_4));
+        items.add(new SatelliteMenuItem(3, R.drawable.ic_5));
+        items.add(new SatelliteMenuItem(2, R.drawable.ic_6));
+        items.add(new SatelliteMenuItem(1, R.drawable.ic_2));
+
+        SatelliteMenu.addItems(items);        
+        
+        SatelliteMenu.setOnItemClickedListener(new SateliteClickedListener() {
+			
+			public void eventOccured(int id) {
+				Log.e("sat", "Clicked on " + id);
+			}
+		});
 	}
 
 	@Override
@@ -151,9 +132,6 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 				break;
 			case R.id.btnDelInfo:
 				delInfo();
-				break;
-			case R.id.composer_buttons_show_hide_button:
-				toggle();
 				break;
 		}
 	}
@@ -234,21 +212,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 //		mClientEngine.httpGetRequestEx(PublicType.DELETE_INFO_MSGID, object, this);
 	}
 
-	private void toggle(){
-		log.e("toggle areButtonsShowing = " + areButtonsShowing);
-		if (!areButtonsShowing) {
-			// 图标的动画
-			MyAnimations.startAnimationsIn(composerButtonsWrapper, 300);
-			// 加号的动画
-			composerButtonsShowHideButtonIcon.startAnimation(MyAnimations.getRotateAnimation(0, -225, 300));
-		} else {
-			// 图标的动画
-			MyAnimations.startAnimationsOut(composerButtonsWrapper, 300);
-			// 加号的动画
-			composerButtonsShowHideButtonIcon.startAnimation(MyAnimations.getRotateAnimation(-225, 0, 300));
-		}
-		areButtonsShowing = !areButtonsShowing;
-	}
+
 	
 	@Override
 	public void onSuccess(int requestAction, ResponseDataPacket dataPacket, Object extra) {
