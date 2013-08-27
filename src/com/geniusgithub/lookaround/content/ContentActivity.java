@@ -15,6 +15,7 @@ import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -80,6 +81,7 @@ private static final CommonLog log = LogFactory.createLog();
 		mBtnBack.setOnClickListener(this);
 		mBtnCollect.setOnClickListener(this);
 		mBtnReadOrign.setOnClickListener(this);
+		mIVContent.setOnClickListener(this);
 		
 		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);	   
 	}
@@ -123,6 +125,9 @@ private static final CommonLog log = LogFactory.createLog();
 			case R.id.btn_readorign:
 				readOrign();
 				break;
+			case R.id.iv_content:
+				goPhoneView();
+				break;
 
 		}
 	}
@@ -134,6 +139,14 @@ private static final CommonLog log = LogFactory.createLog();
 	
 	private void readOrign(){
 		
+	}
+	
+	private void goPhoneView(){
+		log.e("goPhoneView ");
+		
+		Intent intent = new Intent();
+		intent.setClass(this, PictureBrowerActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
