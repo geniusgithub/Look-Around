@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.widget.phoneview;
+package com.geniusgithub.lookaround.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 
-public class MyImageView extends ImageView {
+public class ImageViewEx extends ImageView {
 	
 	// This is the base transformation which is used to show the image
 	// initially. The current computation for this shows the image in
@@ -52,14 +52,33 @@ public class MyImageView extends ImageView {
 
 	static final float SCALE_RATE = 1.25F;
 
-	public MyImageView(Context context, AttributeSet attrs) {
+	private boolean isDefaultBitmap = true;
+	private String url;
+	
+	public ImageViewEx(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
 
-	public MyImageView(Context context) {
+	public ImageViewEx(Context context) {
 		super(context);
 		init();
+	}
+	
+	public void setDefaultBitmapFlag(boolean flag){
+		isDefaultBitmap = flag;
+	}
+	
+	public boolean getDefaultBitmapFlag(){
+		return isDefaultBitmap;
+	}
+	
+	public void setURL(String u){
+		url = u;
+	}
+	
+	public String getURL(){
+		return url;
 	}
 
 	@Override
@@ -159,7 +178,7 @@ public class MyImageView extends ImageView {
 		return getValue(matrix, Matrix.MSCALE_X);
 	}
 
-	protected float getScale() {
+	public float getScale() {
 		return getScale(mSuppMatrix)*mMinZoom;
 	}
 	
@@ -231,7 +250,7 @@ public class MyImageView extends ImageView {
 		});
 	}
 
-	protected void zoomTo(float scale) {
+	public void zoomTo(float scale) {
 		float cx = getWidth() / 2F;
 		float cy = getHeight() / 2F;
 

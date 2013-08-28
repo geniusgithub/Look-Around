@@ -6,8 +6,13 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BaseType {
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
 
+import android.util.Log;
+
+public class BaseType {
+	private static final CommonLog log = LogFactory.createLog();
 	// ListItem
 	public static class ListItem implements IParseJson{
 
@@ -121,6 +126,7 @@ public class BaseType {
 		}
 		
 		private void updateImageURL(String url){
+		
 			if (url == null || url.length() < 1){
 				return ;
 			}

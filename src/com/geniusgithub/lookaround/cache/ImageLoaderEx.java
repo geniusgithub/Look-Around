@@ -14,32 +14,63 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
 
 public class ImageLoaderEx {
-
+	
+	
+	private static final CommonLog log = LogFactory.createLog();
 	private MemoryCache memoryCache = new MemoryCache();
 	private AbstractFileCache fileCache;
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	// 线程池
 	private ExecutorService executorService;
-
+	
+	private int requestSize = 120;
+	
+	private Bitmap mDefaultBitmap = null;
+	
+	private boolean mIsLoadLocalBitmapQuick = false;
+	
+	
+	
 	public ImageLoaderEx(Context context) {
 		fileCache = new FileCache(context);
 		executorService = Executors.newFixedThreadPool(5);
 	}
+	
+	public void setScaleParam(int request_size){
+		requestSize = request_size;
+		log.e("setScaleParam requestSize = " + requestSize);
+	}
+	
+	public void setLoadLocalBitmapQuick(boolean flag){
+		mIsLoadLocalBitmapQuick = flag;
+	}
+	
+	public void setDefaultBitmap(Drawable drawable){
+		if (drawable != null){
+			BitmapDrawable bd = (BitmapDrawable) drawable;
+			mDefaultBitmap = bd.getBitmap();
+		}
+	}
 
 	// 最主要的方法
-	public void DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache) {
+	public boolean DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache) {
 		if (url == null || url.length() < 1 || imageView == null){
-			return ;
+			return false;
 		}
 		
 		
@@ -47,13 +78,45 @@ public class ImageLoaderEx {
 		// 先从内存缓存中查找
 
 		Bitmap bitmap = memoryCache.get(url);
-		if (bitmap != null)
+		if (bitmap != null){
 			imageView.setImageBitmap(bitmap);
-		else if (!isLoadOnlyFromCache){
+			return true;	
+		}
 			
+		// 如果直接从缓存文件加载
+		if (mIsLoadLocalBitmapQuick){
+			File f = fileCache.getFile(url);
+			
+			// 先从文件缓存中查找是否有
+			Bitmap b = null;
+			if (f != null && f.exists()){
+				b = decodeFile(f);
+			}
+			if (b != null){
+				imageView.setImageBitmap(b);
+				return true;
+			}
+		}
+		if (mDefaultBitmap != null){
+			
+			imageView.setImageBitmap(mDefaultBitmap);
+		}
+		if (!isLoadOnlyFromCache){			
 			// 若没有的话则开启新线程加载图片
 			queuePhoto(url, imageView);
 		}
+		
+		return false;
+		
+	}
+	
+	public boolean syncLoadBitmap(String url, ImageView imageView){
+		if (url == null || url.length() < 1 || imageView == null){
+			return false;
+		}
+		
+		queuePhoto(url, imageView);
+		return true;
 	}
 
 	private void queuePhoto(String url, ImageView imageView) {
@@ -102,19 +165,21 @@ public class ImageLoaderEx {
 			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
 			// Find the correct scale value. It should be the power of 2.
-			final int REQUIRED_SIZE = 120;
+
 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
-			Log.e("", "w = " + width_tmp + ", h = " + height_tmp);
+		
 			int scale = 1;
 			while (true) {
-				if (width_tmp / 2 < REQUIRED_SIZE
-						|| height_tmp / 2 < REQUIRED_SIZE)
+				if (width_tmp / 2 < requestSize
+						|| height_tmp / 2 < requestSize)
 					break;
 				width_tmp /= 2;
 				height_tmp /= 2;
 				scale *= 2;
 			}
-		
+			
+			log.e("w = " + width_tmp + ", h = " + height_tmp + ", scale = " + scale);
+			
 			// decode with inSampleSize
 			BitmapFactory.Options o2 = new BitmapFactory.Options();
 			o2.inSampleSize = scale;
@@ -181,6 +246,7 @@ public class ImageLoaderEx {
 		}
 
 		public void run() {
+			log.e("BitmapDisplayer run...");
 			if (imageViewReused(photoToLoad))
 				return;
 			if (bitmap != null)

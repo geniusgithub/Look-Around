@@ -31,6 +31,7 @@ public class InfoContentAdapter extends BaseAdapter{
 		mContext = context;
 		this.data = data;
 		mImageLoader = new ImageLoaderEx(context);
+		mImageLoader.setDefaultBitmap(mContext.getResources().getDrawable(R.drawable.load_img));
 	}
 	
 	public void refreshData(List<BaseType.InfoItem> data)
@@ -148,13 +149,8 @@ public class InfoContentAdapter extends BaseAdapter{
 		int thumailImageCount = item.getThumnaiImageCount();
 		holder.tvImageCount.setText(String.valueOf(thumailImageCount));
 	
+		mImageLoader.DisplayImage(item.getThumnaiImageURL(0), holder.ivContent, mBusy);
 	
-		holder.ivContent.setImageResource(R.drawable.load_img);
-		if (!mBusy) {
-			mImageLoader.DisplayImage(item.getThumnaiImageURL(0), holder.ivContent, false);
-		} else {
-			mImageLoader.DisplayImage(item.getThumnaiImageURL(0),  holder.ivContent, true);		
-		}
 
 		return view;
 	}

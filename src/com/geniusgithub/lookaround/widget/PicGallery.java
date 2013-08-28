@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.widget.phoneview;
+package com.geniusgithub.lookaround.widget;
 
 import com.geniusgithub.lookaround.content.PictureBrowerActivity;
 
@@ -15,7 +15,7 @@ import android.widget.Gallery;
 public class PicGallery extends Gallery {
 
 	private GestureDetector gestureScanner;
-	private MyImageView imageView;
+	private ImageViewEx imageView;
 
 	public PicGallery(Context context) {
 		super(context);
@@ -40,8 +40,8 @@ public class PicGallery extends Gallery {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				View view = PicGallery.this.getSelectedView();
-				if (view instanceof MyImageView) {
-					imageView = (MyImageView) view;
+				if (view instanceof ImageViewEx) {
+					imageView = (ImageViewEx) view;
 
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 						baseValue = 0;
@@ -77,7 +77,7 @@ public class PicGallery extends Gallery {
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 		View view = PicGallery.this.getSelectedView();
-		if (view instanceof MyImageView) {
+		if (view instanceof ImageViewEx) {
 			
 			float xdistance = calXdistance(e1, e2);
 			float min_distance = PictureBrowerActivity.screenWidth / 4f;
@@ -88,7 +88,7 @@ public class PicGallery extends Gallery {
 				kEvent = KeyEvent.KEYCODE_DPAD_RIGHT;
 			}
 			
-			imageView = (MyImageView) view;
+			imageView = (ImageViewEx) view;
 
 			Matrix m = imageView.getImageMatrix();
 			m.getValues(v);
@@ -156,14 +156,14 @@ public class PicGallery extends Gallery {
 		case MotionEvent.ACTION_UP:
 			// 判断边界是否越界
 			View view = PicGallery.this.getSelectedView();
-			if (view instanceof MyImageView) {
+			if (view instanceof ImageViewEx) {
 				
 				if(kEvent != KEY_INVALID) { // 是否切换上一页或下一页
 					onKeyDown(kEvent, null);
 					kEvent = KEY_INVALID;
 				}
 				
-				imageView = (MyImageView) view;
+				imageView = (ImageViewEx) view;
 				float width = imageView.getScale() * imageView.getImageWidth();
 				float height = imageView.getScale()
 						* imageView.getImageHeight();
