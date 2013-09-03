@@ -6,16 +6,23 @@ import java.util.List;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
 import com.geniusgithub.lookaround.animation.MyAnimations;
 import com.geniusgithub.lookaround.cache.ImageLoaderEx;
 import com.geniusgithub.lookaround.cache.SimpleImageLoader;
+import com.geniusgithub.lookaround.datastore.DaoMaster;
+import com.geniusgithub.lookaround.datastore.DaoSession;
+import com.geniusgithub.lookaround.datastore.InfoItemDao;
+import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +57,12 @@ private static final CommonLog log = LogFactory.createLog();
 	
 	private SatelliteMenu SatelliteMenu; 
 	
+	
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private InfoItemDao infoItemDao;
+    private SQLiteDatabase db;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,6 +74,9 @@ private static final CommonLog log = LogFactory.createLog();
 
 	@Override
 	protected void onDestroy() {
+		
+		db.close();
+		
 		super.onDestroy();
 	}
 	
@@ -110,6 +126,18 @@ private static final CommonLog log = LogFactory.createLog();
 
         SatelliteMenu.addItems(items);        	        
         SatelliteMenu.setOnItemClickedListener(this);
+        
+        inidDataBase();
+	}
+	
+	private void inidDataBase(){
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "lookaround-db", null);
+        db = helper.getWritableDatabase();
+
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        infoItemDao = daoSession.getInfoItemDao();
+
 	}
 
 	@Override
@@ -134,6 +162,9 @@ private static final CommonLog log = LogFactory.createLog();
 	
 
 	private void collect(){
+		BaseType.InfoItemEx itemEx = new BaseType.InfoItemEx(mInfoItem, mTypeItem);
+		infoItemDao.insert(itemEx);
+		CommonUtil.showToast(R.string.toast_collect_success, this);
 		
 	}
 	

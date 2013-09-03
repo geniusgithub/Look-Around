@@ -9,7 +9,9 @@
    <string name="toast_login_fail">登录失败</string>  
    <string name="toast_getdata_fail">获取数据失败</string>  
    <string name="toast_anylizedata_fail">解析数据失败</string> 
-   
+   <string name="toast_collect_success">收藏成功</string> 
+      
+      
    <string name="lookaround">随便看看</string>  
     
    <string name="clect">收藏</string>

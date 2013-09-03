@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sat="http://schemas.android.com/apk/res/com.geniusgithub.lookaround"
+    android:orientation="vertical" 
+    android:background="@color/window_bg" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+
+   <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/map_top_bg">
+    
+   		<Button
+        android:id="@+id/btn_back"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:paddingLeft="5dp"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffff" 
+        android:text="@string/back"
+        android:background="@drawable/selector_btn_back"/>
+    
+        <TextView
+        android:id="@+id/tv_bartitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+       
+
+
+	</RelativeLayout>
+	
+    <FrameLayout 
+        android:layout_width="fill_parent" 
+    	android:layout_height="fill_parent">
+       
+		<ListView
+		    android:id="@+id/listview"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_marginLeft="10.0dip" 
+			android:layout_marginTop="10.0dip" 
+			android:layout_marginRight="10.0dip"
+			android:divider="@null"
+		    android:dividerHeight="5dp"
+		    android:cacheColorHint="@color/transparent"
+		    android:clickable="true"/>
+	    
+   		 
+    </FrameLayout>
+
+   
+    
+</LinearLayout>
+
+
+

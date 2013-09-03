@@ -38,7 +38,7 @@ public class DaoSession extends AbstractDaoSession {
         mInfoItemDaoConfig = daoConfigMap.get(InfoItemDao.class).clone();
         mInfoItemDaoConfig.initIdentityScope(type);
         mInfoItemDao = new InfoItemDao(mInfoItemDaoConfig, this);
-        registerDao(BaseType.InfoItem.class, mInfoItemDao);
+        registerDao(BaseType.InfoItemEx.class, mInfoItemDao);
 
 
     }

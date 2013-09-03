@@ -62,6 +62,7 @@
                 
                  <!--  我的收藏 	-->   
                 <LinearLayout 
+                    android:id="@+id/ll_mycollect"
                     style="@style/leba_bg_bottom_layout">
                     <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/collect" android:layout_weight="1.0" />
                     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>

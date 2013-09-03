@@ -80,60 +80,7 @@ public class BaseType {
 		public String mThumbnaiURL_STRING = "";
 		
 		public List<String> mImageUrlList = new ArrayList<String>();
-		public List<String> mThumbnaiURLList = new ArrayList<String>();
-		
-		
-		public InfoItem(){
-		}
-		
-		public InfoItem(String key, String title, String content, String time, String username){
-			mKeyID = key;
-			mTitle = title;
-			mContent = content;
-			mTime = time;
-			mUserName = username;
-		}
-		// javabean
-		public void setMKeyID(String key){
-			mKeyID = key;
-		}
-		
-		public String getMKeyID(){
-			return mKeyID;
-		}
-		
-		public void setMTitle(String title){
-			mTitle = title;
-		}
-		
-		public String getMTitle(){
-			return mTitle;
-		}
-		
-		public void setMContent(String content){
-			mContent = content;
-		}
-		
-		public String getMContent(){
-			return mContent;
-		}
-		
-		public void setMTime(String time){
-			mTime = time;
-		}
-		
-		public String getMTime(){
-			return mTime;
-		}
-		
-		public void setMUserName(String username){
-			mUserName = username;
-		}
-		
-		public String getMUserName(){
-			return mUserName;
-		}
-		// javabean
+		public List<String> mThumbnaiURLList = new ArrayList<String>();	
 		
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
@@ -178,7 +125,7 @@ public class BaseType {
 			return mImageUrlList.get(pos);
 		}
 		
-		private void updateImageURL(String url){
+		protected void updateImageURL(String url){
 		
 			if (url == null || url.length() < 1){
 				return ;
@@ -199,7 +146,7 @@ public class BaseType {
 			
 		}
 		
-		private void updateThumbnaiURL(String url){
+		protected void updateThumbnaiURL(String url){
 			if (url == null || url.length() < 1){
 				return ;
 			}
@@ -218,7 +165,7 @@ public class BaseType {
 			
 		}
 		
-		private void updateBannerType(){
+		protected void updateBannerType(){
 			boolean isHasContent = mContent.length() > 0 ? true : false;
 			boolean isHasThumail = mThumbnaiURLList.size() == 0 ? false : true;
 			mBannerType = -1;
@@ -237,5 +184,99 @@ public class BaseType {
 			}
 		}
 		
+	}
+	
+	
+	public static class InfoItemEx extends InfoItem{
+		
+			public ListItem mType = new ListItem();
+			
+			public InfoItemEx(InfoItem item, ListItem type){
+				mBannerType = item.mBannerType;
+				mKeyID = item.mKeyID;
+				mTitle = item.mTitle;
+				mContent = item.mContent;
+				mTime = item.mTime;
+				mCommentCount = item.mCommentCount;
+				mLinkCount = item.mLinkCount;
+				mUserName = item.mUserName;
+				mHeadPath = item.mHeadPath;
+				mImageURL_STRING = item.mImageURL_STRING;
+				mThumbnaiURL_STRING = item.mThumbnaiURL_STRING;
+				
+				updateImageURL(mImageURL_STRING);
+				updateThumbnaiURL(mThumbnaiURL_STRING);
+				updateBannerType();
+				
+				mType = type;
+ 			}
+			
+			
+			public InfoItemEx(String key,int bannerType, String title, String content, String time, String commentCount, 
+							String linkCount, String username, String headPath, String imageURL, String thumbnaiURL){
+				mKeyID = key;
+				mBannerType = bannerType;
+				mTitle = title;
+				mContent = content;
+				mTime = time;
+				mCommentCount = commentCount;
+				mLinkCount = linkCount;
+				mUserName = username;
+				mHeadPath = headPath;
+				mImageURL_STRING = imageURL;
+				mThumbnaiURL_STRING = thumbnaiURL;
+			}
+			
+			public InfoItemEx(){
+
+			}
+			
+			public void updateURLS(){
+				updateImageURL(mImageURL_STRING);
+				updateThumbnaiURL(mThumbnaiURL_STRING);
+				updateBannerType();
+			}
+			
+			// javabean
+			public void setMKeyID(String key){
+				mKeyID = key;
+			}
+			
+			public String getMKeyID(){
+				return mKeyID;
+			}
+			
+			public void setMTitle(String title){
+				mTitle = title;
+			}
+			
+			public String getMTitle(){
+				return mTitle;
+			}
+			
+			public void setMContent(String content){
+				mContent = content;
+			}
+			
+			public String getMContent(){
+				return mContent;
+			}
+			
+			public void setMTime(String time){
+				mTime = time;
+			}
+			
+			public String getMTime(){
+				return mTime;
+			}
+			
+			public void setMUserName(String username){
+				mUserName = username;
+			}
+			
+			public String getMUserName(){
+				return mUserName;
+			}
+			// javabean
 	}
 }

@@ -1,6 +1,10 @@
 package com.geniusgithub.lookaround.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
 import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.datastore.DaoSession;
@@ -36,8 +40,8 @@ private static final CommonLog log = LogFactory.createLog();
     private InfoItemDao infoItemDao;
     private SQLiteDatabase db;
     
-    private Cursor cursor;
-    
+    private InfoContentExAdapter mAdapter;
+	private List<BaseType.InfoItemEx> data = new ArrayList<BaseType.InfoItemEx>();
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,9 @@ private static final CommonLog log = LogFactory.createLog();
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
+
+		db.close();
+		
 		super.onDestroy();
 	}
 
@@ -66,6 +72,7 @@ private static final CommonLog log = LogFactory.createLog();
 		mBtnReset.setOnClickListener(this);
 
 		listView = (ListView) findViewById(R.id.listview);
+		listView.setOnItemClickListener(this);
 	}
 	
 	private void initData(){
@@ -77,33 +84,32 @@ private static final CommonLog log = LogFactory.createLog();
         daoSession = daoMaster.newSession();
         infoItemDao = daoSession.getInfoItemDao();
 
-        String idColumn = InfoItemDao.Properties.KEY_ID.columnName;
-        String titleColumn = InfoItemDao.Properties.KEY_TITLE.columnName;
-        String contentColumn = InfoItemDao.Properties.KEY_CONTENT.columnName;
-        String timeColumn = InfoItemDao.Properties.KEY_TIME.columnName;
-        String usernameColumn = InfoItemDao.Properties.KEY_USERNAME.columnName;
-        log.e("idColumn = " + idColumn + 
-        		",titleColumn = " + titleColumn + 
-        		",contentColumn = " + contentColumn + 
-        		",timeColumn = " + timeColumn + 
-        		",usernameColumn = " + usernameColumn);
 
-        String columns[] = infoItemDao.getAllColumns();
-        int size = columns.length;
-        String newColumns[] = new String[size + 1];
-        newColumns[0] = "_id";
-        for(int i = 0; i < size; i++){
-        	newColumns[i + 1] = columns[i];
-        }
-   
-        cursor = db.query(infoItemDao.getTablename(), newColumns, null, null, null, null, null);
-        String[] from = {idColumn, titleColumn};
-        int[] to = { android.R.id.text1, android.R.id.text2};
+        mAdapter = new InfoContentExAdapter(this, data);        
+        listView.setAdapter(mAdapter);
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor, from,
-                to);
-        
-        listView.setAdapter(adapter);
+    	data = infoItemDao.loadAll();
+    	log.e("data = "  + data + ",size = " + data.size());
+    	if (data.size() > 0){
+        	BaseType.InfoItemEx item = data.get(data.size() - 1);
+        	log.e("item = " + item);
+        	if (item != null){
+          		key = Integer.valueOf(item.mKeyID);
+        		mAdapter.refreshData(data);		
+        	}
+  
+    	}
+
+    
+	}
+	
+
+	
+	private void refreshData(){
+
+		data = infoItemDao.loadAll();
+		log.e("load all size = " + data.size());
+		mAdapter.refreshData(data);
 	}
 
 	@Override
@@ -118,12 +124,21 @@ private static final CommonLog log = LogFactory.createLog();
 		}
 	}
 	
+	int key = 10;	
 	private void add(){
+		BaseType.InfoItemEx item = new BaseType.InfoItemEx(String.valueOf(key), 0, "title", "content", "time", "commentCount",
+				"linkcount", "username", "headpath", "imageurl", "thuURL");
+		long id = infoItemDao.insert(item);
+		log.e("infoItemDao insert id = " + id);
+		key += 5;
 		
+		refreshData();
 	}
 	
 	private void reset(){
+		infoItemDao.deleteAll();
 		
+		refreshData();
 	}
 
 	@Override
@@ -132,7 +147,8 @@ private static final CommonLog log = LogFactory.createLog();
 		
 		infoItemDao.deleteByKey(item.mKeyID);
 	    Log.d("TestDaoActivity", "Deleted note, ID: " + item.mKeyID);
-	    cursor.requery();
+
+	    refreshData();
 	}
 
 }

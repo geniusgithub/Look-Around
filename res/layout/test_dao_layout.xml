@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:background="@drawable/default_homebg">
+
+	<LinearLayout 
+	android:id="@+id/ll_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    	<Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add" />
+
+    	<Button
+        android:id="@+id/btnReset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="reset" />
+
+	</LinearLayout>
+
+	    <ListView
+	    android:id="@+id/listview"
+	    android:layout_below="@id/ll_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:cacheColorHint="@color/transparent"
+	    android:clickable="true"/>
+    
+</RelativeLayout>

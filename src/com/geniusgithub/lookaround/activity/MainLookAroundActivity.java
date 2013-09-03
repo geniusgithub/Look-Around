@@ -21,6 +21,7 @@ import com.geniusgithub.lookaround.R.dimen;
 import com.geniusgithub.lookaround.R.drawable;
 import com.geniusgithub.lookaround.R.id;
 import com.geniusgithub.lookaround.R.layout;
+import com.geniusgithub.lookaround.activity.set.SettingActivity;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
