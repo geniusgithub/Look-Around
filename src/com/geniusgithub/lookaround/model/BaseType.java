@@ -82,6 +82,59 @@ public class BaseType {
 		public List<String> mImageUrlList = new ArrayList<String>();
 		public List<String> mThumbnaiURLList = new ArrayList<String>();
 		
+		
+		public InfoItem(){
+		}
+		
+		public InfoItem(String key, String title, String content, String time, String username){
+			mKeyID = key;
+			mTitle = title;
+			mContent = content;
+			mTime = time;
+			mUserName = username;
+		}
+		// javabean
+		public void setMKeyID(String key){
+			mKeyID = key;
+		}
+		
+		public String getMKeyID(){
+			return mKeyID;
+		}
+		
+		public void setMTitle(String title){
+			mTitle = title;
+		}
+		
+		public String getMTitle(){
+			return mTitle;
+		}
+		
+		public void setMContent(String content){
+			mContent = content;
+		}
+		
+		public String getMContent(){
+			return mContent;
+		}
+		
+		public void setMTime(String time){
+			mTime = time;
+		}
+		
+		public String getMTime(){
+			return mTime;
+		}
+		
+		public void setMUserName(String username){
+			mUserName = username;
+		}
+		
+		public String getMUserName(){
+			return mUserName;
+		}
+		// javabean
+		
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
 				
