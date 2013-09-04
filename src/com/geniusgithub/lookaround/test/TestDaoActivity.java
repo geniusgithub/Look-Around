@@ -127,7 +127,9 @@ private static final CommonLog log = LogFactory.createLog();
 	int key = 10;	
 	private void add(){
 		BaseType.InfoItemEx item = new BaseType.InfoItemEx(String.valueOf(key), 0, "title", "content", "time", "commentCount",
-				"linkcount", "username", "headpath", "imageurl", "thuURL");
+									"linkcount", "username", "sourceFrom",  "sourceUrl", 
+									"headpath", "imageurl", "thuURL");
+		
 		long id = infoItemDao.insert(item);
 		log.e("infoItemDao insert id = " + id);
 		key += 5;

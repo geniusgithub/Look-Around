@@ -86,8 +86,9 @@ public class InfoContentExAdapter extends BaseAdapter{
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
 
-		BaseType.InfoItem item = data.get(pos); 
+		BaseType.InfoItemEx item = data.get(pos); 
 		int type = item.mBannerType;
+	
 	
 		switch (type) {
 		case 0:
@@ -119,7 +120,8 @@ public class InfoContentExAdapter extends BaseAdapter{
 			holder = (ViewHolder0) view.getTag();
 		}
 		
-		BaseType.InfoItem item = data.get(pos);
+		BaseType.InfoItemEx item = data.get(pos);
+		
 		holder.tvTitle.setText(item.mTitle);
 		holder.tvContent.setText(item.mContent);
 		holder.tvArtist.setText(item.mUserName);
@@ -144,7 +146,7 @@ public class InfoContentExAdapter extends BaseAdapter{
 			holder = (ViewHolder1) view.getTag();
 		}
 		
-		BaseType.InfoItem item = data.get(pos);
+		BaseType.InfoItemEx  item = data.get(pos);
 		holder.tvTitle.setText(item.mTitle);
 		holder.tvContent.setText(item.mContent);
 		holder.tvArtist.setText(item.mUserName);
@@ -177,7 +179,7 @@ public class InfoContentExAdapter extends BaseAdapter{
 			holder = (ViewHolder2) view.getTag();
 		}
 		
-		BaseType.InfoItem item = data.get(pos);
+		BaseType.InfoItemEx item = data.get(pos);
 		holder.tvTitle.setText(item.mTitle);	
 		holder.tvArtist.setText(item.mUserName);
 				

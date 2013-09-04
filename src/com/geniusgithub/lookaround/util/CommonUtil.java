@@ -20,6 +20,10 @@ public class CommonUtil {
 		Toast.makeText(context, context.getString(stringID), Toast.LENGTH_SHORT).show();
 	}
 	
+	public static void showToast(String  text, Context context){
+		Toast.makeText(context,text, Toast.LENGTH_SHORT).show();
+	}
+	
 	public static boolean hasSDCard() {
 		String status = Environment.getExternalStorageState();
 		if (!status.equals(Environment.MEDIA_MOUNTED)) {

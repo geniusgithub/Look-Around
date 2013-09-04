@@ -15,6 +15,7 @@ public class SettingActivity extends Activity implements OnClickListener{
 
 	private Button mBtnBack;
 	private View mMyCollectView;
+	private View mAboutView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class SettingActivity extends Activity implements OnClickListener{
     	
     	mMyCollectView = findViewById(R.id.ll_mycollect);
     	mMyCollectView.setOnClickListener(this);
+    	mAboutView = findViewById(R.id.ll_about);
+    	mAboutView.setOnClickListener(this);
     }
     
     private void initData(){
@@ -49,12 +52,21 @@ public class SettingActivity extends Activity implements OnClickListener{
 			case R.id.ll_mycollect:
 				goCollectActivity();
 				break;
+			case R.id.ll_about:
+				goAboutActivity();
+				break;
 		}
 	}
 	
 	private void goCollectActivity(){
 		Intent intent = new Intent();
 		intent.setClass(this, CollectActivity.class);
+		startActivity(intent);
+	}
+	
+	private void goAboutActivity(){
+		Intent intent = new Intent();
+		intent.setClass(this, AboutActivity.class);
 		startActivity(intent);
 	}
 }

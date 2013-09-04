@@ -26,10 +26,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class CollectActivity extends Activity implements OnClickListener, OnItemClickListener{
+	
 	private static final CommonLog log = LogFactory.createLog();
 	private Button mBtnBack;
+	private Button mBtnClear;
+	private TextView mTVTitle;
 	private ListView mListView;
 
 	private InfoContentExAdapter mAdapter;	
@@ -68,6 +72,10 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
 	private void setupViews(){
     	mBtnBack = (Button) findViewById(R.id.btn_back);
     	mBtnBack.setOnClickListener(this);
+    	mBtnClear = (Button) findViewById(R.id.btn_right);
+    	mBtnClear.setOnClickListener(this);
+    	
+    	mTVTitle = (TextView) findViewById(R.id.tv_bartitle);
     	
     	mListView = (ListView) findViewById(R.id.listview);
     	mListView.setOnItemClickListener(this);
@@ -76,7 +84,6 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
     private void initData(){
     	
     	mAdapter = new InfoContentExAdapter(this, mContentData);
-    	
     	mListView.setAdapter(mAdapter);
     	
     	inidDataBase();
@@ -92,12 +99,18 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
         daoSession = daoMaster.newSession();
         infoItemDao = daoSession.getInfoItemDao();
 
+
 	}
 
 	private void refreshData(){
 
 		mContentData = infoItemDao.loadAll();
 		log.e("load all size = " + mContentData.size());
+//		int size = mContentData.size();
+//		for(int i = 0; i < size; i++){
+//			log.e("index = " + i + ", mContentData[0] = \n" + mContentData.get(i).toString());
+//		}
+		
 		mAdapter.refreshData(mContentData);
 	}
 
@@ -107,9 +120,13 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
 			case R.id.btn_back:
 				finish();
 				break;
+			case R.id.btn_right:
+				clear();
+				break;
 		}
 	}
 
+	
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {
@@ -120,7 +137,11 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
 		
 		goContentActivity();
 	}
-	
+
+	private void clear(){
+		infoItemDao.deleteAll();
+		refreshData();
+	}
 
 	private void goContentActivity(){
 		Intent intent = new Intent();
