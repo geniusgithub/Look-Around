@@ -62,7 +62,9 @@ public class BaseType {
 		public final static String KEY_COMMENTCOUNT = "commentCount";
 		public final static String KEY_LIKECOUNT = "likeCount";
 		public final static String KEY_USERNAME = "userName";
-		
+													
+		public final static String KEY_SOURCEFROM= "sourceFrom";
+		public final static String KEY_SOURCEURL= "sourceUrl";
 		public final static String KEY_HEADPATH = "headPath";
 		public final static String KEY_IMAGES = "images";
 		public final static String KEY_IMAGESTHUMBANIL = "imagesThumbnail";
@@ -76,6 +78,8 @@ public class BaseType {
 		public String mCommentCount = "";
 		public String mLinkCount = "";
 		public String mUserName = "";
+		public String mSourceFrom = "";
+		public String mSourceUrl = "";
 		public String mHeadPath = "";
 		public String mImageURL_STRING = "";
 		public String mThumbnaiURL_STRING = "";
@@ -95,6 +99,9 @@ public class BaseType {
 			mCommentCount = jsonObject.getString(KEY_COMMENTCOUNT);
 			mLinkCount = jsonObject.getString(KEY_LIKECOUNT);
 			mUserName = jsonObject.getString(KEY_USERNAME);
+			
+			mSourceFrom = jsonObject.getString(KEY_SOURCEFROM);
+			mSourceUrl = jsonObject.getString(KEY_SOURCEURL);		
 			
 			mHeadPath = jsonObject.getString(KEY_HEADPATH);
 			mImageURL_STRING = jsonObject.getString(KEY_IMAGES);
@@ -193,7 +200,7 @@ public class BaseType {
 	public static class InfoItemEx extends InfoItem{
 		
 			public ListItem mType = new ListItem();
-			
+	
 			public InfoItemEx(InfoItem item, ListItem type){
 				mBannerType = item.mBannerType;
 				mKeyID = item.mKeyID;
@@ -202,6 +209,8 @@ public class BaseType {
 				mTime = item.mTime;
 				mCommentCount = item.mCommentCount;
 				mLinkCount = item.mLinkCount;
+				mSourceFrom = item.mSourceFrom;
+				mSourceUrl = item.mSourceUrl;
 				mUserName = item.mUserName;
 				mHeadPath = item.mHeadPath;
 				mImageURL_STRING = item.mImageURL_STRING;
@@ -215,8 +224,10 @@ public class BaseType {
  			}
 			
 			
-			public InfoItemEx(String key,int bannerType, String title, String content, String time, String commentCount, 
-							String linkCount, String username, String headPath, String imageURL, String thumbnaiURL){
+			public InfoItemEx(String key,int bannerType, String title, String content, 
+								String time, String commentCount,  String linkCount, String username,
+								String sourceFrom, String sourceUrl, String headPath, String imageURL,
+								String thumbnaiURL){
 				mKeyID = key;
 				mBannerType = bannerType;
 				mTitle = title;
@@ -225,6 +236,8 @@ public class BaseType {
 				mCommentCount = commentCount;
 				mLinkCount = linkCount;
 				mUserName = username;
+				mSourceFrom = sourceFrom;
+				mSourceUrl = sourceUrl;
 				mHeadPath = headPath;
 				mImageURL_STRING = imageURL;
 				mThumbnaiURL_STRING = thumbnaiURL;
@@ -239,47 +252,24 @@ public class BaseType {
 				updateThumbnaiURL(mThumbnaiURL_STRING);
 				updateBannerType();
 			}
+		
 			
-			// javabean
-			public void setMKeyID(String key){
-				mKeyID = key;
+			public String toString(){
+				StringBuffer stringBuffer = new StringBuffer();
+				stringBuffer.append("mKeyID = " + mKeyID +
+									"\nmBannerType = " + mBannerType +
+									"\nmTitle = " + mTitle + 
+									"\nmContent = " + mContent + 
+									"\nmTime = " + mTime + 
+									"\nmCommentCount = " + mCommentCount + 
+									"\nmLinkCount = " + mLinkCount + 
+									"\nmUserName = " + mUserName + 
+									"\nmSourceFrom = " + mSourceFrom +
+									"\nmSourceUrl = " + mSourceUrl +
+									"\nmHeadPath = " + mHeadPath + 
+									"\nmImageURL_STRING = " + mImageURL_STRING + 
+									"\nmThumbnaiURL_STRING = " + mThumbnaiURL_STRING);
+				return stringBuffer.toString();
 			}
-			
-			public String getMKeyID(){
-				return mKeyID;
-			}
-			
-			public void setMTitle(String title){
-				mTitle = title;
-			}
-			
-			public String getMTitle(){
-				return mTitle;
-			}
-			
-			public void setMContent(String content){
-				mContent = content;
-			}
-			
-			public String getMContent(){
-				return mContent;
-			}
-			
-			public void setMTime(String time){
-				mTime = time;
-			}
-			
-			public String getMTime(){
-				return mTime;
-			}
-			
-			public void setMUserName(String username){
-				mUserName = username;
-			}
-			
-			public String getMUserName(){
-				return mUserName;
-			}
-			// javabean
 	}
 }

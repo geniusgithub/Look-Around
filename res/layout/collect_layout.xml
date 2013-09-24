@@ -28,14 +28,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:text="@string/collect"
         android:textColor="@color/white"
         android:textSize="20sp" />
        
-
+        <Button
+        android:id="@+id/btn_right"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="15dp"
+		android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffff" 
+        android:text="@string/clear"
+        android:background="@drawable/selector_btn_right"/>
 
 	</RelativeLayout>
 	
-    <FrameLayout 
+    <RelativeLayout 
         android:layout_width="fill_parent" 
     	android:layout_height="fill_parent">
        
@@ -52,7 +62,7 @@
 		    android:clickable="true"/>
 	    
    		 
-    </FrameLayout>
+    </RelativeLayout>
 
    
     

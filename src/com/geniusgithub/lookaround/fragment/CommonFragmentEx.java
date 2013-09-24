@@ -209,8 +209,10 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 	public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {
 
 		BaseType.InfoItem item = (InfoItem) adapter.getItemAtPosition(pos);
+		
+		BaseType.InfoItemEx itemEx = new BaseType.InfoItemEx(item, mTypeData);
 		ContentCache.getInstance().setTypeItem(mTypeData);
-		ContentCache.getInstance().setInfoItem(item);
+		ContentCache.getInstance().setInfoItem(itemEx);
 		
 		goContentActivity();
 	}

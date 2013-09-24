@@ -24,7 +24,7 @@ public class FileCache extends AbstractFileCache{
 	@Override
 	public String getCacheDir() {
 		
-		return FileManager.getSaveFilePath();
+		return FileManager.getCacheFileSavePath();
 	}
 
 }

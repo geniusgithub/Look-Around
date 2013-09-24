@@ -82,39 +82,31 @@
         <activity
             android:name="com.geniusgithub.lookaround.content.PictureBrowerActivity"
             android:label="@string/app_name" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
+        </activity>
+        
+       <activity
+            android:name="com.geniusgithub.lookaround.content.WebViewActivity"
+            android:label="@string/app_name" >
         </activity>
          
        <activity
             android:name="com.geniusgithub.lookaround.content.ContentActivity"
             android:label="@string/app_name" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
         </activity>
-        
 
-        
         <activity
             android:name="com.geniusgithub.lookaround.activity.set.SettingActivity"
             android:label="@string/app_name" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
         </activity>
         
-       <activity
+        <activity
             android:name="com.geniusgithub.lookaround.activity.set.CollectActivity"
             android:label="@string/app_name" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
+        </activity>
+        
+        <activity
+            android:name="com.geniusgithub.lookaround.activity.set.AboutActivity"
+            android:label="@string/app_name" >
         </activity>
         
         <activity

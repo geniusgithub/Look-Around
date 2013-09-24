@@ -12,7 +12,7 @@ public class ContentCache {
 	private static ContentCache mInstance;
 
 	private BaseType.ListItem mTypeItem = new BaseType.ListItem();
-	private BaseType.InfoItem mInfoItem = new BaseType.InfoItem();
+	private BaseType.InfoItemEx mInfoItem = new BaseType.InfoItemEx();
 	
 	public ContentCache(){
 		
@@ -34,11 +34,11 @@ public class ContentCache {
 		return mTypeItem;
 	}
 
-	public void setInfoItem(BaseType.InfoItem item){
+	public void setInfoItem(BaseType.InfoItemEx item){
 		mInfoItem = item;
 	}
 	
-	public BaseType.InfoItem getInfoItem(){
+	public BaseType.InfoItemEx getInfoItem(){
 		return mInfoItem;
 	}
 	

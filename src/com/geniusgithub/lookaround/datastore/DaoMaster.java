@@ -18,7 +18,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 */
 public class DaoMaster extends AbstractDaoMaster {
 	private static final CommonLog log = LogFactory.createLog();
-    public static final int SCHEMA_VERSION = 3;
+    public static final int SCHEMA_VERSION = 1;
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {

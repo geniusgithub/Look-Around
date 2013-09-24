@@ -59,6 +59,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	private TextView mTVBarTitle;
 	private TextView mTVTitle;
 	private TextView mTVArtist;
+	private TextView mTVContent;
 	private TextView mTVTime;
 	private TextView mTVSource;
 	private TextView mTVContent;
@@ -66,7 +67,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	
 
 	private BaseType.ListItem mTypeItem = new BaseType.ListItem();
-	private BaseType.InfoItem mInfoItem = new BaseType.InfoItem();
+	private BaseType.InfoItemEx mInfoItem = new BaseType.InfoItemEx();
 	
 	private SimpleImageLoader mImageLoader;
 	
@@ -77,6 +78,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
     private DaoSession daoSession;
     private InfoItemDao infoItemDao;
     private SQLiteDatabase db;
+    private boolean isCollect = false;
 	
     
     private FileCache fileCache = new FileCache(this);
@@ -107,6 +109,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		mTVBarTitle = (TextView) findViewById(R.id.tv_bartitle);
 		mTVTitle = (TextView) findViewById(R.id.tv_title);
 		mTVArtist = (TextView) findViewById(R.id.tv_artist);
+		mTVContent = (TextView) findViewById(R.id.tv_content);
 		mTVTime = (TextView) findViewById(R.id.tv_time);
 		mTVSource = (TextView) findViewById(R.id.tv_source);
 		mIVContent = (ImageView) findViewById(R.id.iv_content);
@@ -130,9 +133,12 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		mTypeItem = mContentCache.getTypeItem();
 		mInfoItem = mContentCache.getInfoItem();
 		
+		log.e("infoItem --> \n" + mInfoItem.toString());
+		
 		mTVBarTitle.setText(mTypeItem.mTitle);
 		mTVTitle.setText(mInfoItem.mTitle);
 		mTVArtist.setText(mInfoItem.mUserName);
+		mTVContent.setText(mInfoItem.mContent);
 		mTVTime.setText(mInfoItem.mTime);
 		mTVContent.setText(mInfoItem.mContent);
 		
@@ -160,6 +166,10 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
         daoSession = daoMaster.newSession();
         infoItemDao = daoSession.getInfoItemDao();
 
+        isCollect = infoItemDao.isCollect(mInfoItem);
+        if (isCollect){
+        	mBtnCollect.setVisibility(View.GONE);
+        }
 	}
 
 	@Override
@@ -173,7 +183,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 				collect();
 				break;
 			case R.id.btn_readorign:
-				readOrign();
+				goWebviewActivity();
 				break;
 			case R.id.iv_content:
 				goPhoneView();
@@ -184,14 +194,18 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	
 
 	private void collect(){
-		BaseType.InfoItemEx itemEx = new BaseType.InfoItemEx(mInfoItem, mTypeItem);
-		infoItemDao.insert(itemEx);
+		infoItemDao.insert(mInfoItem);
 		CommonUtil.showToast(R.string.toast_collect_success, this);
-		
+		mBtnCollect.setVisibility(View.GONE);
 	}
 	
-	private void readOrign(){
+	private void goWebviewActivity(){
+		log.e("goWebviewActivity ");
 		
+		Intent intent = new Intent();
+		intent.setClass(this, WebViewActivity.class);
+		intent.putExtra(WebViewActivity.INTENT_EXTRA_URL, mInfoItem.mSourceUrl);
+		startActivity(intent);
 	}
 	
 	private void goPhoneView(){

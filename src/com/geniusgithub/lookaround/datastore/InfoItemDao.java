@@ -34,9 +34,11 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
         public final static Property KEY_COMMENTCOUNT = new Property(5, String.class, BaseType.InfoItem.KEY_COMMENTCOUNT, false, BaseType.InfoItem.KEY_COMMENTCOUNT);
         public final static Property KEY_LIKECOUNT = new Property(6, String.class, BaseType.InfoItem.KEY_LIKECOUNT, false, BaseType.InfoItem.KEY_LIKECOUNT);
         public final static Property KEY_USERNAME = new Property(7, String.class, BaseType.InfoItem.KEY_USERNAME, false, BaseType.InfoItem.KEY_USERNAME);  
-        public final static Property KEY_HEADPATH = new Property(8, String.class, BaseType.InfoItem.KEY_HEADPATH, false, BaseType.InfoItem.KEY_HEADPATH);       
-        public final static Property KEY_IMAGES = new Property(9, String.class, BaseType.InfoItem.KEY_IMAGES, false, BaseType.InfoItem.KEY_IMAGES);       
-        public final static Property KEY_IMAGESTHUMBANIL = new Property(10, String.class, BaseType.InfoItem.KEY_IMAGESTHUMBANIL, false, BaseType.InfoItem.KEY_IMAGESTHUMBANIL);       
+        public final static Property KEY_SOURCEFROM = new Property(8, String.class, BaseType.InfoItem.KEY_SOURCEFROM, false, BaseType.InfoItem.KEY_SOURCEFROM);
+        public final static Property KEY_SOURCEURL = new Property(9, String.class, BaseType.InfoItem.KEY_SOURCEURL, false, BaseType.InfoItem.KEY_SOURCEURL);
+        public final static Property KEY_HEADPATH = new Property(10, String.class, BaseType.InfoItem.KEY_HEADPATH, false, BaseType.InfoItem.KEY_HEADPATH);       
+        public final static Property KEY_IMAGES = new Property(11, String.class, BaseType.InfoItem.KEY_IMAGES, false, BaseType.InfoItem.KEY_IMAGES);       
+        public final static Property KEY_IMAGESTHUMBANIL = new Property(12, String.class, BaseType.InfoItem.KEY_IMAGESTHUMBANIL, false, BaseType.InfoItem.KEY_IMAGESTHUMBANIL);       
     };
     
 	
@@ -60,6 +62,8 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
 	                "'time' TEXT," + 
 	                "'commentCount' TEXT," + 
 	                "'likeCount' TEXT," + 
+	                "'sourceFrom' TEXT," +
+	                "'sourceUrl' TEXT," + 
 	                "'userName' TEXT," + 
 	                "'headPath' TEXT," + 
 	                "'images' TEXT," + 
@@ -78,17 +82,19 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
         stmt.clearBindings();
  
 
-        stmt.bindString(1, entity.getMKeyID());  
+        stmt.bindString(1, entity.mKeyID);  
         stmt.bindLong(2, entity.mBannerType);  
-        stmt.bindString(3, entity.getMTitle());
-        stmt.bindString(4, entity.getMContent());  
-        stmt.bindString(5, entity.getMTime());
+        stmt.bindString(3, entity.mTitle);
+        stmt.bindString(4, entity.mContent);  
+        stmt.bindString(5, entity.mTime);
         stmt.bindString(6, entity.mCommentCount);
         stmt.bindString(7, entity.mLinkCount);
-        stmt.bindString(8, entity.getMUserName());
-        stmt.bindString(9, entity.mHeadPath);
-        stmt.bindString(10, entity.mImageURL_STRING);
-        stmt.bindString(11, entity.mThumbnaiURL_STRING);
+        stmt.bindString(8, entity.mUserName);
+        stmt.bindString(9, entity.mSourceFrom);
+        stmt.bindString(10, entity.mSourceUrl);
+        stmt.bindString(11, entity.mHeadPath);
+        stmt.bindString(12, entity.mImageURL_STRING);
+        stmt.bindString(13, entity.mThumbnaiURL_STRING);
  
     }
 
@@ -111,34 +117,41 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
 											            cursor.getString(offset + 7),
 											            cursor.getString(offset + 8),
 											            cursor.getString(offset + 9),
-											            cursor.getString(offset + 10)
+											            cursor.getString(offset + 10),
+											            cursor.getString(offset + 11),
+											            cursor.getString(offset + 12)
     													);
 
+    	entity.updateURLS();
+    	
         return entity;
     }
      
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, BaseType.InfoItemEx entity, int offset) {
-        entity.setMKeyID(cursor.getString(offset + 0));
+        entity.mKeyID = cursor.getString(offset + 0);
         entity.mBannerType = cursor.getInt(offset + 1);
-        entity.setMTitle(cursor.getString(offset + 2));
-        entity.setMContent(cursor.getString(offset +3));
-        entity.setMTime(cursor.getString(offset + 4));
+        entity.mTitle = cursor.getString(offset + 2);
+        entity.mContent = cursor.getString(offset +3);
+        entity.mTime =  cursor.getString(offset + 4);
         entity.mCommentCount = cursor.getString(offset + 5);
         entity.mLinkCount = cursor.getString(offset + 6);
-        entity.setMUserName( cursor.getString(offset + 7));
-        entity.mHeadPath = cursor.getString(offset + 8);
-        entity.mImageURL_STRING = cursor.getString(offset + 9);
-        entity.mThumbnaiURL_STRING = cursor.getString(offset + 10);
+        entity.mUserName =  cursor.getString(offset + 7);
+        entity.mSourceFrom =  cursor.getString(offset + 8);
+        entity.mSourceUrl =  cursor.getString(offset + 9);
+        entity.mHeadPath = cursor.getString(offset + 10);
+        entity.mImageURL_STRING = cursor.getString(offset + 11);
+        entity.mThumbnaiURL_STRING = cursor.getString(offset + 12);
       
+    	entity.updateURLS();
     }
     
  
 
 	@Override
 	protected String getKey(BaseType.InfoItemEx entity) {
-		return entity.getMKeyID();
+		return entity.mKeyID;
 	}
 
 	@Override
@@ -149,8 +162,13 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
 	@Override
 	protected String updateKeyAfterInsert(BaseType.InfoItemEx entity, long rowId) {
 
-		return entity.getMKeyID();
+		return entity.mKeyID;
 	}
 	
 
+	public boolean isCollect(BaseType.InfoItemEx item){
+		BaseType.InfoItemEx itemEx = load(item.mKeyID);
+		
+		return itemEx != null ? true : false;
+	}
 }

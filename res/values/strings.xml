@@ -10,12 +10,19 @@
    <string name="toast_getdata_fail">获取数据失败</string>  
    <string name="toast_anylizedata_fail">解析数据失败</string> 
    <string name="toast_collect_success">收藏成功</string> 
-      
-      
+   <string name="toast_save_fail">未检测到SD卡，保存失败</string> 
+   <string name="toast_save_success">保存成功 </string>
+   <string name="toast_save_fail2">保存失败</string>
+   <string name="toast_savefile_end">文件保存在</string>
+   
+   
    <string name="lookaround">随便看看</string>  
     
    <string name="clect">收藏</string>
+   <string name="clear">清空</string>
+   <string name="save">保存</string>
    <string name="read_orign">阅读原文</string>
+   <string name="page">网页</string>
       
       
    <string name="setting">设置</string>
@@ -27,7 +34,9 @@
    <string name="clear_cache">清除缓存</string>
    <string name="grade">给应用加分</string>
    <string name="check_update">检查更新</string>
-   <string name="about">关于</string>  
+   <string name="about">关于</string>
+   
+   <string name="about_content">暂时没有介绍哦 </string>  
    
    <string name="dangerous">保险库</string>  
    

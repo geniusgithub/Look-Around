@@ -1,6 +1,7 @@
 package com.geniusgithub.lookaround.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,6 +21,8 @@ import java.util.zip.ZipOutputStream;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
@@ -318,6 +321,97 @@ public class FileHelper {
 		return false;
 	}
 	
+	public static boolean copyFile(String fromPath, String destUri) {
+		if (null == fromPath || fromPath.length() < 1 || null == destUri || destUri.length() < 1) {
+			log.e("copyFile Invalid param. fromPath="+fromPath+", destUri="+destUri);
+			return false;
+		}
+		
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			is = new FileInputStream(fromPath);
+			if (null == is) {
+				log.e("Failed to open inputStream: "+fromPath+"->"+destUri);
+				return false;
+			}
+			
+			// check output uri
+			String path = null;
+			Uri uri = null;
+			
+			String lwUri = destUri.toLowerCase();
+			if (lwUri.startsWith("content://")) {
+				uri = Uri.parse(destUri);
+			} else if (lwUri.startsWith("file://")) {
+				uri = Uri.parse(destUri);
+				path = uri.getPath();
+			} else {
+				path = destUri;
+			}
+			
+			// open output 
+			if (null != path) {
+				File fl = new File(path);
+	            String pth = path.substring(0, path.lastIndexOf("/"));
+	            File pf = new File(pth);
+	            
+	            if (pf.exists() && !pf.isDirectory()) {
+	            	pf.delete();
+	            }
+	            
+	            pf = new File(pth+File.separator);
+	            
+	            if (!pf.exists()) {
+	                if (!pf.mkdirs()) {
+	                    log.e("Can't make dirs, path=" + pth);
+	                }
+	            }
+	            
+	            pf = new File(path);
+	            if (pf.exists()) {
+	            	if (pf.isDirectory()) deleteDirectory(path);
+	            	else pf.delete();
+	            }
+	            
+				os = new FileOutputStream(path);
+				fl.setLastModified(System.currentTimeMillis());
+			} else{
+				return false;
+			}
+
+			
+			
+			// copy file
+			byte[] dat = new byte[1024];
+			int i = is.read(dat);
+			while(-1 != i) {
+				os.write(dat, 0, i);
+				i = is.read(dat);
+			}
+			
+			is.close();
+			is = null;
+			
+			os.flush();
+			os.close();
+			os = null;
+			
+			return true;
+			
+		} catch(Exception ex) {
+			log.e("Exception, ex: " + ex.toString());
+		} finally {
+			if(null != is) {
+				try{is.close();} catch(Exception ex) {};
+			}
+			if(null != os) {
+				try{os.close();} catch(Exception ex) {};
+			}
+		}
+		return false;
+	}
+	
 	public static byte[] readAll(InputStream is) throws Exception {
     	ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
 		byte[] buf = new byte[1024];
@@ -409,6 +503,37 @@ public class FileHelper {
 		}
 		return false;
 	}
+	
+	  public  static boolean saveBitmap(String sourcPath, String savePath){
+		  if (sourcPath == null || savePath == null){
+	    		return false;
+	      }
+		  
+		  Bitmap bm = BitmapFactory.decodeFile(sourcPath);
+		  return saveBitmap(bm, savePath);
+	  }
+	
+	
+    public  static boolean saveBitmap(Bitmap bm, String savePath) {  
+    	if (bm == null || savePath == null){
+    		return false;
+    	}
+    	
+    	savePath += ".jpg";
+    	log.e("saveBitmap to : " + savePath);
+        BufferedOutputStream bos;
+		try {
+			bos = new BufferedOutputStream(new FileOutputStream(savePath));
+			 bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);  
+		     bos.flush();  
+		     bos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}  
+       
+		return true;  
+    }  
 	
 	/*************ZIP file operation***************/
 	public static boolean readZipFile(String zipFileName, StringBuffer crc) {
