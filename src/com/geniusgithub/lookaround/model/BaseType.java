@@ -66,6 +66,7 @@ public class BaseType {
 		public final static String KEY_HEADPATH = "headPath";
 		public final static String KEY_IMAGES = "images";
 		public final static String KEY_IMAGESTHUMBANIL = "imagesThumbnail";
+		public final static String KEY_SOURCEURL = "sourceUrl";
 		
 		public int mBannerType = 0;
 		public String mKeyID = "";
@@ -78,6 +79,7 @@ public class BaseType {
 		public String mHeadPath = "";
 		public String mImageURL_STRING = "";
 		public String mThumbnaiURL_STRING = "";
+		public String mSourceUrl = "";
 		
 		public List<String> mImageUrlList = new ArrayList<String>();
 		public List<String> mThumbnaiURLList = new ArrayList<String>();	
@@ -97,6 +99,7 @@ public class BaseType {
 			mHeadPath = jsonObject.getString(KEY_HEADPATH);
 			mImageURL_STRING = jsonObject.getString(KEY_IMAGES);
 			mThumbnaiURL_STRING = jsonObject.getString(KEY_IMAGESTHUMBANIL);
+			mSourceUrl = jsonObject.getString(KEY_SOURCEURL);
 			updateImageURL(mImageURL_STRING);
 			updateThumbnaiURL(mThumbnaiURL_STRING);
 			updateBannerType();
