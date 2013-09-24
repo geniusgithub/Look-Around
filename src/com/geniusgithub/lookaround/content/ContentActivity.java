@@ -62,7 +62,6 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	private TextView mTVContent;
 	private TextView mTVTime;
 	private TextView mTVSource;
-	private TextView mTVContent;
 	private ImageView mIVContent;
 	
 
