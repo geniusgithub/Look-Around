@@ -112,7 +112,6 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		mTVTime = (TextView) findViewById(R.id.tv_time);
 		mTVSource = (TextView) findViewById(R.id.tv_source);
 		mIVContent = (ImageView) findViewById(R.id.iv_content);
-		mTVContent = (TextView) findViewById(R.id.tv_content);
 		
 		mBtnBack.setOnClickListener(this);
 		mBtnCollect.setOnClickListener(this);

@@ -23,27 +23,23 @@
 	    
 	   		<Button
 	        android:id="@+id/btn_back"
-	        android:layout_width="60dp"
-	        android:layout_height="30dp"
-	        android:layout_marginLeft="15dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
 	        android:paddingLeft="5dp"
 	        android:layout_centerVertical="true"
-	        android:textColor="#ffffff" 
-	        android:text="@string/back"
 	        android:background="@drawable/selector_btn_back"/>
 	    
 
 	       
 	        <Button
 	        android:id="@+id/btn_right"
-	        android:layout_width="60dp"
-	        android:layout_height="30dp"
-	        android:layout_marginRight="15dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="5dp"
 			android:layout_alignParentRight="true"
 	        android:layout_centerVertical="true"
-	        android:textColor="#ffffff" 
-	        android:text="@string/save"
-	        android:background="@drawable/selector_btn_right"/>
+	        android:background="@drawable/selector_btn_save"/>
 	
 		</RelativeLayout>
 		

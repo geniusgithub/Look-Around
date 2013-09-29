@@ -12,7 +12,7 @@
       android:layout_height="wrap_content"  
       android:gravity="center"
       android:text="查看更多" 
-      android:textColor="@color/blue"
+      android:textColor="@color/black"
       android:textSize="20sp"/> 
       
   <LinearLayout

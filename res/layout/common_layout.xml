@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#eeeeee">
+    android:background="@color/window_bg">
 
  
     <FrameLayout
@@ -31,6 +31,7 @@
  		        android:layout_centerInParent="true"
 	            android:indeterminateDrawable="@drawable/progressbar"/>
         </RelativeLayout>
+  
         
         <RelativeLayout
             android:id="@+id/content_view"
@@ -40,13 +41,14 @@
 		    android:id="@+id/listview"
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
-		    android:layout_marginLeft="10.0dip" 
+		    android:paddingLeft="10.0dip" 
 			android:layout_marginTop="10.0dip" 
-			android:layout_marginRight="10.0dip"
+			android:paddingRight="10.0dip"
 			android:divider="@null"
 		    android:dividerHeight="5dp"
 		    android:cacheColorHint="@color/transparent"
-		    android:clickable="true"/>
+		    android:clickable="true"
+		    android:listSelector="@drawable/selector_content_item"/>
         </RelativeLayout>
        
     </FrameLayout>

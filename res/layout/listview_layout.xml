@@ -27,14 +27,15 @@
     android:id="@+id/listview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginLeft="10.0dip" 
-	android:layout_marginTop="10.0dip" 
-	android:layout_marginRight="10.0dip"
-    android:divider="@null"
+    android:layout_marginLeft="2.0dip" 
+	android:layout_marginRight="2.0dip"
+    android:divider="@drawable/divider_line"
     android:dividerHeight="5dp"
     android:cacheColorHint="@color/transparent"
     android:scrollbars="none"
-    android:clickable="true"/>
+    android:clickable="true"
+    android:listSelector="@drawable/selector_nav_item"
+   />
     
 
 </LinearLayout>

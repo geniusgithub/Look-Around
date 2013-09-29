@@ -14,13 +14,10 @@
     
    		<Button
         android:id="@+id/btn_back"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
-        android:paddingLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
-        android:textColor="#ffffff" 
-        android:text="@string/back"
         android:background="@drawable/selector_btn_back"/>
     
         <TextView
@@ -29,19 +26,17 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/collect"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp" />
        
         <Button
         android:id="@+id/btn_right"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
 		android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:textColor="#ffffff" 
-        android:text="@string/clear"
-        android:background="@drawable/selector_btn_right"/>
+        android:background="@drawable/selector_btn_del"/>
 
 	</RelativeLayout>
 	

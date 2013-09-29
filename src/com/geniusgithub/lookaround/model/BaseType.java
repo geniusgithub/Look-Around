@@ -104,7 +104,7 @@ public class BaseType {
 			mHeadPath = jsonObject.getString(KEY_HEADPATH);
 			mImageURL_STRING = jsonObject.getString(KEY_IMAGES);
 			mThumbnaiURL_STRING = jsonObject.getString(KEY_IMAGESTHUMBANIL);
-			mSourceUrl = jsonObject.getString(KEY_SOURCEURL);
+
 			updateImageURL(mImageURL_STRING);
 			updateThumbnaiURL(mThumbnaiURL_STRING);
 			updateBannerType();

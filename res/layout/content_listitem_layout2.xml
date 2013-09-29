@@ -3,9 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:minHeight="40dp"
-    android:background="@drawable/list_item_background">
+    android:background="@drawable/selector_content_item"
+    android:padding="10dp">
     
-    
+
   	<LinearLayout
   	 android:id="@+id/ll_title"
      android:layout_width="fill_parent"
