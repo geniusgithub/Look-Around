@@ -21,6 +21,7 @@ import com.geniusgithub.lookaround.datastore.InfoItemDao;
 import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.network.ClientEngine;
+import com.geniusgithub.lookaround.test.TestShareActivity;
 import com.geniusgithub.lookaround.test.TestWeiboActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
@@ -290,7 +291,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 
 	private void goShareActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, ShareActivity.class);
+		intent.setClass(this, TestShareActivity.class);
 		startActivity(intent);
 	}
 

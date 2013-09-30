@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/window_bg" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+
+    <RelativeLayout 
+    android:id="@+id/rl_top"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/map_top_bg">
+    
+   		<Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/selector_btn_cancel"/>
+    
+        <TextView
+        android:id="@+id/tv_bartitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="分享至微博" />
+       
+        <Button
+        android:id="@+id/btn_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+		android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/selector_btn_complete"/>
+
+	</RelativeLayout>
+	       
+    <LinearLayout 
+        android:id="@+id/ll_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+      
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/link_icon">            
+        </ImageView>
+        
+        <TextView
+        android:id="@+id/tv_target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/silver"
+        android:textSize="16sp"
+        android:text="受折磨的灵魂" />
+          
+    </LinearLayout>
+  
+    
+   <RelativeLayout 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent"
+        android:layout_above="@id/ll_bottom"
+        android:layout_below="@id/rl_top"
+        android:layout_margin="10dp"
+        android:background="@drawable/sharekey_info_bg">
+
+        <EditText
+        android:id="@+id/et_content"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent"
+        android:gravity="left|top"
+        android:background="@null">            
+        </EditText>
+        
+        <FrameLayout
+        android:id="@+id/fl_phoneframe"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp">
+   
+	        <ImageView
+	        android:id="@+id/iv_pic"
+	        android:layout_width="100dp" 
+	        android:layout_height="120dp"
+	        android:src="@drawable/default_homebg"
+	        android:background="@drawable/share_tb_back" 
+	    	android:scaleType="centerInside"    
+	        android:paddingTop="5dp"/>
+
+	        <ImageView
+	        android:layout_width="100dp" 
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/pin" />         
+	        
+	      
+        </FrameLayout>       
+          
+        <Button
+            android:id="@+id/btn_cancelimage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_alignRight="@id/fl_phoneframe"
+			android:layout_alignBottom="@id/fl_phoneframe"
+	        android:background="@drawable/img_cancel"/>
+   
+        <TextView
+        android:id="@+id/tv_live"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/silver"
+        android:textSize="16sp"
+        android:text="您还可以输入50字" />
+         
+    </RelativeLayout>
+    
+</RelativeLayout>
+
+
+
