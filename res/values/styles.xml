@@ -13,9 +13,12 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="@style/Theme.Sherlock.Light">
+    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
     </style>
-
+            
+     <style name="MainTheme" parent="@style/Theme.Sherlock.Light">
+          <item name="android:windowNoTitle">true</item> 
+    </style>
     
     <style name="NavigationTextStyle" >
       <item name="android:textSize">16sp</item>
