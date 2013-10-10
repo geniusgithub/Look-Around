@@ -2,6 +2,8 @@ package com.geniusgithub.lookaround.test;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,10 +12,15 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
@@ -22,9 +29,10 @@ import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
+import com.geniusgithub.lookaround.weibo.sdk.ShareCore;
 import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
 
-public class TestWeiboActivity extends Activity implements OnClickListener{
+public class TestWeiboActivity extends Activity implements OnClickListener, PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
@@ -36,8 +44,9 @@ public class TestWeiboActivity extends Activity implements OnClickListener{
 	private Button mBtnQZone;
 	private Button mBtnWChat;
 	private Button mBtnWFrien;
+	private Button mBtnShowUser;
 	
-	
+	private Platform mPlatform;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,17 +72,20 @@ public class TestWeiboActivity extends Activity implements OnClickListener{
 		mBtnQZone = (Button) findViewById(R.id.btn_qzone);
 		mBtnWChat = (Button) findViewById(R.id.btn_w_chat);
 		mBtnWFrien = (Button) findViewById(R.id.btn_w_friend);
+		mBtnShowUser = (Button) findViewById(R.id.btn_get_info);
 		
 		mBtnSinal.setOnClickListener(this);
 		mBtnTencent.setOnClickListener(this);
 		mBtnQZone.setOnClickListener(this);
 		mBtnWChat.setOnClickListener(this);
 		mBtnWFrien.setOnClickListener(this);
+		mBtnShowUser.setOnClickListener(this);
 	}
 	
 	private void initData(){
 		ShareSDK.initSDK(this);
-		
+		mPlatform = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+		mPlatform.setPlatformActionListener(this);
 		initImagePath();
 	}
 
@@ -119,6 +131,9 @@ public class TestWeiboActivity extends Activity implements OnClickListener{
 				case R.id.btn_w_friend:
 					shareToWFriend();
 					break;
+				case R.id.btn_get_info:
+					getInfo();
+					break;
 				}
 	}
 	
@@ -142,7 +157,6 @@ public class TestWeiboActivity extends Activity implements OnClickListener{
 	
 		goShareActivity();
 	}
-	
 	private void shareToQZone(){
 	
 		ShareItem.setTitle("QZone Share");
@@ -161,13 +175,47 @@ public class TestWeiboActivity extends Activity implements OnClickListener{
 	private void shareToWFriend(){
 		
 	}
+	
+	private void getInfo(){
+		mPlatform.showUser(null);
+	}
 
 
 	private void goShareActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, ShareActivity.class);
+		intent.setClass(this, TestShareActivity.class);
 		startActivity(intent);
 	}
+
+
+	@Override
+	public void onCancel(Platform arg0, int arg1) {
+		log.e("onCancel");
+		
+	}
+
+
+	@Override
+	public void onComplete(Platform plat, int action, HashMap<String, Object> map) {
+		log.e("onComplete Platform = " + plat.getName() + ", action = " + action);
+		
+		
+		for ( Entry<String, Object> ent : map.entrySet()) {
+			String key = ent.getKey();
+			Object value = ent.getValue();
+			log.e("key = " + key + "\nvalue = " + value.toString() + "\n");
+		}
+		
+	}
+
+
+	@Override
+	public void onError(Platform arg0, int arg1, Throwable arg2) {
+		log.e("onError");
+		
+	}
+
+	
 
 	
 }

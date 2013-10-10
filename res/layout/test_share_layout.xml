@@ -61,8 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:textColor="@color/silver"
-        android:textSize="16sp"
-        android:text="受折磨的灵魂" />
+        android:textSize="16sp"/>
           
     </LinearLayout>
   
@@ -96,7 +95,6 @@
 	        android:id="@+id/iv_pic"
 	        android:layout_width="100dp" 
 	        android:layout_height="120dp"
-	        android:src="@drawable/default_homebg"
 	        android:background="@drawable/share_tb_back" 
 	    	android:scaleType="centerInside"    
 	        android:paddingTop="5dp"/>

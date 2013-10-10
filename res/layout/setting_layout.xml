@@ -72,7 +72,8 @@
                 style="@style/leba_bg_layout">                  
 	                <!--  节省流量模式	-->   
 	                <LinearLayout 
-	                    style="@style/leba_bg_top_layout">
+	                    style="@style/leba_bg_top_layout"
+	                    android:visibility="gone">
 	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/flow" android:layout_weight="1.0" />
 	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
 	                </LinearLayout> 
@@ -81,7 +82,7 @@
 	   
 	                 <!--  清除缓存 	-->   
 	                 <LinearLayout 
-	                 	 style="@style/leba_bg_mid_layout">
+	                 	  style="@style/leba_bg_top_layout">
 	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/clear_cache" android:layout_weight="1.0" />
 	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
 	                 </LinearLayout>
@@ -115,15 +116,16 @@
 	                  </LinearLayout>                             
             </LinearLayout>              
             
-            <!-- 保险库 -->
+            <!--  意见与反馈 -->
             <LinearLayout 
                 style="@style/leba_bg_layout">            
                 <LinearLayout 
                     style="@style/leba_bg_single_layout">                
-                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/dangerous" android:layout_weight="1.0" />
+                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/advise" android:layout_weight="1.0" />
                     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
                 </LinearLayout>
             </LinearLayout>
+            
                 
         </LinearLayout>     
     </ScrollView>

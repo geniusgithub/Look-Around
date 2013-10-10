@@ -10,9 +10,20 @@ public class ShareItem {
 	private static final CommonLog log = LogFactory.createLog();
 	
 	public static HashMap<String, Object> reqMap = new HashMap<String, Object>();
+	
+	public static String imagePath = null;
 		
 	public ShareItem(){
 		
+	}
+	
+	/** 要分享的图片路径 */
+	public  static void setShareImagePath(String path) {
+		imagePath = path;
+	}
+	
+	public static String getShareImagePath(){
+		return imagePath;
 	}
 	
 	/** address是接收人地址，仅在信息和邮件使用，否则可以不提供 */

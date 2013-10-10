@@ -244,7 +244,12 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		ShareItem.setText(mInfoItem.mContent);
 		if (imageURL != null){
 			ShareItem.setImageUrl(imageURL);
-		}	
+			String sharPath = fileCache.getSavePath(imageURL);
+			ShareItem.setShareImagePath(sharPath);
+		}else{
+			ShareItem.setShareImagePath(null);
+		}
+		
 		ShareItem.setPlatform(SinaWeibo.NAME);		
 		goShareActivity();
 	}
@@ -254,13 +259,20 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		if (imageURL != null){
 			imageURL = fileCache.getSavePath(imageURL);
 		}
+		ShareItem.setShareImagePath(imageURL);
 		
 		ShareItem.setTitle(mInfoItem.mTitle);
 	//	ShareItem.setTitleUrl("http://blog.csdn.net/lancees");
 		ShareItem.setText(mInfoItem.mContent);
 		if (imageURL != null){
-			ShareItem.setImageUrl(imageURL);
-		}	
+			String sharPath = fileCache.getSavePath(imageURL);
+			ShareItem.setImagePath(sharPath);
+			ShareItem.setShareImagePath(sharPath);
+			
+		}else{
+			ShareItem.setShareImagePath(null);
+		}
+	
 		ShareItem.setPlatform(TencentWeibo.NAME);	
 	
 		goShareActivity();
@@ -274,7 +286,11 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		ShareItem.setText(mInfoItem.mContent);
 		if (imageURL != null){
 			ShareItem.setImageUrl(imageURL);
-		}	
+			String sharPath = fileCache.getSavePath(imageURL);
+			ShareItem.setShareImagePath(sharPath);
+		}else{
+			ShareItem.setShareImagePath(null);
+		}
 		ShareItem.setPlatform(QZone.NAME);
 	
 		goShareActivity();

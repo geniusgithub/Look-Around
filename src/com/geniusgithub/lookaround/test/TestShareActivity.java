@@ -21,6 +21,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Handler.Callback;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +50,7 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 	private Button mBtnBack;
 	private Button mBtnShare;
 	private Button mBtnCancelImage;
+	private ImageView mIVShareImage;
 	
 	private EditText mETContent;
 	private TextView mTVTarget;
@@ -54,9 +58,13 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 	
 	private int notifyIcon;
 	private String notifyTitle;
-
+	private String sharePath;
+	
+	
 	private Platform mPlatform;
 	private HashMap<String, Object> reqMap;
+	
+	private View phoneFrameView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +92,7 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 		mBtnBack = (Button) findViewById(R.id.btn_back);
 		mBtnShare = (Button) findViewById(R.id.btn_right);
 		mBtnCancelImage = (Button) findViewById(R.id.btn_cancelimage);
+		mIVShareImage = (ImageView) findViewById(R.id.iv_pic);
 		mBtnBack.setOnClickListener(this);
 		mBtnShare.setOnClickListener(this);
 		mBtnCancelImage.setOnClickListener(this);
@@ -92,10 +101,12 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 		mTVTarget = (TextView) findViewById(R.id.tv_target);
 		mETContent.addTextChangedListener(this);
 		mTVLive = (TextView) findViewById(R.id.tv_live);
+		
+		phoneFrameView = findViewById(R.id.fl_phoneframe);
 	}
 	
 	private void initData(){
-
+	
 		reqMap = ShareItem.reqMap;
 		mPlatform = ShareSDK.getPlatform(this, (String) reqMap.get("platform"));
 		Object object = reqMap.get("text");
@@ -105,10 +116,59 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 			mETContent.setSelection(value.length());
 		}
 		
-		
+		sharePath = ShareItem.getShareImagePath();
+		log.e("sharePath = " + sharePath);
+		if (sharePath == null){
+			showShareImage(false);
+		}else{
+			Bitmap bitmap = BitmapFactory.decodeFile(sharePath);
+			if (bitmap != null){
+				mIVShareImage.setImageBitmap(bitmap);
+			}
+			
+		}
+	
+		mPlatform.setPlatformActionListener(new PlatformActionListener() {
+			
+			@Override
+			public void onError(Platform arg0, int arg1, Throwable arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onComplete(Platform platform, int action, HashMap<String, Object> map) {
+				
+				String name = (String) map.get("name");
+				if (name == null){
+					name = (String) map.get("nickname");
+				}
+				log.e("get user info --> onComplete \nPlatform = " + platform.getName() + ",  name = " +  name);
+				if (name != null){
+					updateTarget(name);
+				}
+				
+			}
+			
+			@Override
+			public void onCancel(Platform arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		mPlatform.showUser(null);
 	}
 	
 
+	public void showShareImage(boolean flag){
+		if (!flag){
+			phoneFrameView.setVisibility(View.GONE);
+			mBtnCancelImage.setVisibility(View.GONE);
+		}else{
+			phoneFrameView.setVisibility(View.VISIBLE);
+			mBtnCancelImage.setVisibility(View.VISIBLE);
+		}
+	}
 	
 	/** 分享时Notification的图标和文字 */
 	public void setNotification(int icon, String title) {
@@ -116,11 +176,22 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 		notifyTitle = title;
 	}
 	
+	private void updateTarget(final String name){
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+			mTVTarget.setText(name);
+				
+			}
+		});
+	}
 	
 	/** 执行分享 */
 	public void share(Platform plat, HashMap<String, Object> data) {
 		boolean started = false;
 	
+			
 			String name = plat.getName();
 			boolean isWechat = "WechatMoments".equals(name) || "Wechat".equals(name);
 			if (isWechat && !plat.isValid()) {
@@ -164,7 +235,7 @@ public class TestShareActivity extends Activity implements Callback , TextWatche
 				showNotification(2000, getString(R.string.sharing));
 				finish();
 			}
-			plat.setPlatformActionListener(this);
+			mPlatform.setPlatformActionListener(this);
 			ShareCore shareCore = new ShareCore();
 			shareCore.share(plat, data);
 	
