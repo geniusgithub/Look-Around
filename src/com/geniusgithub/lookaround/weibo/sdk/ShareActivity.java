@@ -4,115 +4,198 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.framework.utils.UIHandler;
+
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler.Callback;
 import android.os.Message;
+import android.os.Handler.Callback;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.MotionEvent;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.FrameLayout.LayoutParams;
 
-public class ShareActivity extends Activity implements Callback , PlatformActionListener{
+public class ShareActivity extends Activity implements Callback , TextWatcher,
+												OnClickListener, PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
-	
-	private static final String FILE_NAME = "/pic.png";
-	public static String TEST_IMAGE;
-	
-	private FrameLayout flPage; // 页面
-	private int notifyIcon;
-	private String notifyTitle;
-	
-	private HashMap<String, Object> reqMap;
 	
 	private static final int MSG_TOAST = 1;
 	private static final int MSG_ACTION_CCALLBACK = 2;
 	private static final int MSG_CANCEL_NOTIFY = 3;
 	
+	private static final int MAX_TEXT_LENGTH = 420;
+	
+	private Button mBtnBack;
+	private Button mBtnShare;
+	private Button mBtnCancelImage;
+	private ImageView mIVShareImage;
+	
+	private EditText mETContent;
+	private TextView mTVTarget;
+	private TextView mTVLive;
+	
+	private int notifyIcon;
+	private String notifyTitle;
+	private String sharePath;
+	
+	
+	private Platform mPlatform;
+	private HashMap<String, Object> reqMap;
+	
+	private View phoneFrameView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.share_layout);
 		
-		initViews();
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.test_share_layout);
+		setupViews();
 		initData();
 	}
 
 	@Override
 	protected void onDestroy() {
-
+		
 		ShareSDK.stopSDK(this);
 		
 		super.onDestroy();
 	}
 
-
-	private void initViews(){
+	
+	private void setupViews(){
 		ShareSDK.initSDK(this);
-		setNotification(R.drawable.logo_icon,"SDK TEST");
 		
+		setNotification(R.drawable.logo_icon,"Look Around");
 		
-		reqMap = ShareItem.reqMap;
+		mBtnBack = (Button) findViewById(R.id.btn_back);
+		mBtnShare = (Button) findViewById(R.id.btn_right);
+		mBtnCancelImage = (Button) findViewById(R.id.btn_cancelimage);
+		mIVShareImage = (ImageView) findViewById(R.id.iv_pic);
+		mBtnBack.setOnClickListener(this);
+		mBtnShare.setOnClickListener(this);
+		mBtnCancelImage.setOnClickListener(this);
 		
-		EditPageEx page = new EditPageEx();
-		page.setShareData(reqMap);
-		page.setParent(this);
-		page.show(this, null);
-
+		mETContent = (EditText) findViewById(R.id.et_content);
+		mTVTarget = (TextView) findViewById(R.id.tv_target);
+		mETContent.addTextChangedListener(this);
+		mTVLive = (TextView) findViewById(R.id.tv_live);
 		
-		flPage = new FrameLayout(this);
-
-		// 宫格列表的容器，为了“下对齐”，在外部包含了一个FrameLayout
-		LinearLayout llPage = new LinearLayout(this) {
-			public boolean onTouchEvent(MotionEvent event) {
-				return true;
-			}
-		};
-		llPage.setOrientation(LinearLayout.VERTICAL);
-		llPage.setBackgroundResource(R.drawable.share_vp_back);
-		FrameLayout.LayoutParams lpLl = new FrameLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		lpLl.gravity = Gravity.BOTTOM;
-		llPage.setLayoutParams(lpLl);
-		flPage.addView(llPage);
-
-		setContentView(flPage);
-
-
+		phoneFrameView = findViewById(R.id.fl_phoneframe);
 	}
 	
 	private void initData(){
-
-		
-	}
-
 	
-	/** 循环执行分享 */
-	public void share(HashMap<Platform, HashMap<String, Object>> shareData) {
-		boolean started = false;
-		for (Entry<Platform, HashMap<String, Object>> ent : shareData.entrySet()) {
-			Platform plat = ent.getKey();
+		reqMap = ShareItem.reqMap;
+		mPlatform = ShareSDK.getPlatform(this, (String) reqMap.get("platform"));
+		Object object = reqMap.get("text");
+		if (object != null){
+			String value = (String) object;
+			mETContent.setText(value);
+			mETContent.setSelection(value.length());
+		}
+		
+		sharePath = ShareItem.getShareImagePath();
+		log.e("sharePath = " + sharePath);
+		if (sharePath == null){
+			showShareImage(false);
+		}else{
+			Bitmap bitmap = BitmapFactory.decodeFile(sharePath);
+			if (bitmap != null){
+				mIVShareImage.setImageBitmap(bitmap);
+			}
+			
+		}
+	
+		mPlatform.setPlatformActionListener(new PlatformActionListener() {
+			
+			@Override
+			public void onError(Platform arg0, int arg1, Throwable arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onComplete(Platform platform, int action, HashMap<String, Object> map) {
+				
+				String name = (String) map.get("name");
+				if (name == null){
+					name = (String) map.get("nickname");
+				}
+				log.e("get user info --> onComplete \nPlatform = " + platform.getName() + ",  name = " +  name);
+				if (name != null){
+					updateTarget(name);
+				}
+				
+			}
+			
+			@Override
+			public void onCancel(Platform arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		mPlatform.showUser(null);
+	}
+	
+
+	public void showShareImage(boolean flag){
+		if (!flag){
+			phoneFrameView.setVisibility(View.GONE);
+			mBtnCancelImage.setVisibility(View.GONE);
+		}else{
+			phoneFrameView.setVisibility(View.VISIBLE);
+			mBtnCancelImage.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	/** 分享时Notification的图标和文字 */
+	public void setNotification(int icon, String title) {
+		notifyIcon = icon;
+		notifyTitle = title;
+	}
+	
+	private void updateTarget(final String name){
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+			mTVTarget.setText(name);
+				
+			}
+		});
+	}
+	
+	/** 执行分享 */
+	public void share(Platform plat, HashMap<String, Object> data) {
+			boolean started = false;
+		
+			int relen = MAX_TEXT_LENGTH -  mETContent.length();
+			if (relen < 0){
+				CommonUtil.showToast(R.string.toast_too_txtcount, this);
+				return ;
+			}
 			String name = plat.getName();
 			boolean isWechat = "WechatMoments".equals(name) || "Wechat".equals(name);
 			if (isWechat && !plat.isValid()) {
@@ -120,16 +203,7 @@ public class ShareActivity extends Activity implements Callback , PlatformAction
 				msg.what = MSG_TOAST;
 				msg.obj = getString(R.string.wechat_client_inavailable);
 				UIHandler.sendMessage(msg, this);
-				continue;
-			}
-
-			boolean isGooglePlus = "GooglePlus".equals(name);
-			if (isGooglePlus && !plat.isValid()) {
-				Message msg = new Message();
-				msg.what = MSG_TOAST;
-				msg.obj = getString(R.string.google_plus_client_inavailable);
-				UIHandler.sendMessage(msg, this);
-				continue;
+				return ;
 			}
 
 			boolean isQQ = "QQ".equals(name);
@@ -138,27 +212,28 @@ public class ShareActivity extends Activity implements Callback , PlatformAction
 				msg.what = MSG_TOAST;
 				msg.obj = getString(R.string.qq_client_inavailable);
 				UIHandler.sendMessage(msg, this);
-				continue;
+				return ;
 			}
 
-			HashMap<String, Object> data = ent.getValue();
 			int shareType = Platform.SHARE_TEXT;
-			String imagePath = String.valueOf(data.get("imagePath"));
-			if (imagePath != null && (new File(imagePath)).exists()) {
-				shareType = Platform.SHARE_IMAGE;
-				if (data.containsKey("url") && !TextUtils.isEmpty(data.get("url").toString())) {
-					shareType = Platform.SHARE_WEBPAGE;
-				}
-			}
-			else {
-				String imageUrl = String.valueOf(data.get("imageUrl"));
-				if (imageUrl != null) {
+			if (sharePath != null){
+				String imagePath = String.valueOf(data.get("imagePath"));
+				if (imagePath != null && (new File(imagePath)).exists()) {
 					shareType = Platform.SHARE_IMAGE;
 					if (data.containsKey("url") && !TextUtils.isEmpty(data.get("url").toString())) {
 						shareType = Platform.SHARE_WEBPAGE;
 					}
 				}
-			}
+				else {
+					String imageUrl = String.valueOf(data.get("imageUrl"));
+					if (imageUrl != null) {
+						shareType = Platform.SHARE_IMAGE;
+						if (data.containsKey("url") && !TextUtils.isEmpty(data.get("url").toString())) {
+							shareType = Platform.SHARE_WEBPAGE;
+						}
+					}
+				}
+			}	
 			data.put("shareType", shareType);
 
 			if (!started) {
@@ -166,47 +241,32 @@ public class ShareActivity extends Activity implements Callback , PlatformAction
 				showNotification(2000, getString(R.string.sharing));
 				finish();
 			}
-			plat.setPlatformActionListener(this);
+			mPlatform.setPlatformActionListener(this);
 			ShareCore shareCore = new ShareCore();
 			shareCore.share(plat, data);
-		}
+	
 	}
 	
 	
-	/** 分享时Notification的图标和文字 */
-	public void setNotification(int icon, String title) {
-		notifyIcon = icon;
-		notifyTitle = title;
-	}
-	
-	
-	// 在状态栏提示分享操作
-	private void showNotification(long cancelTime, String text) {
-		try {
-			NotificationManager nm = (NotificationManager) 
-					getSystemService(Context.NOTIFICATION_SERVICE);
-			final int id = Integer.MAX_VALUE / 13 + 1;
-			nm.cancel(id);
-
-			long when = System.currentTimeMillis();
-			Notification notification = new Notification(notifyIcon, text, when);
-			PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(), 0);
-			notification.setLatestEventInfo(this, notifyTitle, text, pi);
-			notification.flags = Notification.FLAG_AUTO_CANCEL;
-			nm.notify(id, notification);
-
-			if (cancelTime > 0) {
-				Message msg = new Message();
-				msg.what = MSG_CANCEL_NOTIFY;
-				msg.obj = nm;
-				msg.arg1 = id;
-				UIHandler.sendMessageDelayed(msg, cancelTime, this);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.btn_back:
+			finish();
+			break;
+		case R.id.btn_right:
+			share(mPlatform, reqMap);
+			break;
+		case R.id.btn_cancelimage:
+			showShareImage(false);
+			sharePath = null;
+			reqMap.remove("imagePath");
+			reqMap.remove("imageUrl");
+			break;
 		}
 	}
 
+	
 	@Override
 	public boolean handleMessage(Message msg) {
 			switch(msg.what) {
@@ -255,6 +315,33 @@ public class ShareActivity extends Activity implements Callback , PlatformAction
 		}
 		return false;
 	}
+		
+	// 在状态栏提示分享操作
+	private void showNotification(long cancelTime, String text) {
+				try {
+					NotificationManager nm = (NotificationManager) 
+							getSystemService(Context.NOTIFICATION_SERVICE);
+					final int id = Integer.MAX_VALUE / 13 + 1;
+					nm.cancel(id);
+
+					long when = System.currentTimeMillis();
+					Notification notification = new Notification(notifyIcon, text, when);
+					PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(), 0);
+					notification.setLatestEventInfo(this, notifyTitle, text, pi);
+					notification.flags = Notification.FLAG_AUTO_CANCEL;
+					nm.notify(id, notification);
+
+					if (cancelTime > 0) {
+						Message msg = new Message();
+						msg.what = MSG_CANCEL_NOTIFY;
+						msg.obj = nm;
+						msg.arg1 = id;
+						UIHandler.sendMessageDelayed(msg, cancelTime, this);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
 
 	public void onComplete(Platform platform, int action,
 			HashMap<String, Object> res) {
@@ -289,6 +376,26 @@ public class ShareActivity extends Activity implements Callback , PlatformAction
 		msg.arg2 = action;
 		msg.obj = platform;
 		UIHandler.sendMessage(msg, this);
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		int remain = MAX_TEXT_LENGTH - mETContent.length();
+		mTVLive.setText("您还可以输入" + String.valueOf(remain) + "字");
+		mTVLive.setTextColor(remain > 0 ? 0xffcfcfcf : 0xffff0000);
 	}
 
 

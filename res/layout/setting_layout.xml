@@ -51,6 +51,7 @@
                 style="@style/leba_bg_layout">                    
                   <!--  我的推送 	-->   
                 <LinearLayout 
+                      android:id="@+id/ll_mypush"
                     style="@style/leba_bg_top_layout">
                     <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/push" android:layout_weight="1.0" />
                     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
@@ -82,6 +83,7 @@
 	   
 	                 <!--  清除缓存 	-->   
 	                 <LinearLayout 
+	                      android:id="@+id/ll_clearcache"
 	                 	  style="@style/leba_bg_top_layout">
 	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/clear_cache" android:layout_weight="1.0" />
 	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
@@ -91,6 +93,7 @@
 	                 
 	                 <!--  给应用打分 	-->   
 	                 <LinearLayout 
+	                     android:id="@+id/ll_garding"
 	                 	 style="@style/leba_bg_mid_layout">
 	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/grade" android:layout_weight="1.0" />
 	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
@@ -100,6 +103,7 @@
 	   
 	                <!--  检查更新 	--> 
 	                 <LinearLayout 
+	                     android:id="@+id/ll_checkupdate"
 	                 	 style="@style/leba_bg_mid_layout">
 	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:text="@string/check_update" android:layout_weight="1.0" />
 	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
@@ -118,6 +122,7 @@
             
             <!--  意见与反馈 -->
             <LinearLayout 
+                android:id="@+id/ll_advise"
                 style="@style/leba_bg_layout">            
                 <LinearLayout 
                     style="@style/leba_bg_single_layout">                

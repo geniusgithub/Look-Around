@@ -3,6 +3,7 @@ package com.geniusgithub.lookaround.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,20 +52,27 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		log.e("MainLookAroundActivity  onCreate!!!");
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_slidemenu_layout);	
+		boolean loginStatus = LAroundApplication.getInstance().getLoginStatus();
+		if (!loginStatus){
+			log.e("loginStatus is false ,jump to welcome view!!!");		
+			LAroundApplication.getInstance().startToWelcomeActivity();
+			finish();
+			return ;
+		}
 		
-		
-		setupViews();
-		
+		setupViews();	
+	
 		initData();
+		
+	
 	}
 	
 	
 	
 	private void setupViews(){
-
-		setContentView(R.layout.main_slidemenu_layout);
 		
 		initActionBar();
 		
@@ -73,7 +81,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	}
 	
 	private void initSlideMenu(){
-
+		log.e("MainLookAroundActivity initSlideMenu"); 
 		SlidingMenu sm = getSlidingMenu();
 		sm.setMode(SlidingMenu.LEFT);
 

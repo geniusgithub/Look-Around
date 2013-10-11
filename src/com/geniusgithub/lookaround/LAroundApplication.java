@@ -18,12 +18,15 @@ package com.geniusgithub.lookaround;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
+import com.geniusgithub.lookaround.activity.WelcomActivity;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 import android.app.Application;
+import android.content.Intent;
 
 public class LAroundApplication extends Application{
 
@@ -33,6 +36,8 @@ public class LAroundApplication extends Application{
 
 	private PublicType.UserLoginResult mUserLoginResult = new PublicType.UserLoginResult();
 	
+	private boolean isLogin = false;
+	
 	public synchronized static LAroundApplication getInstance(){
 		return mInstance;
 	}
@@ -40,8 +45,9 @@ public class LAroundApplication extends Application{
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+		log.e("LAroundApplication  onCreate!!!");
 		mInstance = this;
+		startBackgroundService();
 	}
 	
 	public void setUserLoginResult(PublicType.UserLoginResult object){
@@ -52,6 +58,33 @@ public class LAroundApplication extends Application{
 		return mUserLoginResult;
 	}
 	
+	public void setLoginStatus(boolean flag){
+		isLogin = flag;
+	}
 	
+	public boolean getLoginStatus(){
+	
+		return isLogin;
+	}
+	
+	public void startToWelcomeActivity(){
+		Intent intent = new Intent();
+		intent.setClass(this, WelcomActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	}
 
+	public void startToMainActivity(){
+		Intent intent = new Intent();
+		intent.setClass(this, MainLookAroundActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+	
+	private void startBackgroundService(){
+		Intent intent = new Intent();
+		intent.setClass(this, BackgroundService.class);
+		startService(intent);
+	}
 }

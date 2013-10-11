@@ -37,6 +37,7 @@ private static final CommonLog log = LogFactory.createLog();
 	private NavChannelAdapter mAdapter;
 	
 	private FragmentControlCenter mControlCenter;
+	private boolean loginStatus = false;
 	
 	public NavigationFragment(){
 		
@@ -49,6 +50,7 @@ private static final CommonLog log = LogFactory.createLog();
 		log.e("NavigationFragment onCreate");
 		mContext = LAroundApplication.getInstance();
 		mControlCenter = FragmentControlCenter.getInstance(getActivity());
+	    loginStatus = LAroundApplication.getInstance().getLoginStatus();
 	}
 
 
@@ -72,8 +74,11 @@ private static final CommonLog log = LogFactory.createLog();
 		super.onActivityCreated(savedInstanceState);
 		log.e("NavigationFragment onActivityCreated");
 		
-		setupViews();
-		initData();
+		if (loginStatus){
+			setupViews();
+			initData();
+		}
+	
 	}
 	
 	

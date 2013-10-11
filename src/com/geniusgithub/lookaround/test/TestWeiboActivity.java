@@ -28,9 +28,9 @@ import cn.sharesdk.tencent.weibo.TencentWeibo;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
 import com.geniusgithub.lookaround.weibo.sdk.ShareCore;
 import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
+import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
 
 public class TestWeiboActivity extends Activity implements OnClickListener, PlatformActionListener{
 
@@ -183,7 +183,7 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 
 	private void goShareActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, TestShareActivity.class);
+		intent.setClass(this, ShareActivity.class);
 		startActivity(intent);
 	}
 

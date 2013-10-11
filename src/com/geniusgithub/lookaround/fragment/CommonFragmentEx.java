@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.adapter.InfoContentAdapter;
 import com.geniusgithub.lookaround.content.ContentActivity;
@@ -17,7 +18,9 @@ import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
+import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.widget.RefreshListView;
 
 import android.content.Context;
@@ -35,6 +38,8 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 							RefreshListView.IOnRefreshListener, RefreshListView.IOnLoadMoreListener,
 							OnItemClickListener{
 
+	private static final CommonLog log = LogFactory.createLog();
+	
 	private BaseType.ListItem mTypeData;
 	public View mInvalidView;
 	public View mLoadView;
@@ -48,22 +53,27 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 	private InfoRequestProxy mInfoRequestProxy;
 	
 	private Handler mHandler;
+	private boolean loginStatus = false;
 	public CommonFragmentEx(BaseType.ListItem data){
 		mTypeData = data;	
+	}
+	
+	public CommonFragmentEx(){
+	
 	}
 	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+		log.e("CommonFragmentEx onCreate");
 		super.onCreate(savedInstanceState);
-	
+	    loginStatus = LAroundApplication.getInstance().getLoginStatus();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+		log.e("CommonFragmentEx onCreateView");
 		View view = inflater.inflate(R.layout.common_layout, null);
 		mInvalidView = view.findViewById(R.id.invalid_view);
 		mLoadView = view.findViewById(R.id.load_view);
@@ -78,13 +88,14 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		log.e("CommonFragmentEx onActivityCreated");
 		
-		
-		setupViews();
-		
-		initData();
-		
-		mInfoRequestProxy.requestRefreshInfo();
+		if (loginStatus){
+			setupViews();			
+			initData();		
+			mInfoRequestProxy.requestRefreshInfo();
+		}
+
 	
 	}
 	
@@ -111,9 +122,11 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 
 	@Override
 	public void onDestroy() {
+		log.e("CommonFragmentEx onDestroy");
+		if (loginStatus){
+			mInfoRequestProxy.cancelRequest();
+		}
 		
-		mInfoRequestProxy.cancelRequest();
-	
 		super.onDestroy();
 	}
 	

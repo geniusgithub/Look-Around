@@ -167,6 +167,7 @@ public class WelcomActivity extends Activity implements IRequestDataPacketCallba
 		try {
 			object.parseJson(dataPacket.data);
 			mApplication.setUserLoginResult(object);
+			mApplication.setLoginStatus(true);
 			goMainActivity();
 		} catch (JSONException e) {
 			e.printStackTrace();

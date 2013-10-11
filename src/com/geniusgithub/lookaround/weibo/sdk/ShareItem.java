@@ -17,6 +17,11 @@ public class ShareItem {
 		
 	}
 	
+	public static void clear(){
+		reqMap.clear();
+		imagePath = null;
+	}
+	
 	/** 要分享的图片路径 */
 	public  static void setShareImagePath(String path) {
 		imagePath = path;

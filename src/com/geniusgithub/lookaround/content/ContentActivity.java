@@ -10,30 +10,23 @@ import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
-import com.geniusgithub.lookaround.animation.MyAnimations;
 import com.geniusgithub.lookaround.cache.FileCache;
-import com.geniusgithub.lookaround.cache.ImageLoaderEx;
 import com.geniusgithub.lookaround.cache.SimpleImageLoader;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
 import com.geniusgithub.lookaround.datastore.DaoSession;
 import com.geniusgithub.lookaround.datastore.InfoItemDao;
 import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.network.ClientEngine;
-import com.geniusgithub.lookaround.test.TestShareActivity;
-import com.geniusgithub.lookaround.test.TestWeiboActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
 import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
+import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ext.SatelliteMenu;
@@ -41,7 +34,6 @@ import android.view.ext.SatelliteMenuItem;
 import android.view.ext.SatelliteMenu.SateliteClickedListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ContentActivity extends Activity implements OnClickListener, SateliteClickedListener{
@@ -79,12 +71,20 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
     private InfoItemDao infoItemDao;
     private SQLiteDatabase db;
     private boolean isCollect = false;
-	
+    private boolean loginStatus = false;
     
     private FileCache fileCache = new FileCache(this);
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		loginStatus = LAroundApplication.getInstance().getLoginStatus();
+		if (!loginStatus){
+			log.e("loginStatus is false ,jump to welcome view!!!");		
+			LAroundApplication.getInstance().startToMainActivity();
+			finish();
+			return ;
+		}
 		
 		setupViews();	
 		initData();
@@ -94,7 +94,10 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	@Override
 	protected void onDestroy() {
 		
-		db.close();
+		if (loginStatus){
+			db.close();
+		}
+		
 		
 		super.onDestroy();
 	}
@@ -142,6 +145,9 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 		mTVContent.setText(mInfoItem.mContent);
 		
 		mImageLoader.DisplayImage(mInfoItem.getImageURL(0), mIVContent);
+		if (mInfoItem.getThumnaiImageCount() == 0){
+			mIVContent.setVisibility(View.GONE);
+		}
 
 		List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
         items.add(new SatelliteMenuItem(SINA_ID, R.drawable.logo_sina));
@@ -239,6 +245,8 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	}
 
 	private void shareToSina(){
+		ShareItem.clear();
+		
 		String imageURL = mInfoItem.getImageURL(0);
 			
 		ShareItem.setText(mInfoItem.mContent);
@@ -246,20 +254,15 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 			ShareItem.setImageUrl(imageURL);
 			String sharPath = fileCache.getSavePath(imageURL);
 			ShareItem.setShareImagePath(sharPath);
-		}else{
-			ShareItem.setShareImagePath(null);
 		}
-		
 		ShareItem.setPlatform(SinaWeibo.NAME);		
 		goShareActivity();
 	}
 	
 	private void shareToTencent(){
+		ShareItem.clear();
+		
 		String imageURL = mInfoItem.getImageURL(0);
-		if (imageURL != null){
-			imageURL = fileCache.getSavePath(imageURL);
-		}
-		ShareItem.setShareImagePath(imageURL);
 		
 		ShareItem.setTitle(mInfoItem.mTitle);
 	//	ShareItem.setTitleUrl("http://blog.csdn.net/lancees");
@@ -269,8 +272,6 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 			ShareItem.setImagePath(sharPath);
 			ShareItem.setShareImagePath(sharPath);
 			
-		}else{
-			ShareItem.setShareImagePath(null);
 		}
 	
 		ShareItem.setPlatform(TencentWeibo.NAME);	
@@ -279,6 +280,8 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	}
 	
 	private void shareToQZone(){
+		ShareItem.clear();
+		
 		String imageURL = mInfoItem.getImageURL(0);
 		
 		ShareItem.setTitle(mInfoItem.mTitle);
@@ -288,8 +291,6 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 			ShareItem.setImageUrl(imageURL);
 			String sharPath = fileCache.getSavePath(imageURL);
 			ShareItem.setShareImagePath(sharPath);
-		}else{
-			ShareItem.setShareImagePath(null);
 		}
 		ShareItem.setPlatform(QZone.NAME);
 	
@@ -297,17 +298,17 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	}
 	
 	private void shareToWChat(){
-		
+		CommonUtil.showToast(R.string.toast_nosupport_weixin, this);
 	}
 	
 	private void shareToWFriend(){
-		
+		CommonUtil.showToast(R.string.toast_nosupport_friend, this);
 	}
 
 
 	private void goShareActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, TestShareActivity.class);
+		intent.setClass(this, ShareActivity.class);
 		startActivity(intent);
 	}
 
