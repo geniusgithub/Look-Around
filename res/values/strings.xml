@@ -14,6 +14,7 @@
    <string name="toast_save_success">保存成功 </string>
    <string name="toast_save_fail2">保存失败</string>
    <string name="toast_savefile_end">文件保存在</string>
+   <string name="toast_no_txtcount">内容不能为空</string>
    <string name="toast_too_txtcount">发送文本长度过长，请缩减字数</string>
    <string name="toast_no_push">暂无推送消息</string>
    <string name="toast_no_function">此功能尚未开放</string>
@@ -21,6 +22,10 @@
    <string name="toast_nosupport_weixin">暂不支持微信分享</string>
    <string name="toast_nosupport_friend">暂不支持朋友圈分享</string> 
        
+   
+   <string name="hint_advise">您的意见将帮助我们改进产品和服务</string> 
+      
+      
    <string name="lookaround">随便看看</string>  
     
    <string name="clect">收藏</string>

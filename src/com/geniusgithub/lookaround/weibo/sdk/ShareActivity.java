@@ -6,8 +6,10 @@ import java.util.Map.Entry;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.framework.utils.UIHandler;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -70,7 +72,7 @@ public class ShareActivity extends Activity implements Callback , TextWatcher,
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.test_share_layout);
+		setContentView(R.layout.share_layout);
 		setupViews();
 		initData();
 	}
@@ -128,35 +130,12 @@ public class ShareActivity extends Activity implements Callback , TextWatcher,
 			
 		}
 	
-		mPlatform.setPlatformActionListener(new PlatformActionListener() {
-			
-			@Override
-			public void onError(Platform arg0, int arg1, Throwable arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onComplete(Platform platform, int action, HashMap<String, Object> map) {
-				
-				String name = (String) map.get("name");
-				if (name == null){
-					name = (String) map.get("nickname");
-				}
-				log.e("get user info --> onComplete \nPlatform = " + platform.getName() + ",  name = " +  name);
-				if (name != null){
-					updateTarget(name);
-				}
-				
-			}
-			
-			@Override
-			public void onCancel(Platform arg0, int arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		mPlatform.showUser(null);
+		PlatformDb db = mPlatform.getDb();
+		String nickname = db.get("nickname");
+		if (nickname != null){
+			mTVTarget.setText(nickname);
+		}
+		
 	}
 	
 
@@ -175,17 +154,7 @@ public class ShareActivity extends Activity implements Callback , TextWatcher,
 		notifyIcon = icon;
 		notifyTitle = title;
 	}
-	
-	private void updateTarget(final String name){
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-			mTVTarget.setText(name);
-				
-			}
-		});
-	}
+
 	
 	/** 执行分享 */
 	public void share(Platform plat, HashMap<String, Object> data) {
@@ -196,6 +165,10 @@ public class ShareActivity extends Activity implements Callback , TextWatcher,
 				CommonUtil.showToast(R.string.toast_too_txtcount, this);
 				return ;
 			}
+			
+			String value = mETContent.getText().toString();
+			reqMap.put("text", value);
+			
 			String name = plat.getName();
 			boolean isWechat = "WechatMoments".equals(name) || "Wechat".equals(name);
 			if (isWechat && !plat.isValid()) {

@@ -26,7 +26,7 @@
         android:layout_centerInParent="true"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:text="分享至微博" />
+        android:text="@string/advise" />
        
         <Button
         android:id="@+id/btn_right"
@@ -66,7 +66,7 @@
     </LinearLayout>
   
     
-   <RelativeLayout 
+    <RelativeLayout 
         android:layout_width="fill_parent" 
         android:layout_height="fill_parent"
         android:layout_above="@id/ll_bottom"
@@ -78,42 +78,11 @@
         android:id="@+id/et_content"
         android:layout_width="fill_parent" 
         android:layout_height="fill_parent"
+        android:hint="@string/hint_advise"
         android:gravity="left|top"
         android:background="@null">            
         </EditText>
-        
-        <FrameLayout
-        android:id="@+id/fl_phoneframe"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="5dp">
-   
-	        <ImageView
-	        android:id="@+id/iv_pic"
-	        android:layout_width="100dp" 
-	        android:layout_height="120dp"
-	        android:background="@drawable/share_tb_back" 
-	    	android:scaleType="centerInside"    
-	        android:paddingTop="5dp"/>
-
-	        <ImageView
-	        android:layout_width="100dp" 
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/pin" />         
-	        
-	      
-        </FrameLayout>       
-          
-        <Button
-            android:id="@+id/btn_cancelimage"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-			android:layout_alignRight="@id/fl_phoneframe"
-			android:layout_alignBottom="@id/fl_phoneframe"
-	        android:background="@drawable/img_cancel"/>
+       
    
         <TextView
         android:id="@+id/tv_live"
