@@ -88,7 +88,7 @@ public class BaseType {
 		
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
-				
+			
 			mBannerType = jsonObject.getInt(KEY_BANNERTYPE);
 			mKeyID = jsonObject.getString(KEY_ID);
 			mTitle = jsonObject.getString(KEY_TITLE);

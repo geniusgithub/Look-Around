@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.geniusgithub.lookaround"
     android:versionCode="010001"
-    android:versionName="v01.00.01" >
+    android:versionName="1.00.01" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -50,10 +50,10 @@
          <activity
             android:name="com.geniusgithub.lookaround.test.TestProtocolActivity"
             android:label="@string/app_name" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         
         <activity
@@ -125,10 +125,10 @@
         <activity
             android:name="com.geniusgithub.lookaround.activity.set.AdviseActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
+<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             </intent-filter> -->
         </activity>
         
         <activity

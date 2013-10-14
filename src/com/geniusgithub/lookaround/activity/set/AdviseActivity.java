@@ -42,7 +42,7 @@ public class AdviseActivity extends Activity implements Callback , TextWatcher,
 	private static final int MSG_ACTION_CCALLBACK = 2;
 	private static final int MSG_CANCEL_NOTIFY = 3;
 	
-	private static final int MAX_TEXT_LENGTH = 420;
+	private static final int MAX_TEXT_LENGTH = 100;
 	
 	private Button mBtnBack;
 	private Button mBtnShare;
@@ -131,8 +131,9 @@ public class AdviseActivity extends Activity implements Callback , TextWatcher,
 			HashMap<String, Object> reqMap = new HashMap<String, Object>();
 			reqMap.put("shareType", shareType);
 			
-			
-			reqMap.put("text", getSendContent());
+			String sendContent = getSendContent();
+			log.e("sendContent = " + sendContent);
+			reqMap.put("text", sendContent);
 			
 			if (!started) {
 				started = true;
@@ -149,12 +150,21 @@ public class AdviseActivity extends Activity implements Callback , TextWatcher,
 	public String getSendContent(){
 		String value = mETContent.getText().toString();
 		StringBuffer sBuffer = new StringBuffer();
-		sBuffer.append("@android火星人");
+		sBuffer.append("@android火星人 ");
 		sBuffer.append("#意见与反馈#");
+		sBuffer.append("\n");
+		sBuffer.append(getMobileInfo());
 		sBuffer.append(value);
-		return value;
+		return sBuffer.toString();
 	}
 	
+	public String getMobileInfo(){
+		String value = "(版本" + CommonUtil.getSoftVersion(this) + 
+					",厂商" + CommonUtil.getDeviceManufacturer() + 
+					", 型号" + CommonUtil.getDeviceModel() + 
+					", 系统" + CommonUtil.getOSVersion() + ")";
+		return value;
+	}
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){

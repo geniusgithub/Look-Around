@@ -81,4 +81,15 @@ public class PublicTypeBuilder {
 		object.mSign = SecuteUtil.getSignString(object.mKeys, PublicTypeBuilder.TOKEN_KEY, object.mTimeStamp);
 		return object;
 	}
+	
+	public static  PublicType.CheckUpdate buildCheckUpdate(Context context){
+		PublicType.CheckUpdate object = new PublicType.CheckUpdate();
+		object.mKeys = "0";
+		object.mStd = "A1.0";		
+		object.mTimeStamp = String.valueOf(System.currentTimeMillis());
+		object.mSign = SecuteUtil.getSignString(object.mKeys, PublicTypeBuilder.TOKEN_KEY, object.mTimeStamp);
+		object.mVercode = CommonUtil.getSoftVersion(context);
+		object.mOSName = "Android";
+		return object;
+	}
 }

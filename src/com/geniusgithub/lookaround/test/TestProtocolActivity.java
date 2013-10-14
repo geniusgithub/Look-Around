@@ -40,6 +40,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	private Button mBtnAbout;
 	private Button mBtnGetinfo;
 	private Button mBtnDelinfo;
+	private Button mBtnUpdate;
 		
 	private ClientEngine mClientEngine;
 
@@ -74,6 +75,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnAbout = (Button) findViewById(R.id.btnAbout);
 		mBtnGetinfo = (Button) findViewById(R.id.btnGetInfo);
 		mBtnDelinfo = (Button) findViewById(R.id.btnDelInfo);
+		mBtnUpdate = (Button) findViewById(R.id.btnUpdate);
 		
 		mBtnRegiste.setOnClickListener(this);
 		mBtnLogin.setOnClickListener(this);
@@ -82,6 +84,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnAbout.setOnClickListener(this);
 		mBtnGetinfo.setOnClickListener(this);
 		mBtnDelinfo.setOnClickListener(this);
+		mBtnUpdate.setOnClickListener(this);
 		
 		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);	    
 		  
@@ -132,6 +135,9 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 				break;
 			case R.id.btnDelInfo:
 				delInfo();
+				break;
+			case R.id.btnUpdate:
+				update();
 				break;
 		}
 	}
@@ -212,7 +218,17 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 //		mClientEngine.httpGetRequestEx(PublicType.DELETE_INFO_MSGID, object, this);
 	}
 
-
+	private void update(){
+		log.e("update");
+		PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(this);
+		
+		
+		BaseRequestPacket packet = new BaseRequestPacket();
+		packet.action = PublicType.CHECK_UPDATE_MSGID;
+		packet.object = object;
+		
+		mClientEngine.httpGetRequestEx(packet, this);
+	}
 	
 	@Override
 	public void onSuccess(int requestAction, ResponseDataPacket dataPacket, Object extra) {
@@ -230,6 +246,9 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 			case PublicType.GET_INFO_MSGID:{
 				onGetInfoResult(dataPacket);
 			}
+				break;
+			case PublicType.CHECK_UPDATE_MSGID:
+				onGetCheckUpdate(dataPacket);
 				break;
 				
 		}
@@ -292,6 +311,19 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		}
 		
 	}
-
+	
+	private void onGetCheckUpdate( ResponseDataPacket dataPacket){
+		PublicType.CheckUpdateResult object = new PublicType.CheckUpdateResult();
+		
+		try {
+			object.parseJson(dataPacket.data);
+			log.e("mHaveNewVer = " + object.mHaveNewVer +  "\nmVerCode = " + object.mVerCode + 
+					"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmVerDescribre = " + object.mVerDescribre);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 }

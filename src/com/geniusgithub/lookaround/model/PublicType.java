@@ -278,4 +278,53 @@ public class PublicType {
 			return mapValue;
 		}
 	}
+	
+	// 检测升级
+	public final static int CHECK_UPDATE_MSGID  = 0x0017;
+	public static class CheckUpdate extends AbstractBaseProtocol
+	{
+		public final static String KEY_VERCODE = "vercode";	
+		public final static String KEY_OSNAME = "osname";		
+		
+		public String mVercode = "";
+		public String mOSName = "";
+	
+		
+		@Override
+		public Map<String, String> toStringMap() {
+			super.toStringMap();
+			mapValue.put(KEY_VERCODE, mVercode);	
+			mapValue.put(KEY_OSNAME, mOSName);
+			return mapValue;
+		}
+	}
+
+	public static class CheckUpdateResult implements IParseJson
+	{
+		public final static String KEY_HavNewVer = "haveNewVer";	
+		public final static String KEY_VerCode = "verCode";		
+		public final static String KEY_VerName = "verName";		
+		public final static String KEY_AppUrl = "appUrl";		
+		public final static String KEY_VerDescribe = "verDescribe";		
+		
+		public int mHaveNewVer = 0;
+		public int mVerCode = 0;
+		public String mVerName = "";
+		public String mAppUrl = "";
+		public String mVerDescribre = "";
+		@Override
+		public boolean parseJson(JSONObject jsonObject) throws JSONException {
+			
+
+			mHaveNewVer = jsonObject.getInt(KEY_HavNewVer);
+			if (mHaveNewVer != 0){
+				mVerCode = jsonObject.getInt(KEY_VerCode);
+				mVerName = jsonObject.getString(KEY_VerName);
+				mAppUrl = jsonObject.getString(KEY_AppUrl);
+				mVerDescribre = jsonObject.getString(KEY_VerDescribe);
+			}
+			
+			return true;
+		}
+	}
 }
