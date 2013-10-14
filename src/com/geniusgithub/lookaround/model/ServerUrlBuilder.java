@@ -17,7 +17,7 @@ public class ServerUrlBuilder {
 	public static final String aboutURL = "App/About";
 	public static final String getInfotURL = "Topic/list";
 	public static final String deleeteITopicURL = "Topic/Delete";
-	
+	public static final String checkUpdateURL = "App/versioncheck";
 	
 	public static String getServerURL(int action){
 		switch(action){
@@ -35,6 +35,8 @@ public class ServerUrlBuilder {
 				return getInfoURL();
 			case PublicType.DELETE_INFO_MSGID:
 				return deleteInfoURL();
+			case PublicType.CHECK_UPDATE_MSGID:
+				return getCheckUpdateURL();
 		}
 		
 		return "";
@@ -68,5 +70,10 @@ public class ServerUrlBuilder {
 	
 	public static String deleteInfoURL(){
 		return baseURL + deleeteITopicURL;
+	}
+	
+	
+	public static String getCheckUpdateURL(){
+		return baseURL + checkUpdateURL;
 	}
 }
