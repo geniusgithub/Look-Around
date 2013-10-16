@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,8 @@ import android.widget.RelativeLayout;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.animation.MyAnimations;
+import com.geniusgithub.lookaround.dialog.DialogBuilder;
+import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
 import com.geniusgithub.lookaround.network.BaseRequestPacket;
@@ -41,7 +44,8 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	private Button mBtnGetinfo;
 	private Button mBtnDelinfo;
 	private Button mBtnUpdate;
-		
+	private Button mBtnDialog;
+	
 	private ClientEngine mClientEngine;
 
 	private SatelliteMenu SatelliteMenu; 
@@ -76,6 +80,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnGetinfo = (Button) findViewById(R.id.btnGetInfo);
 		mBtnDelinfo = (Button) findViewById(R.id.btnDelInfo);
 		mBtnUpdate = (Button) findViewById(R.id.btnUpdate);
+		mBtnDialog = (Button) findViewById(R.id.btnDialog);
 		
 		mBtnRegiste.setOnClickListener(this);
 		mBtnLogin.setOnClickListener(this);
@@ -85,6 +90,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnGetinfo.setOnClickListener(this);
 		mBtnDelinfo.setOnClickListener(this);
 		mBtnUpdate.setOnClickListener(this);
+		mBtnDialog.setOnClickListener(this);
 		
 		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);	    
 		  
@@ -138,6 +144,9 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 				break;
 			case R.id.btnUpdate:
 				update();
+				break;
+			case R.id.btnDialog:
+				dialog();
 				break;
 		}
 	}
@@ -228,6 +237,30 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		packet.object = object;
 		
 		mClientEngine.httpGetRequestEx(packet, this);
+	}
+	
+	Dialog dialog = null;
+	private void dialog(){
+		log.e("dialog");
+	
+		 dialog = DialogBuilder.buildNormalDialog(this, "update title", "update message", new IDialogInterface() {
+			
+			@Override
+			public void onSure() {
+				log.e("onSure");
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onNev() {
+				log.e("onNev");
+				dialog.dismiss();
+			}
+			
+		
+		});
+		 
+		 dialog.show();
 	}
 	
 	@Override
