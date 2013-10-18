@@ -34,8 +34,7 @@
     android:cacheColorHint="@color/transparent"
     android:scrollbars="none"
     android:clickable="true"
-    android:listSelector="@drawable/selector_nav_item"
-   />
+    android:listSelector="@drawable/selector_nav_item" />
     
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +52,8 @@ public class SettingActivity extends Activity implements OnClickListener,
 	private View mAdviseView;
 	
 	private ClientEngine mClientEngine;
+	
+	private PublicType.CheckUpdateResult object = null; 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -190,7 +193,7 @@ public class SettingActivity extends Activity implements OnClickListener,
 
 	private Dialog updateDialog;
 	private void onGetCheckUpdate( ResponseDataPacket dataPacket){
-		PublicType.CheckUpdateResult object = new PublicType.CheckUpdateResult();
+		object = new PublicType.CheckUpdateResult();
 		
 		try {
 			object.parseJson(dataPacket.data);
@@ -199,6 +202,7 @@ public class SettingActivity extends Activity implements OnClickListener,
 		} catch (JSONException e) {
 			e.printStackTrace();
 			CommonUtil.showToast(R.string.toast_anylizedata_fail, this);
+			object = null;
 			return ;
 		}
 		
@@ -223,6 +227,8 @@ public class SettingActivity extends Activity implements OnClickListener,
 			updateDialog.dismiss();
 		}
 		
+	
+		
 	}
 
 
@@ -230,6 +236,15 @@ public class SettingActivity extends Activity implements OnClickListener,
 	public void onNev() {
 		if (updateDialog != null){
 			updateDialog.dismiss();
+		}
+		
+		log.e("object:" + object);
+		if (object != null){
+			Intent intents = new Intent(Intent.ACTION_VIEW);
+			intents.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intents.setData(Uri.parse(object.mAppUrl));
+			startActivity(intents);
+			log.e("jump to url:" + object.mAppUrl);
 		}
 		
 	}
