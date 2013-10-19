@@ -1,16 +1,19 @@
 package com.geniusgithub.lookaround.activity.set;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.util.CommonUtil;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class AboutActivity extends Activity implements OnClickListener{
 
 	private Button mBtnBack;
+	private TextView mTVBottom;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,10 +28,11 @@ public class AboutActivity extends Activity implements OnClickListener{
     private void setupViews(){
     	mBtnBack = (Button) findViewById(R.id.btn_back);
     	mBtnBack.setOnClickListener(this);
+    	mTVBottom = (TextView) findViewById(R.id.tv_bottom);
     }
     
     private void initData(){
-    	
+    	updateView();
     }
 
 
@@ -39,6 +43,12 @@ public class AboutActivity extends Activity implements OnClickListener{
 				finish();
 				break;
 		}
+	}
+	
+	private void updateView(){
+		
+		String value = getResources().getString(R.string.tvt_ver_pre) + CommonUtil.getSoftVersion(this);
+		mTVBottom.setText(value);
 	}
 
 }

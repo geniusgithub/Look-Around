@@ -64,7 +64,8 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="10dp"
-		        android:textSize="20sp" />
+		        android:textSize="20sp"
+		        android:textColor="#222222" />
 	            
 	            <LinearLayout 
 	            android:layout_width="fill_parent" 
@@ -75,15 +76,17 @@
 			        android:id="@+id/tv_artist"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:textSize="18sp" />
+			        android:textSize="18sp"
+			        android:textColor="#666666" />
 	                
 	                <TextView
 			        android:id="@+id/tv_time"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginLeft="15dp"
-			        android:textSize="18sp" />
-	            </LinearLayout>
+			        android:textSize="18sp"
+			        android:textColor="#666666"/>
+	    	     </LinearLayout>
             
             	<View android:background="@color/black" android:layout_width="fill_parent" android:layout_height="1.0px" />
                  
@@ -102,7 +105,8 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginBottom="15dp"
-		        android:textSize="18sp" />
+		        android:textSize="18sp"
+		        android:textColor="#444444" />
 	                     
            		<View android:background="@color/black" android:layout_width="fill_parent" android:layout_height="1.0px" />
              
@@ -117,7 +121,8 @@
 			        android:layout_height="wrap_content"
 			        android:layout_centerVertical="true"
 			        android:text="来源:未知"
-			        android:textSize="18sp" />
+			        android:textSize="18sp" 
+			        android:textColor="#222222"/>
 	                
 	                <Button
 			        android:id="@+id/btn_readorign"
@@ -132,8 +137,8 @@
                 
        		 </LinearLayout>         
    		 </ScrollView>
-   		 
-        
+ 
+        		        
          <RelativeLayout 
 		  android:layout_width="match_parent"
 		  android:layout_height="match_parent">
@@ -149,11 +154,9 @@
 		       sat:totalSpacingDegree="90"
 		       sat:closeOnClick="true"
 		       sat:expandDuration="500"/>
-         </RelativeLayout>    
-   		 
+               
+         </RelativeLayout>    	 
     </FrameLayout>
-
-   
     
 </LinearLayout>
 

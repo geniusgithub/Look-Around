@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,8 @@ import com.geniusgithub.lookaround.R.id;
 import com.geniusgithub.lookaround.R.layout;
 import com.geniusgithub.lookaround.activity.set.SettingActivity;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
+import com.geniusgithub.lookaround.dialog.DialogBuilder;
+import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
@@ -34,7 +37,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 
-public class MainLookAroundActivity extends SlidingFragmentActivity implements OnClickListener{
+public class MainLookAroundActivity extends SlidingFragmentActivity implements OnClickListener, IDialogInterface{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
@@ -69,9 +72,8 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		
 	
 	}
-	
-	
-	
+
+
 	private void setupViews(){
 		
 		initActionBar();
@@ -166,5 +168,47 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		intent.setClass(this, SettingActivity.class);
 		startActivity(intent);
 	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		if (exitDialog != null){
+			exitDialog.dismiss();
+		}
+		
+		exitDialog = getExitDialog();
+		exitDialog.show();
+	}
+	
+	
+	private Dialog exitDialog;
+	private Dialog getExitDialog(){
+		Dialog dialog = DialogBuilder.buildNormalDialog(this,
+				getResources().getString(R.string.dia_msg_exit_title),
+				getResources().getString(R.string.dia_msg_exit_msg),
+				this);
+		return dialog;
+	}
+
+
+
+	@Override
+	public void onSure() {
+		if (exitDialog != null){
+			exitDialog.dismiss();
+		}
+	
+	}
+
+
+
+	@Override
+	public void onNev() {
+		if (exitDialog != null){
+			exitDialog.dismiss();
+		}
+		finish();
+	}
+
 }
 

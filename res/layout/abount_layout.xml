@@ -30,33 +30,51 @@
 
 	</RelativeLayout>
 
-    <ScrollView 
-        android:scrollbarThumbVertical="@drawable/scrollbar_handle_vertical" 
-        android:focusable="true" 
-        android:focusableInTouchMode="true" 
-        android:visibility="visible" 
-        android:layout_width="fill_parent" 
-        android:layout_height="fill_parent" 
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">  
           
-        <LinearLayout 
-            android:orientation="vertical" 
-            android:layout_width="fill_parent" 
-            android:layout_height="fill_parent">
-            
-            <TextView
-	        android:id="@+id/tv_content"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:text="@string/about_content"
-	        android:textColor="@color/black"
-	        android:textSize="20sp" />
-            
-        </LinearLayout>     
+     <RelativeLayout 
+         android:orientation="vertical" 
+         android:layout_width="fill_parent" 
+         android:layout_height="fill_parent">
+         
+         
+          <View
+          android:id="@+id/v_center"
+          android:layout_width="fill_parent" 
+          android:layout_height="1dp"
+          android:layout_centerInParent="true">          
+          </View>
+         
+          <ImageView
+          android:layout_width="wrap_content" 
+          android:layout_height="wrap_content"
+          android:layout_above="@id/v_center"
+          android:layout_centerHorizontal="true"
+          android:src="@drawable/logo_icon">	                
+          </ImageView>
+         
+          <TextView
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:layout_below="@id/v_center"
+	      android:layout_marginTop="15dp"
+	      android:layout_centerHorizontal="true"
+	      android:text="@string/about_content"
+	      android:textColor="#555555"
+	      android:textSize="20sp" />
+          
+          
+          <TextView
+           android:id="@+id/tv_bottom"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:layout_alignParentBottom="true"
+	      android:layout_marginBottom="30dp"
+	      android:layout_centerHorizontal="true"
+	      android:textColor="#555555"
+	      android:textSize="16sp" />
+         
+     </RelativeLayout>     
         
-    </ScrollView>
     
 </LinearLayout>
 

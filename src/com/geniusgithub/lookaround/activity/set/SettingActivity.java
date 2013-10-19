@@ -75,16 +75,17 @@ public class SettingActivity extends Activity implements OnClickListener,
     	mClieaCacheView = findViewById(R.id.ll_clearcache);
     	mGradingView = findViewById(R.id.ll_garding);
     	mCheckUpdateView = findViewById(R.id.ll_checkupdate);
-    	mAdviseView = findViewById(R.id.ll_advise);
     	mAboutView = findViewById(R.id.ll_about);
+    	mAdviseView = findViewById(R.id.ll_advise);
+    	
     	
     	mMyPushView.setOnClickListener(this);
     	mMyCollectView.setOnClickListener(this);
     	mClieaCacheView.setOnClickListener(this);	
     	mGradingView.setOnClickListener(this); 	
     	mCheckUpdateView.setOnClickListener(this);
-    	mAdviseView.setOnClickListener(this);
     	mAboutView.setOnClickListener(this);
+    	mAdviseView.setOnClickListener(this);
     	
     }
     
@@ -97,6 +98,7 @@ public class SettingActivity extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View view) {
+		log.e("onClick id = " + view.getId());
 		switch(view.getId()){
 			case R.id.btn_back:
 				finish();
@@ -120,7 +122,7 @@ public class SettingActivity extends Activity implements OnClickListener,
 				goAboutActivity();
 				break;
 			case R.id.ll_advise:
-				CommonUtil.showToast(R.string.toast_no_function, this);
+				goAdviseActivity();
 				break;
 		}
 	}
@@ -134,6 +136,12 @@ public class SettingActivity extends Activity implements OnClickListener,
 	private void goAboutActivity(){
 		Intent intent = new Intent();
 		intent.setClass(this, AboutActivity.class);
+		startActivity(intent);
+	}
+	
+	private void goAdviseActivity(){
+		Intent intent = new Intent();
+		intent.setClass(this, AdviseActivity.class);
 		startActivity(intent);
 	}
 	
