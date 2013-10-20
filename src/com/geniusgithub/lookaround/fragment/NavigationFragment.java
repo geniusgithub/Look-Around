@@ -111,7 +111,7 @@ private static final CommonLog log = LogFactory.createLog();
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("typeId", item.mTypeID);
 		map.put("typeTitle", item.mTitle);
-		MobclickAgent.onEvent(mContext, "UM0020", map);
+		MobclickAgent.onEvent(mContext, "UMID0020", map);
 		
 		CommonFragmentEx fragmentEx = mControlCenter.getCommonFragmentEx(item);
 		if (getActivity() == null)
