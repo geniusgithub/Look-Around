@@ -1,5 +1,7 @@
 package com.geniusgithub.lookaround.activity.set;
 
+import java.util.List;
+
 import org.json.JSONException;
 
 import android.app.Activity;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import cn.sharesdk.framework.Platform;
@@ -19,7 +22,9 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
 
+import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.dialog.DialogBuilder;
 import com.geniusgithub.lookaround.dialog.DialogEntity;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
@@ -33,10 +38,11 @@ import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
+import com.umeng.analytics.MobclickAgent;
 
 
 
-public class SettingActivity extends Activity implements OnClickListener,
+public class SettingActivity extends BaseActivity implements OnClickListener,
 														IRequestDataPacketCallback,
 														IDialogInterface{
 
@@ -51,9 +57,12 @@ public class SettingActivity extends Activity implements OnClickListener,
 	private View mAboutView;
 	private View mAdviseView;
 	
+	private ImageView mIVUpageIcon;
+	
 	private ClientEngine mClientEngine;
 	
 	private PublicType.CheckUpdateResult object = null; 
+	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,12 +96,37 @@ public class SettingActivity extends Activity implements OnClickListener,
     	mAboutView.setOnClickListener(this);
     	mAdviseView.setOnClickListener(this);
     	
+    	mIVUpageIcon = (ImageView) findViewById(R.id.iv_update);
+    	
     }
     
     private void initData(){
     	ShareSDK.initSDK(this);
     	
     	mClientEngine=  ClientEngine.getInstance(this);	
+    	
+    	object = LAroundApplication.getInstance().getNewVersion();
+    	if (object != null && object.mHaveNewVer != 0){
+    		showUpdateIcon(true);
+    	}else{
+    		showUpdateIcon(false);
+    		
+    		PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(this);		
+    		BaseRequestPacket packet = new BaseRequestPacket();
+    		packet.action = PublicType.CHECK_UPDATE_MSGID;
+    		packet.object = object;
+    		packet.extra = new Object();
+    		mClientEngine.httpGetRequestEx(packet, this);
+    	}
+    	
+    }
+    
+    private void showUpdateIcon(boolean flag){
+    	if (flag){
+    		mIVUpageIcon.setVisibility(View.VISIBLE);
+    	}else{
+    		mIVUpageIcon.setVisibility(View.GONE);
+    	}
     }
 
 
@@ -146,6 +180,7 @@ public class SettingActivity extends Activity implements OnClickListener,
 	}
 	
 	private void clearCache(){
+		MobclickAgent.onEvent(this, "UM004");
 		Platform mPlatform = ShareSDK.getPlatform(this, SinaWeibo.NAME);
 		mPlatform.removeAccount();
 		mPlatform = ShareSDK.getPlatform(this, TencentWeibo.NAME);
@@ -157,15 +192,26 @@ public class SettingActivity extends Activity implements OnClickListener,
 	}
 	
 	private void checkUpdate(){
-		PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(this);
 		
-		
-		BaseRequestPacket packet = new BaseRequestPacket();
-		packet.action = PublicType.CHECK_UPDATE_MSGID;
-		packet.object = object;
-		
-		mClientEngine.httpGetRequestEx(packet, this);
-		CommonUtil.showToast(R.string.toast_checking_update, this);
+		if (object != null && object.mHaveNewVer != 0){
+			if (updateDialog != null){
+				updateDialog.dismiss();
+			}
+			
+			updateDialog = getUpdateDialog(object.mContentList);
+			updateDialog.show();
+		}else{
+			PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(this);
+			
+			
+			BaseRequestPacket packet = new BaseRequestPacket();
+			packet.action = PublicType.CHECK_UPDATE_MSGID;
+			packet.object = object;
+			
+			mClientEngine.httpGetRequestEx(packet, this);
+			CommonUtil.showToast(R.string.toast_checking_update, this);
+		}
+
 
 	}
 
@@ -177,7 +223,7 @@ public class SettingActivity extends Activity implements OnClickListener,
 		
 		switch(requestAction){
 		case PublicType.CHECK_UPDATE_MSGID:
-			onGetCheckUpdate(dataPacket);
+			onGetCheckUpdate(dataPacket, extra);
 			break;
 			
 		}
@@ -200,13 +246,13 @@ public class SettingActivity extends Activity implements OnClickListener,
 
 
 	private Dialog updateDialog;
-	private void onGetCheckUpdate( ResponseDataPacket dataPacket){
+	private void onGetCheckUpdate( ResponseDataPacket dataPacket, Object extra){
 		object = new PublicType.CheckUpdateResult();
 		
 		try {
 			object.parseJson(dataPacket.data);
 			log.e("mHaveNewVer = " + object.mHaveNewVer +  "\nmVerCode = " + object.mVerCode + 
-					"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmVerDescribre = " + object.mVerDescribre);
+					"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmContent.size = " + object.mContentList.size());
 		} catch (JSONException e) {
 			e.printStackTrace();
 			CommonUtil.showToast(R.string.toast_anylizedata_fail, this);
@@ -214,34 +260,45 @@ public class SettingActivity extends Activity implements OnClickListener,
 			return ;
 		}
 		
-		if (updateDialog != null){
-			updateDialog.dismiss();
+		if (object.mHaveNewVer != 0){	
+			showUpdateIcon(true);
+			if (extra == null){
+				if (updateDialog != null){
+					updateDialog.dismiss();
+				}
+				
+				updateDialog = getUpdateDialog(object.mContentList);
+				updateDialog.show();
+			}
+			LAroundApplication.getInstance().setNewVersionFlag(object);
+		}else{
+			if (extra == null){
+				CommonUtil.showToast(R.string.toast_no_update, this);
+			}
+			
 		}
 		
-		updateDialog = getUpdateDialog(object.mVerDescribre);
-		updateDialog.show();
 		
+
 	}
 	
-	private Dialog getUpdateDialog(String message){
-		Dialog dialog = DialogBuilder.buildNormalDialog(this, "check update", message, this);
+	private Dialog getUpdateDialog(List<String > list){
+		int size = list.size();
+		StringBuffer sBuffer = new StringBuffer();
+		for(int i = 0; i < size; i++){
+			String value = String.valueOf(i + 1) + "." + list.get(i);
+			if (i != size - 1){
+				sBuffer.append(value +  "\n");	
+			}
+		}
+		log.e("msg = " + sBuffer.toString());
+		Dialog dialog = DialogBuilder.buildNormalDialog(this, "版本更新" + object.mVerName, sBuffer.toString(), this);
 		return dialog;
 	}
 
 
 	@Override
 	public void onSure() {
-		if (updateDialog != null){
-			updateDialog.dismiss();
-		}
-		
-	
-		
-	}
-
-
-	@Override
-	public void onNev() {
 		if (updateDialog != null){
 			updateDialog.dismiss();
 		}
@@ -254,6 +311,17 @@ public class SettingActivity extends Activity implements OnClickListener,
 			startActivity(intents);
 			log.e("jump to url:" + object.mAppUrl);
 		}
+		
+	}
+
+	
+	@Override
+	public void onCancel() {
+		if (updateDialog != null){
+			updateDialog.dismiss();
+		}
+	
+		
 		
 	}
 

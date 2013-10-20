@@ -2,21 +2,33 @@ package com.geniusgithub.lookaround.model;
 
 import android.content.Context;
 
+import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.util.SecuteUtil;
+
+
 
 public class PublicTypeBuilder {
 
+	private static final CommonLog log = LogFactory.createLog();
+	
 	private static final String TOKEN_KEY = "6B3767B7-CDF3-1016-A586-DC073C5C0F62";
 	
 	public static  PublicType.UserRegister buildUserRegister(Context context){
 		PublicType.UserRegister object = new PublicType.UserRegister();
 		object.mKeys = "0";
 		object.mStd = "A1.0";		
-		object.mMac = CommonUtil.getMacAdress(context).replace(":", "");
+		object.mMac = CommonUtil.getMacAdress(context);
 		object.mBrand = "Android";
 		object.mTimeStamp = String.valueOf(System.currentTimeMillis());
 		object.mSign = SecuteUtil.getSignString(object.mKeys, PublicTypeBuilder.TOKEN_KEY, object.mTimeStamp);
+		object.mModel = CommonUtil.getDeviceModel();
+		object.mVer = CommonUtil.getSoftCode(context);
+		object.mOsver = CommonUtil.getOSVersion();
+		object.mImsi = CommonUtil.getIMSI(context);
+		object.mTelco = CommonUtil.getProvidersName(context);
+		object.mScreensize = CommonUtil.getScreeenSize(context);
 		return object;
 	}
 	
@@ -27,6 +39,12 @@ public class PublicTypeBuilder {
 		object.mStd = "A1.0";		
 		object.mTimeStamp = String.valueOf(System.currentTimeMillis());
 		object.mSign = SecuteUtil.getSignString(object.mKeys, PublicTypeBuilder.TOKEN_KEY, object.mTimeStamp);
+		object.mVer = CommonUtil.getSoftCode(context);
+		object.mOsver = CommonUtil.getOSVersion();
+		object.mTelco =  CommonUtil.getProvidersName(context);
+	
+		object.mModel  = CommonUtil.getDeviceModel();
+	
 		return object;
 	}
 
@@ -88,7 +106,7 @@ public class PublicTypeBuilder {
 		object.mStd = "A1.0";		
 		object.mTimeStamp = String.valueOf(System.currentTimeMillis());
 		object.mSign = SecuteUtil.getSignString(object.mKeys, PublicTypeBuilder.TOKEN_KEY, object.mTimeStamp);
-		object.mVercode = CommonUtil.getSoftVersion(context);
+		object.mVercode = CommonUtil.getSoftCode(context);
 		object.mOSName = "Android";
 		return object;
 	}

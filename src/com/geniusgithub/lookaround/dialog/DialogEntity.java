@@ -7,7 +7,7 @@ public class DialogEntity {
 	public Context context;
 	public String title = "";
 	public String message = "";
-	public String btnPosi = "";
-	public String btnNev = "";
+	public String btnSure = "";
+	public String btnCancel = "";
 
 }

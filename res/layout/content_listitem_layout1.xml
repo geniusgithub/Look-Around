@@ -58,7 +58,8 @@
   	 android:id="@+id/rl_bottom"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
-     android:layout_below="@id/rl_content">
+     android:layout_below="@id/rl_content"
+     >
         
   	    <ImageView
   	    android:id="@+id/iv_image"
@@ -66,6 +67,7 @@
      	android:layout_height="wrap_content"
      	android:layout_alignParentLeft="true"
      	android:layout_marginRight="15dp"
+     	android:layout_centerVertical="true"
      	android:src="@drawable/image">  	      
   	    </ImageView>
   	    

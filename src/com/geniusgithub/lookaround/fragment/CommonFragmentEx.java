@@ -1,7 +1,9 @@
 package com.geniusgithub.lookaround.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 
@@ -22,6 +24,7 @@ import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.widget.RefreshListView;
+import com.umeng.analytics.MobclickAgent;
 
 import android.content.Context;
 import android.content.Intent;
@@ -220,9 +223,9 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {
+		MobclickAgent.onEvent(mContext, "UMID0002");
 
-		BaseType.InfoItem item = (InfoItem) adapter.getItemAtPosition(pos);
-		
+		BaseType.InfoItem item = (InfoItem) adapter.getItemAtPosition(pos);		
 		BaseType.InfoItemEx itemEx = new BaseType.InfoItemEx(item, mTypeData);
 		ContentCache.getInstance().setTypeItem(mTypeData);
 		ContentCache.getInstance().setInfoItem(itemEx);

@@ -22,7 +22,7 @@ public class DialogBuilder {
 		entity.context = context;
 		entity.title = title;
 		entity.message = message;
-		entity.btnPosi = "确定";
+		entity.btnSure = "确定";
 		
 		return buildTipDialog(entity, listener);
 	}
@@ -32,8 +32,8 @@ public class DialogBuilder {
 		entity.context = context;
 		entity.title = title;
 		entity.message = message;
-		entity.btnPosi = "确定";
-		entity.btnNev = "取消";
+		entity.btnSure = "确定";
+		entity.btnCancel = "取消";
 		
 		return buildNormalDialog(entity, listener);
 	}
@@ -46,7 +46,7 @@ public class DialogBuilder {
 		AlertDialog.Builder builder = new AlertDialog.Builder(entity.context);
 		builder.setTitle(entity.title);
 		builder.setMessage(entity.message);
-		builder.setNegativeButton(entity.btnPosi, new OnClickListener() {
+		builder.setNegativeButton(entity.btnSure, new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -66,7 +66,7 @@ public class DialogBuilder {
 		AlertDialog.Builder builder = new AlertDialog.Builder(entity.context);
 		builder.setTitle(entity.title);
 		builder.setMessage(entity.message);
-		builder.setNegativeButton(entity.btnNev, new OnClickListener() {
+		builder.setNegativeButton(entity.btnSure, new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -76,12 +76,12 @@ public class DialogBuilder {
 			}
 		});
 	
-		builder.setPositiveButton(entity.btnPosi, new OnClickListener(){
+		builder.setPositiveButton(entity.btnCancel, new OnClickListener(){
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (listener != null){
-					listener.onNev();
+					listener.onCancel();
 				}
 			}
 			

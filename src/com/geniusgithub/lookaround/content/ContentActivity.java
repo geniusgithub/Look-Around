@@ -10,6 +10,7 @@ import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.cache.FileCache;
 import com.geniusgithub.lookaround.cache.SimpleImageLoader;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
@@ -22,6 +23,7 @@ import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
 import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,7 +38,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ContentActivity extends Activity implements OnClickListener, SateliteClickedListener{
+public class ContentActivity extends BaseActivity implements OnClickListener, SateliteClickedListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 		
@@ -199,6 +201,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	
 
 	private void collect(){
+		MobclickAgent.onEvent(this, "UM0011");
 		infoItemDao.insert(mInfoItem);
 		CommonUtil.showToast(R.string.toast_collect_success, this);
 		mBtnCollect.setVisibility(View.GONE);
@@ -206,7 +209,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	
 	private void goWebviewActivity(){
 		log.e("goWebviewActivity ");
-		
+		MobclickAgent.onEvent(this, "UMID0009");
 		Intent intent = new Intent();
 		intent.setClass(this, WebViewActivity.class);
 		intent.putExtra(WebViewActivity.INTENT_EXTRA_URL, mInfoItem.mSourceUrl);
@@ -215,7 +218,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	
 	private void goPhoneView(){
 		log.e("goPhoneView ");
-		
+		MobclickAgent.onEvent(this, "UMID0003");
 		Intent intent = new Intent();
 		intent.setClass(this, PictureBrowerActivity.class);
 		startActivity(intent);
@@ -245,6 +248,7 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 	}
 
 	private void shareToSina(){
+		MobclickAgent.onEvent(this, "UMID0008");
 		ShareItem.clear();
 		
 		String imageURL = mInfoItem.getImageURL(0);
@@ -307,6 +311,8 @@ public class ContentActivity extends Activity implements OnClickListener, Sateli
 
 
 	private void goShareActivity(){
+		
+		
 		Intent intent = new Intent();
 		intent.setClass(this, ShareActivity.class);
 		startActivity(intent);

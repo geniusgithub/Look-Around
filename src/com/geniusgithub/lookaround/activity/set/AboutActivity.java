@@ -1,6 +1,7 @@
 package com.geniusgithub.lookaround.activity.set;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.util.CommonUtil;
 
 import android.app.Activity;
@@ -10,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class AboutActivity extends Activity implements OnClickListener{
+public class AboutActivity extends BaseActivity implements OnClickListener{
 
 	private Button mBtnBack;
 	private TextView mTVBottom;

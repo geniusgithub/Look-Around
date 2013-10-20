@@ -3,7 +3,11 @@ package com.geniusgithub.lookaround.activity.set;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
 import com.geniusgithub.lookaround.content.ContentActivity;
 import com.geniusgithub.lookaround.content.ContentCache;
@@ -11,14 +15,21 @@ import com.geniusgithub.lookaround.datastore.DaoMaster;
 import com.geniusgithub.lookaround.datastore.DaoSession;
 import com.geniusgithub.lookaround.datastore.InfoItemDao;
 import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
+import com.geniusgithub.lookaround.dialog.DialogBuilder;
+import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.BaseType.InfoItemEx;
+import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +39,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class CollectActivity extends Activity implements OnClickListener, OnItemClickListener{
+public class CollectActivity extends BaseActivity implements OnClickListener,
+												OnItemClickListener, IDialogInterface{
 	
 	private static final CommonLog log = LogFactory.createLog();
 	private Button mBtnBack;
@@ -121,7 +133,7 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
 				finish();
 				break;
 			case R.id.btn_right:
-				clear();
+				showDeleteDialog();
 				break;
 		}
 	}
@@ -148,4 +160,48 @@ public class CollectActivity extends Activity implements OnClickListener, OnItem
 		intent.setClass(this, ContentActivity.class);
 		startActivity(intent);
 	}
+	
+	
+	private Dialog deleteDialog;
+	
+	private void showDeleteDialog(){
+		
+		long count = infoItemDao.count();
+		if (count == 0){
+			CommonUtil.showToast(R.string.toast_no_delcollect, this);	
+			return ;
+		}
+		if (deleteDialog != null){
+			deleteDialog.show();
+			return ;
+		}
+		
+		deleteDialog = DialogBuilder.buildNormalDialog(this,
+									getResources().getString(R.string.dia_msg_delcollect_title),
+									getResources().getString(R.string.dia_msg_delcollect_msg),
+									this);
+		deleteDialog.show();
+	}
+
+	@Override
+	public void onSure() {
+		if (deleteDialog != null){
+			deleteDialog.dismiss();
+		}	
+		
+		clear();
+	}
+
+	
+	@Override
+	public void onCancel() {
+		if (deleteDialog != null){
+			deleteDialog.dismiss();
+		}
+		
+		
+		
+	}
+
+
 }

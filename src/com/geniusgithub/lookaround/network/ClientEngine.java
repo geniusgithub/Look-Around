@@ -30,7 +30,7 @@ public class ClientEngine {
 	private ClientEngine(Context context)
 	{	
 		mContext = context;
-		client.setTimeout(10 * 1000);
+		client.setTimeout(20 * 1000);
 	}
 	
 	public void cancelTask(Context context){

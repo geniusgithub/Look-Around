@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.FileHandler;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.adapter.GalleryAdapterEx;
 import com.geniusgithub.lookaround.cache.FileCache;
 import com.geniusgithub.lookaround.model.BaseType;
@@ -14,6 +15,7 @@ import com.geniusgithub.lookaround.util.FileManager;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.widget.ImageViewEx;
 import com.geniusgithub.lookaround.widget.PicGallery;
+import com.umeng.analytics.MobclickAgent;
 
 
 import android.R.integer;
@@ -29,10 +31,11 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class PictureBrowerActivity extends Activity implements OnItemSelectedListener,
+public class PictureBrowerActivity extends BaseActivity implements OnItemSelectedListener,
 													OnClickListener
 {
 	private static final CommonLog log = LogFactory.createLog();
@@ -50,6 +53,9 @@ public class PictureBrowerActivity extends Activity implements OnItemSelectedLis
 
 	private BaseType.InfoItem mItem = new BaseType.InfoItem();
 	private int mCurPos = 0;
+	private int mTotalNum = 0;
+	
+	private TextView mTVTitle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,8 @@ public class PictureBrowerActivity extends Activity implements OnItemSelectedLis
 		mBtnBack.setOnClickListener(this);
 		mBtnSave = (Button) findViewById(R.id.btn_right);
 		mBtnSave.setOnClickListener(this);
+		
+		mTVTitle = (TextView) findViewById(R.id.tv_title);
 	}
 	
 	
@@ -90,7 +98,7 @@ public class PictureBrowerActivity extends Activity implements OnItemSelectedLis
 		mItem = mContentCache.getInfoItem();
 		List<String> list = mItem.mImageUrlList;
 		log.e("mItem.mImageUrlList.size = " + mItem.mImageUrlList.size());
-		
+		mTotalNum = mItem.mImageUrlList.size();
 		mAdapter = new GalleryAdapterEx(this);
 		gallery.setAdapter(mAdapter);
 		gallery.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -106,9 +114,13 @@ public class PictureBrowerActivity extends Activity implements OnItemSelectedLis
 		mAdapter.setData(list);
 		
 		gallery.setOnItemSelectedListener(this);
+		
+		updateTitle(0);
 	}
 	
-	
+	private void updateTitle(int pos){
+		mTVTitle.setText(String.valueOf(pos + 1) + "/" + String.valueOf(mTotalNum));
+	}
 	
 	private class MySimpleGesture extends SimpleOnGestureListener {
 		// 按两下的第二下Touch down时触发
@@ -155,6 +167,8 @@ public class PictureBrowerActivity extends Activity implements OnItemSelectedLis
 		if (isDefaultBitmap){
 			mAdapter.syncRefreshImageViewEx(imageViewEx);
 		}
+		
+		updateTitle(mCurPos);
 	}
 
 	@Override
@@ -177,6 +191,7 @@ public class PictureBrowerActivity extends Activity implements OnItemSelectedLis
 	
 	
 	private void save(){
+		MobclickAgent.onEvent(this, "SAVE01");
 		boolean isSDCard = CommonUtil.hasSDCard();
 		if (!isSDCard){
 			CommonUtil.showToast(R.string.toast_save_fail, this);

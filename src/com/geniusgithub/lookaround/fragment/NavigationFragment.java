@@ -1,7 +1,9 @@
 package com.geniusgithub.lookaround.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.BaseType.ListItem;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
+import com.umeng.analytics.MobclickAgent;
 
 public class NavigationFragment extends Fragment implements OnItemClickListener{
 
@@ -99,9 +102,16 @@ private static final CommonLog log = LogFactory.createLog();
 	
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int pos, long arg3) {
+			
 		
 		BaseType.ListItem item = (ListItem) adapter.getItemAtPosition(pos);
 		log.e("pos = " + pos + ", item = " + "\n" + item.getShowString());
+		
+	
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("typeId", item.mTypeID);
+		map.put("typeTitle", item.mTitle);
+		MobclickAgent.onEvent(mContext, "UM0020", map);
 		
 		CommonFragmentEx fragmentEx = mControlCenter.getCommonFragmentEx(item);
 		if (getActivity() == null)

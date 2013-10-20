@@ -24,6 +24,7 @@ import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Application;
 import android.content.Intent;
@@ -36,7 +37,11 @@ public class LAroundApplication extends Application{
 
 	private PublicType.UserLoginResult mUserLoginResult = new PublicType.UserLoginResult();
 	
+	
 	private boolean isLogin = false;
+	
+	private PublicType.CheckUpdateResult updateObject = null;
+	
 	
 	public synchronized static LAroundApplication getInstance(){
 		return mInstance;
@@ -48,6 +53,7 @@ public class LAroundApplication extends Application{
 		log.e("LAroundApplication  onCreate!!!");
 		mInstance = this;
 		startBackgroundService();
+		MobclickAgent.setDebugMode(true);
 	}
 	
 	public void setUserLoginResult(PublicType.UserLoginResult object){
@@ -60,6 +66,15 @@ public class LAroundApplication extends Application{
 	
 	public void setLoginStatus(boolean flag){
 		isLogin = flag;
+	}
+	
+	public PublicType.CheckUpdateResult  getNewVersion(){
+	
+		return updateObject;
+	}
+	
+	public void setNewVersionFlag(PublicType.CheckUpdateResult object){
+		updateObject = object;
 	}
 	
 	public boolean getLoginStatus(){

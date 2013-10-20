@@ -88,13 +88,15 @@ public class PublicType {
 		public final static String KEY_TELCO = "telco";
 		public final static String KEY_OSVER = "osver";
 		public final static String KEY_VER = "ver";
-	
+		
 
 		public String mConn = "";
 		public String mModel = "";
 		public String mTelco = "";
 		public String mOsver = "";
 		public String mVer = "";
+		
+		
 
 		@Override
 		public Map<String, String> toStringMap() {
@@ -115,12 +117,30 @@ public class PublicType {
 		public final static String KEY_DATALIST = "DataList";
 		public final static String KEY_ADMIN = "isAdmin";
 		public final static String KEY_ADTYPE = "adType";
-		
-		
+
 	
 		public List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
 		public int mIsAdmin = 0;
 		public int mAdType = 0;
+		
+		
+		//-----------------------------------------------
+		public final static String KEY_HavNewVer = "haveNewVer";	
+		public final static String KEY_VerCode = "verCode";		
+		public final static String KEY_VerName = "verName";		
+		public final static String KEY_AppUrl = "appUrl";		
+		public final static String KEY_VerDescribe = "verDescribe";		
+		public final static String KEY_FORCEUPDATE = "forceUpdate";	
+		
+		public int mForceUpdate = 0;
+		public int mHaveNewVer = 0;
+		public int mVerCode = 0;
+		public String mVerName = "";
+		public String mAppUrl = "";
+		public String mVerDescribre = "";
+		//-----------------------------------------------
+		
+		
 		
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
@@ -141,6 +161,17 @@ public class PublicType {
 					e.printStackTrace();
 				}							
 			}
+			
+			mForceUpdate = jsonObject.optInt(KEY_FORCEUPDATE);
+			mHaveNewVer = jsonObject.optInt(KEY_HavNewVer);
+			if (mHaveNewVer != 0){
+				mVerCode = jsonObject.optInt(KEY_VerCode);
+				mVerName = jsonObject.optString(KEY_VerName);
+				mAppUrl = jsonObject.optString(KEY_AppUrl);
+				mVerDescribre = jsonObject.optString(KEY_VerDescribe);
+			}
+			
+			
 			return true;
 
 		}	
@@ -283,7 +314,7 @@ public class PublicType {
 	public final static int CHECK_UPDATE_MSGID  = 0x0017;
 	public static class CheckUpdate extends AbstractBaseProtocol
 	{
-		public final static String KEY_VERCODE = "vercode";	
+		public final static String KEY_VERCODE = "versioncode";	
 		public final static String KEY_OSNAME = "osname";		
 		
 		public String mVercode = "";
@@ -311,7 +342,9 @@ public class PublicType {
 		public int mVerCode = 0;
 		public String mVerName = "";
 		public String mAppUrl = "";
-		public String mVerDescribre = "";
+		
+		public List<String> mContentList = new ArrayList<String>();
+		
 		@Override
 		public boolean parseJson(JSONObject jsonObject) throws JSONException {
 			
@@ -321,7 +354,13 @@ public class PublicType {
 				mVerCode = jsonObject.getInt(KEY_VerCode);
 				mVerName = jsonObject.getString(KEY_VerName);
 				mAppUrl = jsonObject.getString(KEY_AppUrl);
-				mVerDescribre = jsonObject.getString(KEY_VerDescribe);
+				JSONArray jsonArray = jsonObject.getJSONArray(KEY_VerDescribe);
+				
+				int size = jsonArray.length();
+				for(int i = 0; i < size; i++){
+					String value = jsonArray.getString(i);
+					mContentList.add(value);
+				}
 			}
 			
 			return true;

@@ -30,6 +30,7 @@ import com.geniusgithub.lookaround.network.IRequestContentCallback;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 public class TestProtocolActivity extends Activity implements OnClickListener, IRequestDataPacketCallback, IRequestContentCallback{
@@ -45,6 +46,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	private Button mBtnDelinfo;
 	private Button mBtnUpdate;
 	private Button mBtnDialog;
+	private Button mBtnTest;
 	
 	private ClientEngine mClientEngine;
 
@@ -81,6 +83,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnDelinfo = (Button) findViewById(R.id.btnDelInfo);
 		mBtnUpdate = (Button) findViewById(R.id.btnUpdate);
 		mBtnDialog = (Button) findViewById(R.id.btnDialog);
+		mBtnTest = (Button) findViewById(R.id.btnTest);
 		
 		mBtnRegiste.setOnClickListener(this);
 		mBtnLogin.setOnClickListener(this);
@@ -91,7 +94,8 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		mBtnDelinfo.setOnClickListener(this);
 		mBtnUpdate.setOnClickListener(this);
 		mBtnDialog.setOnClickListener(this);
-		
+		mBtnTest.setOnClickListener(this);
+			
 		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);	    
 		  
 	}
@@ -148,7 +152,19 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 			case R.id.btnDialog:
 				dialog();
 				break;
+			case R.id.btnTest:
+				test();
+				break;
 		}
+	}
+	
+	private void test(){
+		String mac = CommonUtil.getMacAdress(this);
+		log.e("mac = " + mac);
+		String imsi = CommonUtil.getIMSI(this);
+		log.e("imsi = " + imsi);
+		String providerString = CommonUtil.getProvidersName(this);
+		log.e("providerString = " + providerString);
 	}
 	
 	
@@ -252,8 +268,8 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 			}
 
 			@Override
-			public void onNev() {
-				log.e("onNev");
+			public void onCancel() {
+				log.e("onCancel");
 				dialog.dismiss();
 			}
 			
@@ -351,7 +367,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		try {
 			object.parseJson(dataPacket.data);
 			log.e("mHaveNewVer = " + object.mHaveNewVer +  "\nmVerCode = " + object.mVerCode + 
-					"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmVerDescribre = " + object.mVerDescribre);
+					"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmContent.sizea = " + object.mContentList.size());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

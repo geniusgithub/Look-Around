@@ -12,11 +12,12 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 
-public class WebViewActivity extends Activity implements OnClickListener{
+public class WebViewActivity extends BaseActivity implements OnClickListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 	

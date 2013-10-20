@@ -3,12 +3,11 @@ package com.geniusgithub.lookaround.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -16,25 +15,21 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.geniusgithub.lookaround.FragmentControlCenter;
-import com.geniusgithub.lookaround.FragmentModel;
+
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.R.dimen;
-import com.geniusgithub.lookaround.R.drawable;
-import com.geniusgithub.lookaround.R.id;
-import com.geniusgithub.lookaround.R.layout;
 import com.geniusgithub.lookaround.activity.set.SettingActivity;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.dialog.DialogBuilder;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
-import com.geniusgithub.lookaround.fragment.NavigationFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class MainLookAroundActivity extends SlidingFragmentActivity implements OnClickListener, IDialogInterface{
@@ -70,9 +65,22 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	
 		initData();
 		
-	
+		MobclickAgent.onError(this);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		MobclickAgent.onResume(this);
+	}
 
 	private void setupViews(){
 		
@@ -105,8 +113,11 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	}
 	
 	private void initActionBar(){
+	
 		ActionBar actionBar = getSupportActionBar();
+
 		actionBar.setCustomView(R.layout.actionbar_layout);
+
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayShowHomeEnabled(false);
 		
@@ -197,17 +208,17 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		if (exitDialog != null){
 			exitDialog.dismiss();
 		}
-	
+		finish();
 	}
 
 
 
 	@Override
-	public void onNev() {
+	public void onCancel() {
 		if (exitDialog != null){
 			exitDialog.dismiss();
 		}
-		finish();
+		
 	}
 
 }

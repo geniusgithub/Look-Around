@@ -12,6 +12,7 @@ import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -38,7 +39,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ShareActivity extends Activity implements Callback , TextWatcher,
+public class ShareActivity extends BaseActivity implements Callback , TextWatcher,
 												OnClickListener, PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
