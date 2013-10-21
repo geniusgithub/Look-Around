@@ -10,6 +10,8 @@ import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
@@ -58,6 +60,7 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	private EditText mETContent;
 	private TextView mTVTarget;
 	private TextView mTVLive;
+	private TextView mTVTitle;
 	
 	private int notifyIcon;
 	private String notifyTitle;
@@ -104,6 +107,7 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 		mTVTarget = (TextView) findViewById(R.id.tv_target);
 		mETContent.addTextChangedListener(this);
 		mTVLive = (TextView) findViewById(R.id.tv_live);
+		mTVTitle = (TextView) findViewById(R.id.tv_bartitle);
 		
 		phoneFrameView = findViewById(R.id.fl_phoneframe);
 	}
@@ -136,6 +140,19 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 		if (nickname != null){
 			mTVTarget.setText(nickname);
 		}
+		
+		String name = mPlatform.getName();
+		log.e("mPlatform name = " + name);
+		String value = "分享至";
+		if (name.equals(QZone.NAME)){
+			value += "QQ空间";
+		}else if (name.equals(TencentWeibo.NAME)){
+			value += "腾讯微博";
+		}else if (name.equals(SinaWeibo.NAME)){
+			value += "新浪微博";
+		}
+		
+		mTVTitle.setText(value);
 		
 	}
 	

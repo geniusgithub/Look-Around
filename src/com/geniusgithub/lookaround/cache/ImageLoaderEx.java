@@ -178,7 +178,7 @@ public class ImageLoaderEx {
 				scale *= 2;
 			}
 			
-			log.e("w = " + width_tmp + ", h = " + height_tmp + ", scale = " + scale);
+		//	log.e("w = " + width_tmp + ", h = " + height_tmp + ", scale = " + scale);
 			
 			// decode with inSampleSize
 			BitmapFactory.Options o2 = new BitmapFactory.Options();
@@ -246,7 +246,7 @@ public class ImageLoaderEx {
 		}
 
 		public void run() {
-			log.e("BitmapDisplayer run...");
+		//	log.e("BitmapDisplayer run...");
 			if (imageViewReused(photoToLoad))
 				return;
 			if (bitmap != null)

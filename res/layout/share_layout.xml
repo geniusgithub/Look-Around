@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:text="分享至微博" />
+        android:textSize="20sp"/>
        
         <Button
         android:id="@+id/btn_right"

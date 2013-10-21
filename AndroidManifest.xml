@@ -24,10 +24,12 @@
         android:theme="@style/AppTheme" 
         android:name="com.geniusgithub.lookaround.LAroundApplication">
         
+       <!--             android:value="5263debd56240b87b3122d91"  --> 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5263debd56240b87b3122d91" >
+            android:value="522b3fba56240bf2741196f1">           
         </meta-data>
+        
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Umeng" >
