@@ -215,12 +215,12 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 		try {
 			object.parseJson(dataPacket.data);
 			
-			log.e("mForceUpdate = " + object.mForceUpdate + "\n" + 
-					"mHaveNewVer = " + object.mHaveNewVer + "\n" + 
-					"mVerCode = " + object.mVerCode + "\n" + 
-					"mVerName = " + object.mVerName + "\n" + 
-					"mAppUrl = " + object.mAppUrl + "\n" + 
-					"mVerDescribre = " + object.mVerDescribre);
+//			log.e("mForceUpdate = " + object.mForceUpdate + "\n" + 
+//					"mHaveNewVer = " + object.mHaveNewVer + "\n" + 
+//					"mVerCode = " + object.mVerCode + "\n" + 
+//					"mVerName = " + object.mVerName + "\n" + 
+//					"mAppUrl = " + object.mAppUrl + "\n" + 
+//					"mVerDescribre = " + object.mVerDescribre);
 			
 			if (object.mForceUpdate != 0){
 				if (forceUpdateDialog != null){
@@ -232,6 +232,14 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			
 				return ;
 			}
+			
+			if (object.mHaveNewVer != 0){
+				CommonUtil.showToast(R.string.toast_update_warn, this);
+			}
+					
+			
+			
+		
 			
 			mApplication.setUserLoginResult(object);
 			mApplication.setLoginStatus(true);

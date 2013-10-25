@@ -39,7 +39,7 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 	@Override
 	public void onSuccess(int statusCode, String content) {
 		
-		log.d("mAction = " + mAction + ", onSuccess! statusCode = " + statusCode + "\ncontent = " + content);
+	//	log.d("mAction = " + mAction + ", onSuccess! statusCode = " + statusCode + "\ncontent = " + content);
 		if (isDataPacketAction(mAction)){
 			if (mDataPacketCallback == null){
 				return ;

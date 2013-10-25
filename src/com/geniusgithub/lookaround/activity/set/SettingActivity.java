@@ -37,6 +37,8 @@ import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.FileHelper;
+import com.geniusgithub.lookaround.util.FileManager;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.umeng.analytics.MobclickAgent;
 
@@ -132,7 +134,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 
 	@Override
 	public void onClick(View view) {
-		log.e("onClick id = " + view.getId());
+	
 		switch(view.getId()){
 			case R.id.btn_back:
 				finish();
@@ -188,6 +190,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		mPlatform = ShareSDK.getPlatform(this, QZone.NAME);
 		mPlatform.removeAccount();
 		CommonUtil.showToast(R.string.toast_clear_success, this);
+		
+		clearImageCache();
 		
 	}
 	
@@ -251,8 +255,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		
 		try {
 			object.parseJson(dataPacket.data);
-			log.e("mHaveNewVer = " + object.mHaveNewVer +  "\nmVerCode = " + object.mVerCode + 
-					"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmContent.size = " + object.mContentList.size());
+		//	log.e("mHaveNewVer = " + object.mHaveNewVer +  "\nmVerCode = " + object.mVerCode + 
+		//			"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmContent.size = " + object.mContentList.size());
 		} catch (JSONException e) {
 			e.printStackTrace();
 			CommonUtil.showToast(R.string.toast_anylizedata_fail, this);
@@ -325,4 +329,35 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		
 	}
 
+	private ClearThread thread = null;
+	private void clearImageCache(){
+		if (thread == null){
+			thread = new ClearThread();
+			thread.start();
+		}else{
+			if (!thread.isAlive()){
+				thread = new ClearThread();
+				thread.start();
+			}
+		}
+
+	}
+	
+	
+	
+	private class ClearThread extends Thread{
+
+		@Override
+		public void run() {
+			String path = FileManager.getCacheFileSavePath();
+			log.e("clearThread run path:" + path);
+			long time1 = System.currentTimeMillis();
+			
+			FileHelper.deleteDirectory(path);
+			
+			long time2 = System.currentTimeMillis();
+			log.e("clearThread complete, cost time:" + (time2 - time1));
+		}
+		
+	};
 }

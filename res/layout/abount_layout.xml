@@ -44,24 +44,25 @@
           android:layout_centerInParent="true">          
           </View>
          
-          <ImageView
-          android:layout_width="wrap_content" 
-          android:layout_height="wrap_content"
-          android:layout_above="@id/v_center"
-          android:layout_centerHorizontal="true"
-          android:src="@drawable/logo_icon">	                
-          </ImageView>
-         
+   
           <TextView
-	      android:layout_width="wrap_content"
+          android:id="@+id/tv_center"
+          android:layout_above="@id/v_center"
+          android:layout_width="wrap_content"  
 	      android:layout_height="wrap_content"
-	      android:layout_below="@id/v_center"
 	      android:layout_marginTop="15dp"
 	      android:layout_centerHorizontal="true"
 	      android:text="@string/about_content"
 	      android:textColor="#555555"
 	      android:textSize="20sp" />
           
+          <ImageView
+          android:layout_width="wrap_content" 
+          android:layout_height="wrap_content"
+          android:layout_above="@id/tv_center"
+          android:layout_centerHorizontal="true"
+          android:src="@drawable/logo_icon_big">	                
+          </ImageView>
           
           <TextView
            android:id="@+id/tv_bottom"

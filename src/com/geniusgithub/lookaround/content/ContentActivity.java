@@ -137,7 +137,7 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 		mTypeItem = mContentCache.getTypeItem();
 		mInfoItem = mContentCache.getInfoItem();
 		
-		log.e("infoItem --> \n" + mInfoItem.toString());
+		//log.e("infoItem --> \n" + mInfoItem.toString());
 		
 		mTVBarTitle.setText(mTypeItem.mTitle);
 		mTVTitle.setText(mInfoItem.mTitle);

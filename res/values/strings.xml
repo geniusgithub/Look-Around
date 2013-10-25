@@ -25,7 +25,7 @@
    <string name="toast_no_update">未检测到新版本</string>   
    <string name="toast_no_delcollect">没有可删除的收藏</string>   
    <string name="toast_connet_fail">联网失败，请检查网络</string>  
-     
+   <string name="toast_update_warn">发现新的版本，详情请到设置里查看</string>    
      
    <string name="dia_msg_exit_title">确定要退出随便瞧瞧?</string>   
    <string name="dia_msg_exit_msg">亲，再好好考虑一下吧~_~</string>   
@@ -57,7 +57,8 @@
    <string name="about">关于</string>
    
    <string name="about_content">随便瞧瞧，随便看看 </string>  
-   
+    
+    
    <string name="dangerous">保险库</string>  
    <string name="advise">意见与反馈</string>  
    

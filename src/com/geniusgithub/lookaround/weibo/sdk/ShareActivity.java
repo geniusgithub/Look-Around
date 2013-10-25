@@ -131,6 +131,11 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 			Bitmap bitmap = BitmapFactory.decodeFile(sharePath);
 			if (bitmap != null){
 				mIVShareImage.setImageBitmap(bitmap);
+			}else{
+				showShareImage(false);
+				sharePath = null;
+				reqMap.remove("imagePath");
+				reqMap.remove("imageUrl");
 			}
 			
 		}

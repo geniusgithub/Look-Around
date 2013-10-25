@@ -49,7 +49,7 @@ public class ShareItem {
 	/** text是分享文本，所有平台都需要这个字段 */
 	public static void setText(String text) {
 		reqMap.put("text", text);
-		log.e("content = " + text);
+	//	log.e("content = " + text);
 	}
 
 	/** imagePath是本地的图片路径，除Linked-In外的所有平台都支持这个字段 */

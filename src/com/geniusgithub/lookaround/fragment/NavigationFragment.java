@@ -105,7 +105,7 @@ private static final CommonLog log = LogFactory.createLog();
 			
 		
 		BaseType.ListItem item = (ListItem) adapter.getItemAtPosition(pos);
-		log.e("pos = " + pos + ", item = " + "\n" + item.getShowString());
+	//	log.e("pos = " + pos + ", item = " + "\n" + item.getShowString());
 		
 	
 		HashMap<String, String> map = new HashMap<String, String>();

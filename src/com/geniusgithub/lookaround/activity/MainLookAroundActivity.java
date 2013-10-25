@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -82,6 +83,8 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		MobclickAgent.onResume(this);
 	}
 
+	
+	
 	private void setupViews(){
 		
 		initActionBar();
@@ -91,7 +94,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	}
 	
 	private void initSlideMenu(){
-		log.e("MainLookAroundActivity initSlideMenu"); 
+	//	log.e("MainLookAroundActivity initSlideMenu"); 
 		SlidingMenu sm = getSlidingMenu();
 		sm.setMode(SlidingMenu.LEFT);
 
@@ -190,6 +193,19 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		exitDialog = getExitDialog();
 		exitDialog.show();
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if(keyCode == KeyEvent.KEYCODE_MENU) {
+			boolean ret = getSlidingMenu().isMenuShowing();
+			if (!ret){
+				goSettingActivity();
+			}
+			return false;
+		
+		}
+		return super.onKeyDown(keyCode, event);
+    }
 	
 	
 	private Dialog exitDialog;
