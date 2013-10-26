@@ -182,7 +182,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 	}
 	
 	private void clearCache(){
-		MobclickAgent.onEvent(this, "UM004");
+		LAroundApplication.getInstance().onEvent("UM004");
 		Platform mPlatform = ShareSDK.getPlatform(this, SinaWeibo.NAME);
 		mPlatform.removeAccount();
 		mPlatform = ShareSDK.getPlatform(this, TencentWeibo.NAME);

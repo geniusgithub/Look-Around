@@ -2,6 +2,7 @@ package com.geniusgithub.lookaround.content;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -201,7 +202,12 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	
 
 	private void collect(){
-		MobclickAgent.onEvent(this, "UM0011");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put(BaseType.ListItem.KEY_TYPEID, mTypeItem.mTypeID);
+		map.put(BaseType.ListItem.KEY_TITLE, mInfoItem.mTitle);
+		LAroundApplication.getInstance().onEvent("UM0011", map);
+		
 		infoItemDao.insert(mInfoItem);
 		CommonUtil.showToast(R.string.toast_collect_success, this);
 		mBtnCollect.setVisibility(View.GONE);
@@ -209,7 +215,7 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	
 	private void goWebviewActivity(){
 		log.e("goWebviewActivity ");
-		MobclickAgent.onEvent(this, "UMID0009");
+		LAroundApplication.getInstance().onEvent("UMID0009");
 		Intent intent = new Intent();
 		intent.setClass(this, WebViewActivity.class);
 		intent.putExtra(WebViewActivity.INTENT_EXTRA_URL, mInfoItem.mSourceUrl);
@@ -218,7 +224,7 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	
 	private void goPhoneView(){
 		log.e("goPhoneView ");
-		MobclickAgent.onEvent(this, "UMID0003");
+		LAroundApplication.getInstance().onEvent("UMID0003");
 		Intent intent = new Intent();
 		intent.setClass(this, PictureBrowerActivity.class);
 		startActivity(intent);
@@ -248,7 +254,7 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	}
 
 	private void shareToSina(){
-		MobclickAgent.onEvent(this, "UMID0008");
+		LAroundApplication.getInstance().onEvent("UMID0008");
 		ShareItem.clear();
 		
 		String imageURL = mInfoItem.getImageURL(0);

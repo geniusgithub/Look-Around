@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,8 +41,8 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	
 	private CommonFragmentEx mContentFragment;
 	
-	private ImageView mLeftIcon;
-	private ImageView mRightIcon;
+	private Button mLeftIcon;
+	private Button mRightIcon;
 	private TextView mTitleTextView;
 	
 	private FragmentControlCenter mControlCenter;
@@ -66,21 +68,22 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	
 		initData();
 		
-		MobclickAgent.onError(this);
+		LAroundApplication.onCatchError(this);
+		
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		
-		MobclickAgent.onPause(this);
+		LAroundApplication.onPause(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
-		MobclickAgent.onResume(this);
+		LAroundApplication.onResume(this);
 	}
 
 	
@@ -124,8 +127,8 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayShowHomeEnabled(false);
 		
-		mLeftIcon = (ImageView) findViewById(R.id.iv_left_icon);
-		mRightIcon = (ImageView) findViewById(R.id.iv_right_icon);
+		mLeftIcon = (Button) findViewById(R.id.iv_left_icon);
+		mRightIcon = (Button) findViewById(R.id.iv_right_icon);
 		mLeftIcon.setOnClickListener(this);
 		mRightIcon.setOnClickListener(this);
 		

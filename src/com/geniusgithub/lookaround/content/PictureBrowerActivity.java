@@ -3,6 +3,7 @@ package com.geniusgithub.lookaround.content;
 import java.util.List;
 import java.util.logging.FileHandler;
 
+import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.adapter.GalleryAdapterEx;
@@ -191,7 +192,7 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 	
 	
 	private void save(){
-		MobclickAgent.onEvent(this, "SAVE01");
+		LAroundApplication.getInstance().onEvent("SAVE01");
 		boolean isSDCard = CommonUtil.hasSDCard();
 		if (!isSDCard){
 			CommonUtil.showToast(R.string.toast_save_fail, this);

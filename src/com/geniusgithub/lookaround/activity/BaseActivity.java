@@ -1,5 +1,7 @@
 package com.geniusgithub.lookaround.activity;
 
+import com.geniusgithub.lookaround.LAroundApplication;
+import com.gfan.sdk.statitistics.GFAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
@@ -9,15 +11,13 @@ public class BaseActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		MobclickAgent.onError(this);
+		LAroundApplication.onCatchError(this);
 	}
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 	}
 
@@ -25,14 +25,14 @@ public class BaseActivity extends Activity{
 	protected void onPause() {
 		super.onPause();
 		
-		MobclickAgent.onPause(this);
+		LAroundApplication.onPause(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
-		MobclickAgent.onResume(this);
+		LAroundApplication.onResume(this);
 	}
 
 }

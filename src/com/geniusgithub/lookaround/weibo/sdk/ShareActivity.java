@@ -50,7 +50,7 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	private static final int MSG_ACTION_CCALLBACK = 2;
 	private static final int MSG_CANCEL_NOTIFY = 3;
 	
-	private static final int MAX_TEXT_LENGTH = 420;
+	private static final int MAX_TEXT_LENGTH = 140;
 	
 	private Button mBtnBack;
 	private Button mBtnShare;

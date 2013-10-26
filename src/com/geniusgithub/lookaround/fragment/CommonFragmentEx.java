@@ -223,12 +223,18 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {
-		MobclickAgent.onEvent(mContext, "UMID0002");
-
+		
+		
 		BaseType.InfoItem item = (InfoItem) adapter.getItemAtPosition(pos);		
 		BaseType.InfoItemEx itemEx = new BaseType.InfoItemEx(item, mTypeData);
 		ContentCache.getInstance().setTypeItem(mTypeData);
 		ContentCache.getInstance().setInfoItem(itemEx);
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put(BaseType.ListItem.KEY_TYPEID, mTypeData.mTypeID);
+		map.put(BaseType.ListItem.KEY_TITLE, itemEx.mTitle);
+		LAroundApplication.getInstance().onEvent("UMID0002", map);
+		
 		
 		goContentActivity();
 	}
