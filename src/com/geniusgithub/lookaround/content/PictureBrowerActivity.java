@@ -19,8 +19,6 @@ import com.geniusgithub.lookaround.widget.PicGallery;
 import com.umeng.analytics.MobclickAgent;
 
 
-import android.R.integer;
-import android.R.mipmap;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.GestureDetector;
