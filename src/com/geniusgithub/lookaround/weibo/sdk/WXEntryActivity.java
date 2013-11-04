@@ -24,7 +24,7 @@ public class WXEntryActivity extends WechatHandlerActivity {
 	 * 做点其他的事情，包括根本不打开任何页面 
 	 */ 
 	public void onGetMessageFromWXReq(WXMediaMessage msg) { 
-		startActivity(new Intent(this, TestWeiboActivity.class)); 
+	//	startActivity(new Intent(this, TestWeiboActivity.class)); 
 	} 
 	/** 
 	 * 处理微信向第三方应用发起的消息 

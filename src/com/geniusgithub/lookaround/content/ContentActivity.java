@@ -8,6 +8,8 @@ import java.util.List;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
@@ -307,12 +309,42 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 		goShareActivity();
 	}
 	
+	
 	private void shareToWChat(){
-		CommonUtil.showToast(R.string.toast_nosupport_weixin, this);
+		ShareItem.clear();
+		
+		String imageURL = mInfoItem.getImageURL(0);
+	
+		ShareItem.setTitle(mInfoItem.mTitle);
+		ShareItem.setText(mInfoItem.mContent);
+		if (imageURL != null){
+			String sharPath = fileCache.getSavePath(imageURL);
+			ShareItem.setImageUrl(imageURL);
+			ShareItem.setShareImagePath(sharPath);		
+		}
+		ShareItem.setUrl(mInfoItem.mSourceUrl);
+		ShareItem.setPlatform(Wechat.NAME);	
+	
+		goShareActivity();
 	}
 	
 	private void shareToWFriend(){
-		CommonUtil.showToast(R.string.toast_nosupport_friend, this);
+	
+		ShareItem.clear();
+		
+		String imageURL = mInfoItem.getImageURL(0);
+	
+		ShareItem.setTitle(mInfoItem.mTitle);
+		ShareItem.setText(mInfoItem.mContent);
+		if (imageURL != null){
+			String sharPath = fileCache.getSavePath(imageURL);
+			ShareItem.setImageUrl(imageURL);
+			ShareItem.setShareImagePath(sharPath);		
+		}
+		ShareItem.setUrl(mInfoItem.mSourceUrl);
+		ShareItem.setPlatform(WechatMoments.NAME);	
+	
+		goShareActivity();
 	}
 
 

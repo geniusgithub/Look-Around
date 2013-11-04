@@ -12,6 +12,8 @@ import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
@@ -155,6 +157,10 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 			value += "腾讯微博";
 		}else if (name.equals(SinaWeibo.NAME)){
 			value += "新浪微博";
+		}else if (name.equals(Wechat.NAME)){
+			value += "微信好友";
+		}else if (name.equals(WechatMoments.NAME)){
+			value += "微信朋友圈";
 		}
 		
 		mTVTitle.setText(value);

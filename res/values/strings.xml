@@ -26,6 +26,8 @@
    <string name="toast_no_delcollect">没有可删除的收藏</string>   
    <string name="toast_connet_fail">联网失败，请检查网络</string>  
    <string name="toast_update_warn">发现新的版本，详情请到设置里查看</string>    
+   <string name="toast_attention_success">关注成功</string>    
+   <string name="toast_attention_fail">关注失败</string>    
      
    <string name="dia_msg_exit_title">确定要退出随便瞧瞧?</string>   
    <string name="dia_msg_exit_msg">亲，再好好考虑一下吧~_~</string>   
@@ -52,8 +54,12 @@
    <string name="collect">我的收藏</string>
    <string name="flow">节省流量模式</string>
    <string name="clear_cache">清除缓存</string>
-   <string name="grade">给应用加分</string>
+   <string name="share_grade">分享该应用</string>
    <string name="check_update">检查更新</string>
+   <string name="support_developer">支持开发者</string>
+   <string name="attention_weibo">关注官方微博</string>
+   
+   
    <string name="about">关于</string>
    
    <string name="about_content">随便瞧瞧，随便看看 </string>  
@@ -86,21 +92,5 @@
 	<string name="qzone">QQ空间</string>
 	<string name="wechat">微信好友</string>
 	<string name="wechatmoments">微信朋友圈</string>
-	<string name="facebook">Facebook</string>
-	<string name="twitter">Twitter</string>
-	<string name="renren">人人网</string>
-	<string name="kaixin">开心网</string>
-	<string name="email">邮件</string>
-	<string name="shortmessage">信息</string>
-	<string name="sohumicroblog">搜狐微博</string>
-	<string name="sohusuishenkan">搜狐随身看</string>
-	<string name="neteasemicroblog">网易微博</string>
-	<string name="douban">豆瓣</string>
-	<string name="youdao">有道云笔记</string>
-	<string name="evernote">印象笔记</string>
-	<string name="linkedin">Linked In</string>
-	<string name="googleplus">Google+</string>
-	<string name="foursquare">FourSquare</string>
-	<string name="qq">QQ</string>
 	
 </resources>

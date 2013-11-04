@@ -1,5 +1,6 @@
 package com.geniusgithub.lookaround.activity.set;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONException;
@@ -9,6 +10,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
@@ -46,7 +50,8 @@ import com.umeng.analytics.MobclickAgent;
 
 public class SettingActivity extends BaseActivity implements OnClickListener,
 														IRequestDataPacketCallback,
-														IDialogInterface{
+														IDialogInterface,
+														 PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
@@ -54,7 +59,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 	private View mMyPushView;
 	private View mMyCollectView;
 	private View mClieaCacheView;
-	private View mGradingView;
+	private View mShareGradingView;
+	private View mSupportDevelopterView;
+	private View mAttentionWeiboView;
 	private View mCheckUpdateView;
 	private View mAboutView;
 	private View mAdviseView;
@@ -84,7 +91,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     	mMyPushView = findViewById(R.id.ll_mypush);
     	mMyCollectView = findViewById(R.id.ll_mycollect);
     	mClieaCacheView = findViewById(R.id.ll_clearcache);
-    	mGradingView = findViewById(R.id.ll_garding);
+    	mShareGradingView = findViewById(R.id.ll_garding);
+    	mSupportDevelopterView = findViewById(R.id.ll_support);
+    	mAttentionWeiboView = findViewById(R.id.ll_attention);
     	mCheckUpdateView = findViewById(R.id.ll_checkupdate);
     	mAboutView = findViewById(R.id.ll_about);
     	mAdviseView = findViewById(R.id.ll_advise);
@@ -93,7 +102,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     	mMyPushView.setOnClickListener(this);
     	mMyCollectView.setOnClickListener(this);
     	mClieaCacheView.setOnClickListener(this);	
-    	mGradingView.setOnClickListener(this); 	
+    	mShareGradingView.setOnClickListener(this); 	
+    	mSupportDevelopterView.setOnClickListener(this);
+    	mAttentionWeiboView.setOnClickListener(this);
     	mCheckUpdateView.setOnClickListener(this);
     	mAboutView.setOnClickListener(this);
     	mAdviseView.setOnClickListener(this);
@@ -149,7 +160,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 				clearCache();
 				break;
 			case R.id.ll_garding:
-				CommonUtil.showToast(R.string.toast_no_function, this);
+				shareGrade();
+				break;
+			case R.id.ll_support:
+				support();
+				break;
+			case R.id.ll_attention:
+				attention();
 				break;
 			case R.id.ll_checkupdate:
 				checkUpdate();
@@ -193,6 +210,20 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		
 		clearImageCache();
 		
+	}
+	
+	private void shareGrade(){
+		
+	}
+	
+	private void support(){
+		
+	}
+
+	private void attention(){
+		Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+		plat.setPlatformActionListener(this);
+		plat.followFriend("2881812642");
 	}
 	
 	private void checkUpdate(){
@@ -248,6 +279,42 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 		
 	}
 
+	public void onComplete(Platform platform, int action,
+			HashMap<String, Object> res) {
+		log.e("onComplete Platform = " + platform.getName() + ", action = " + action);
+
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				CommonUtil.showToast(R.string.toast_attention_success, SettingActivity.this);
+				
+			}
+		});
+		
+		
+	}
+
+	public void onError(Platform platform, int action, Throwable t) {
+		t.printStackTrace();
+		log.e("onError Platform = " + platform.getName() + ", action = " + action);
+
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				CommonUtil.showToast(R.string.toast_attention_fail, SettingActivity.this);
+				
+			}
+		});
+	
+		
+	}
+
+	public void onCancel(Platform platform, int action) {
+		log.e("onCancel Platform = " + platform.getName() + ", action = " + action);
+
+	}
 
 	private Dialog updateDialog;
 	private void onGetCheckUpdate( ResponseDataPacket dataPacket, Object extra){
@@ -359,5 +426,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 			log.e("clearThread complete, cost time:" + (time2 - time1));
 		}
 		
-	};
+	}
+
+
+
+
 }
