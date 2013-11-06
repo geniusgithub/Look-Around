@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:orientation="vertical" 
+    android:background="@color/window_bg" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+  
+    <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/map_top_bg">
+
+
+         
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffff" 
+        android:background="@drawable/selector_btn_back"/>
+    
+       <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/setting"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+	</RelativeLayout>
+
+    <ScrollView 
+        android:scrollbarThumbVertical="@drawable/scrollbar_handle_vertical" 
+        android:focusableInTouchMode="true" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" >    
+        <LinearLayout 
+            android:orientation="vertical" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content">     
+           
+             
+            <!--  绑定账号   -->
+            <LinearLayout 
+                style="@style/leba_bg_layout">            
+                <LinearLayout 
+                    android:id="@+id/ll_bindaccount"
+                    style="@style/leba_bg_single_layout">                
+                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/bind" android:layout_weight="1.0" />
+                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
+                </LinearLayout>
+            </LinearLayout>
+            
+ 
+          <LinearLayout 
+                style="@style/leba_bg_layout">                  
+	                <!--  我的推送	-->   
+	                <LinearLayout 
+	                    android:id="@+id/ll_mypush"
+	                    style="@style/leba_bg_top_layout">
+	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/push" android:layout_weight="1.0" />
+	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
+	                </LinearLayout> 
+                
+	                 <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />
+	           
+	                 <!--  我的收藏 	-->   
+	                 <LinearLayout 
+	                      android:id="@+id/ll_mycollect"
+	                 	  style="@style/leba_bg_top_layout">
+	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/collect" android:layout_weight="1.0" />
+	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow" />
+	                 </LinearLayout>
+
+	                   <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" /> 
+	               <!--  清除缓存	-->  
+	                  <LinearLayout 
+	                    android:id="@+id/ll_clearcache"
+	                    style="@style/leba_bg_bottom_layout">
+	                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/clear_cache" android:layout_weight="1.0" />
+	                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow" />
+	                  </LinearLayout>     
+	                  
+		               
+            </LinearLayout>              
+            
+            <!--  关于 -->
+            <LinearLayout 
+                style="@style/leba_bg_layout">            
+                <LinearLayout 
+                     android:id="@+id/ll_about"
+                    style="@style/leba_bg_single_layout">                
+                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/about" android:layout_weight="1.0" />
+                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
+                </LinearLayout>
+            </LinearLayout>
+            
+                
+        </LinearLayout>     
+    </ScrollView>
+    
+</LinearLayout>
+

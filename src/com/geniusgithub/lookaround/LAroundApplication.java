@@ -18,6 +18,8 @@ package com.geniusgithub.lookaround;
 
 import java.util.HashMap;
 
+import cn.sharesdk.framework.ShareSDK;
+
 import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
 import com.geniusgithub.lookaround.activity.WelcomActivity;
 import com.geniusgithub.lookaround.model.PublicType;
@@ -58,7 +60,7 @@ public class LAroundApplication extends Application implements ItatisticsEvent{
 		MobclickAgent.setDebugMode(true);
 		
 		GFAgent.init(this);
-
+		ShareSDK.initSDK(this);
 	}
 	
 	public void setUserLoginResult(PublicType.UserLoginResult object){

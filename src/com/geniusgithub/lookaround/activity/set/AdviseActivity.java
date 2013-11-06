@@ -71,14 +71,14 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 	@Override
 	protected void onDestroy() {
 		
-		ShareSDK.stopSDK(this);
+
 		
 		super.onDestroy();
 	}
 
 	
 	private void setupViews(){
-		ShareSDK.initSDK(this);
+
 		
 		setNotification(R.drawable.logo_icon,"Look Around");
 		

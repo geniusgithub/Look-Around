@@ -84,6 +84,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     
     
     private void setupViews(){
+  
+    	
     	mBtnBack = (Button) findViewById(R.id.btn_back);  	
     	mBtnBack.setOnClickListener(this);
     	
@@ -114,7 +116,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     }
     
     private void initData(){
-    	ShareSDK.initSDK(this);
+
     	
     	mClientEngine=  ClientEngine.getInstance(this);	
     	

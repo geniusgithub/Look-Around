@@ -60,7 +60,7 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 	@Override
 	protected void onDestroy() {
 
-		ShareSDK.stopSDK(this);
+	
 		
 		super.onDestroy();
 	}
@@ -83,7 +83,7 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 	}
 	
 	private void initData(){
-		ShareSDK.initSDK(this);
+
 		mPlatform = ShareSDK.getPlatform(this, SinaWeibo.NAME);
 		mPlatform.setPlatformActionListener(this);
 		initImagePath();

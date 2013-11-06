@@ -10,7 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@drawable/map_top_bg">
-    <Button
+    
+    	<Button
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,50 +32,72 @@
 	</RelativeLayout>
 
           
-     <RelativeLayout 
-         android:orientation="vertical" 
-         android:layout_width="fill_parent" 
-         android:layout_height="fill_parent">
-         
-         
-          <View
-          android:id="@+id/v_center"
-          android:layout_width="fill_parent" 
-          android:layout_height="1dp"
-          android:layout_centerInParent="true">          
-          </View>
-         
-   
-          <TextView
-          android:id="@+id/tv_center"
-          android:layout_above="@id/v_center"
-          android:layout_width="wrap_content"  
-	      android:layout_height="wrap_content"
-	      android:layout_marginTop="15dp"
-	      android:layout_centerHorizontal="true"
-	      android:text="@string/about_content"
-	      android:textColor="#555555"
-	      android:textSize="20sp" />
-          
+   <LinearLayout 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    android:gravity="center">
+       
           <ImageView
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content"
-          android:layout_above="@id/tv_center"
-          android:layout_centerHorizontal="true"
           android:src="@drawable/logo_icon_big">	                
           </ImageView>
-          
+                   
           <TextView
-           android:id="@+id/tv_bottom"
+          android:id="@+id/tv_version"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
-	      android:layout_alignParentBottom="true"
-	      android:layout_marginBottom="30dp"
-	      android:layout_centerHorizontal="true"
+	      android:layout_marginTop="10dp"
+	      android:text="随便瞧瞧"
 	      android:textColor="#555555"
-	      android:textSize="16sp" />
+	      android:textSize="20sp" />
+   </LinearLayout>
+     
+   <LinearLayout 
+         style="@style/leba_bg_layout">                  
+          <!--  意见与反馈	-->   
+          <LinearLayout 
+              style="@style/leba_bg_top_layout">
+              <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/advise" android:layout_weight="1.0" />
+              <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
+          </LinearLayout> 
          
-     </RelativeLayout>     
+           <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />
+
+          <!--  关注官方微博 	--> 
+           <LinearLayout 
+               android:id="@+id/ll_attention"
+           	 style="@style/leba_bg_mid_layout">
+              <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/attention_weibo" android:layout_weight="1.0" />
+              <ImageView android:id="@+id/iv_update" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/app_new" />
+            </LinearLayout>
+
+           <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />
+
+          <!--  检查更新 	--> 
+           <LinearLayout 
+               android:id="@+id/ll_checkupdate"
+           	 style="@style/leba_bg_mid_layout">
+              <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/check_update" android:layout_weight="1.0" />
+              <ImageView android:id="@+id/iv_update" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/app_new" />
+            </LinearLayout>
+          
+            <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" /> 
+          
+       
+         <!--  支持开发者	-->  
+            <LinearLayout 
+              android:id="@+id/ll_support"
+              style="@style/leba_bg_bottom_layout">
+              <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/support_developer" android:layout_weight="1.0" />
+              <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
+            </LinearLayout>     
+            
+          
+     </LinearLayout>     
         
     
 </LinearLayout>

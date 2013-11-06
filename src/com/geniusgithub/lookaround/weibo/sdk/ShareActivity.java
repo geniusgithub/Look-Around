@@ -86,14 +86,13 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	@Override
 	protected void onDestroy() {
 		
-		ShareSDK.stopSDK(this);
 		
 		super.onDestroy();
 	}
 
 	
 	private void setupViews(){
-		ShareSDK.initSDK(this);
+
 		
 		setNotification(R.drawable.logo_icon,"Look Around");
 		
