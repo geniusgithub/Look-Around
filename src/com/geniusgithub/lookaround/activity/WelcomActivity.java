@@ -215,12 +215,18 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 		try {
 			object.parseJson(dataPacket.data);
 			
+			
 			log.e("mForceUpdate = " + object.mForceUpdate + "\n" + 
 					"mHaveNewVer = " + object.mHaveNewVer + "\n" + 
 					"mVerCode = " + object.mVerCode + "\n" + 
-					"mVerName = " + object.mVerName + "\n" + 
-					"mAppUrl = " + object.mAppUrl + "\n" + 
-					"mVerDescribre = " + object.mVerDescribre);
+					"mVerName = " + object.mVerName);
+			
+//			log.e("mForceUpdate = " + object.mForceUpdate + "\n" + 
+//					"mHaveNewVer = " + object.mHaveNewVer + "\n" + 
+//					"mVerCode = " + object.mVerCode + "\n" + 
+//					"mVerName = " + object.mVerName + "\n" + 
+//					"mAppUrl = " + object.mAppUrl + "\n" + 
+//					"mVerDescribre = " + object.mVerDescribre);
 			
 			if (object.mForceUpdate != 0){
 				if (forceUpdateDialog != null){

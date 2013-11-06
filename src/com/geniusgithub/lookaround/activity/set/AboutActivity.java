@@ -7,6 +7,8 @@ import org.json.JSONException;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
@@ -80,7 +82,9 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
     	mAdviseView.setOnClickListener(this);
     	
     	mTVVersion = (TextView) findViewById(R.id.tv_version);
-    	mIVUpageIcon = (ImageView) findViewById(R.id.iv_update);
+
+    	mIVUpageIcon = (ImageView) findViewById(R.id.iv_updateicon);
+
     }
     
     private void initData(){
@@ -117,6 +121,18 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 			case R.id.btn_back:
 				finish();
 				break;
+			case R.id.ll_advise:
+				goAdviseActivity();
+				break;
+			case R.id.ll_attention:
+				attention();
+				break;
+			case R.id.ll_checkupdate:
+				checkUpdate();
+				break;
+			case R.id.ll_support:
+				support();
+				break;
 		}
 	}
 	
@@ -124,6 +140,49 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 		
 		String value = getResources().getString(R.string.tvt_ver_pre) + CommonUtil.getSoftVersion(this);
 		mTVVersion.setText(value);
+	}
+	
+	private void goAdviseActivity(){
+		Intent intent = new Intent();
+		intent.setClass(this, AdviseActivity.class);
+		startActivity(intent);
+	}
+	
+	private void attention(){
+		Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+		plat.setPlatformActionListener(this);
+		plat.followFriend("2881812642");
+	}
+	
+
+	private void checkUpdate(){
+		
+		if (object != null && object.mHaveNewVer != 0){
+			if (updateDialog != null){
+				updateDialog.dismiss();
+			}
+			
+			updateDialog = getUpdateDialog(object.mContentList);
+			updateDialog.show();
+		}else{
+			PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(this);
+			
+			
+			BaseRequestPacket packet = new BaseRequestPacket();
+			packet.action = PublicType.CHECK_UPDATE_MSGID;
+			packet.object = object;
+			
+			mClientEngine.httpGetRequestEx(packet, this);
+			CommonUtil.showToast(R.string.toast_checking_update, this);
+		}
+
+
+	}
+	
+	private void support(){
+		Intent intent = new Intent();
+		intent.setClass(this, SupportActivity.class);
+		startActivity(intent);
 	}
 	
 	@Override
