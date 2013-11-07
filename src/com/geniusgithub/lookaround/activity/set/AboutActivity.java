@@ -292,8 +292,9 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 		StringBuffer sBuffer = new StringBuffer();
 		for(int i = 0; i < size; i++){
 			String value = String.valueOf(i + 1) + "." + list.get(i);
+			sBuffer.append(value);
 			if (i != size - 1){
-				sBuffer.append(value +  "\n");	
+				sBuffer.append("\n");	
 			}
 		}
 		log.e("msg = " + sBuffer.toString());

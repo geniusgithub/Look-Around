@@ -6,6 +6,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.tencent.weibo.TencentWeibo;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
@@ -64,10 +73,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
     	PublicType.UserLoginResult object = LAroundApplication.getInstance().getUserLoginResult();
     	log.e("object.mHaveNewVer = " + object.mHaveNewVer);
     	if (object.mHaveNewVer != 0){
-    		if (!object.mAppUrl.equals("http://www.yjz9.com/2012/photo_xg_1108/11610.shtml")){
-    			mIVUpageIcon.setImageResource(R.drawable.app_new);
-			}
-    	
+    			mIVUpageIcon.setImageResource(R.drawable.app_new);	
     	}
     }
 
@@ -98,9 +104,27 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void goBindActivity(){
-		Intent intent = new Intent();
-		intent.setClass(this, BindActivity.class);
-		startActivity(intent);
+//		Intent intent = new Intent();
+//		intent.setClass(this, BindActivity.class);
+//		startActivity(intent);
+		
+		
+		Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+		plat.removeAccount();	
+
+		plat = ShareSDK.getPlatform(this, TencentWeibo.NAME);
+		plat.removeAccount();
+		
+		plat = ShareSDK.getPlatform(this, QZone.NAME);
+		plat.removeAccount();
+		
+		plat = ShareSDK.getPlatform(this, Wechat.NAME);
+		plat.removeAccount();
+		
+		plat = ShareSDK.getPlatform(this, WechatMoments.NAME);
+		plat.removeAccount();
+		
+		CommonUtil.showToast("解除成功", this);
 	}
 	
 	private void goCollectActivity(){

@@ -216,17 +216,13 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			object.parseJson(dataPacket.data);
 			
 			
+			
 			log.e("mForceUpdate = " + object.mForceUpdate + "\n" + 
 					"mHaveNewVer = " + object.mHaveNewVer + "\n" + 
 					"mVerCode = " + object.mVerCode + "\n" + 
-					"mVerName = " + object.mVerName);
-			
-//			log.e("mForceUpdate = " + object.mForceUpdate + "\n" + 
-//					"mHaveNewVer = " + object.mHaveNewVer + "\n" + 
-//					"mVerCode = " + object.mVerCode + "\n" + 
-//					"mVerName = " + object.mVerName + "\n" + 
-//					"mAppUrl = " + object.mAppUrl + "\n" + 
-//					"mVerDescribre = " + object.mVerDescribre);
+					"mVerName = " + object.mVerName + "\n" + 
+					"mAppUrl = " + object.mAppUrl + "\n" + 
+					"mVerDescribre = " + object.mVerDescribre);
 			
 			if (object.mForceUpdate != 0){
 				if (forceUpdateDialog != null){
@@ -240,9 +236,7 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			}
 			
 			if (object.mHaveNewVer != 0){				
-				if (!object.mAppUrl.equals("http://www.yjz9.com/2012/photo_xg_1108/11610.shtml")){
-					CommonUtil.showToast(R.string.toast_update_warn, this);
-				}
+				CommonUtil.showToast(R.string.toast_update_warn, this);
 			}
 					
 			

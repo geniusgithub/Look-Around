@@ -146,6 +146,7 @@ public class CommonUtil {
 				version = String.valueOf(value);
 		 } catch (NameNotFoundException e) {			
 				e.printStackTrace();
+				log.e("getSoftCode error...");
 		}
 		
 		 return version;

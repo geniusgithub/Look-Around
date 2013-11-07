@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.geniusgithub.lookaround"
-    android:versionCode="010003"
+    android:versionCode="10003"
     android:versionName="1.00.03" >
 
     <uses-sdk

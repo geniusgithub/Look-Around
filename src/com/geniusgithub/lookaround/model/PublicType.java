@@ -87,9 +87,8 @@ public class PublicType {
 		public final static String KEY_MODEL = "model";
 		public final static String KEY_TELCO = "telco";
 		public final static String KEY_OSVER = "osver";
-		public final static String KEY_VER = "ver";
+		public final static String KEY_VER = "versioncode";
 		
-
 		public String mConn = "";
 		public String mModel = "";
 		public String mTelco = "";
