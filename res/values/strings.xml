@@ -28,7 +28,9 @@
    <string name="toast_update_warn">发现新的版本，详情请到设置里查看</string>    
    <string name="toast_attention_success">关注成功</string>    
    <string name="toast_attention_fail">关注失败</string>    
-     
+   <string name="toast_exit_again">再按一次退出程序</string>    
+        
+        
    <string name="dia_msg_exit_title">确定要退出随便瞧瞧?</string>   
    <string name="dia_msg_exit_msg">亲，再好好考虑一下吧~_~</string>   
    <string name="dia_msg_delcollect_title">删除收藏?</string>   
@@ -62,7 +64,7 @@
    
    
    <string name="about">关于</string>
-   
+   <string name="unbind">未绑定</string>  
    <string name="advise">意见与反馈</string>  
    
      <string name="cancel">取消</string>
@@ -90,5 +92,6 @@
 	<string name="wechat">微信好友</string>
 	<string name="wechatmoments">微信朋友圈</string>
 	
+	<string name="about_connect">新浪微博(android火星人)           Gmail(lance.wyj@gmail.com)</string>
 	<string name="about_bottom">Copyright @2013 LookAround\nAll Rights Reserved</string>
 </resources>

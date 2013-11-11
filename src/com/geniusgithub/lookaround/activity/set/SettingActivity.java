@@ -104,27 +104,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void goBindActivity(){
-//		Intent intent = new Intent();
-//		intent.setClass(this, BindActivity.class);
-//		startActivity(intent);
-		
-		
-		Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
-		plat.removeAccount();	
-
-		plat = ShareSDK.getPlatform(this, TencentWeibo.NAME);
-		plat.removeAccount();
-		
-		plat = ShareSDK.getPlatform(this, QZone.NAME);
-		plat.removeAccount();
-		
-		plat = ShareSDK.getPlatform(this, Wechat.NAME);
-		plat.removeAccount();
-		
-		plat = ShareSDK.getPlatform(this, WechatMoments.NAME);
-		plat.removeAccount();
-		
-		CommonUtil.showToast("解除成功", this);
+		Intent intent = new Intent();
+		intent.setClass(this, BindActivity.class);
+		startActivity(intent);
 	}
 	
 	private void goCollectActivity(){

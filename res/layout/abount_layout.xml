@@ -109,6 +109,7 @@
     android:layout_marginBottom="10dp">
         
         <TextView
+        android:id="@+id/tv_bottom"
         android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:layout_alignParentBottom="true"
@@ -116,6 +117,21 @@
     	android:textColor="#666666"
     	android:text="@string/about_bottom">
             
+        </TextView>
+        
+        <TextView
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_above="@id/tv_bottom"
+    	android:gravity="center"
+    	android:ellipsize="marquee" 
+		android:singleLine="true"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:scrollHorizontally="true"
+		android:marqueeRepeatLimit="marquee_forever"	
+    	android:textColor="@color/royalblue"
+    	android:text="@string/about_connect">            
         </TextView>
     </RelativeLayout>
     

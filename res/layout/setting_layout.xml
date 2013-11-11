@@ -50,7 +50,7 @@
                 <LinearLayout 
                     android:id="@+id/ll_bindaccount"
                     style="@style/leba_bg_single_layout">                
-                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="取消微博绑定" android:layout_weight="1.0" />
+                    <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/bind" android:layout_weight="1.0" />
                     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
                 </LinearLayout>
             </LinearLayout>

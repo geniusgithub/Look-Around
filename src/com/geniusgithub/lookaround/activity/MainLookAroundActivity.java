@@ -29,6 +29,7 @@ import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
 import com.geniusgithub.lookaround.fragment.NavigationFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -189,12 +190,18 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 	
 	@Override
 	public void onBackPressed() {
-		if (exitDialog != null){
-			exitDialog.dismiss();
+//		if (exitDialog != null){
+//			exitDialog.dismiss();
+//		}
+//		
+//		exitDialog = getExitDialog();
+//		exitDialog.show();
+		if(showExitToast()){
+			finish();
+		}else{
+			CommonUtil.showToast(R.string.toast_exit_again, this);
 		}
 		
-		exitDialog = getExitDialog();
-		exitDialog.show();
 	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -209,6 +216,17 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		}
 		return super.onKeyDown(keyCode, event);
     }
+	
+	private long curMillios = 0;
+	private boolean showExitToast(){
+		long time = System.currentTimeMillis();
+		if (time - curMillios < 2000){
+			return true;
+		}
+		
+		curMillios = time;
+		return false;
+	}
 	
 	
 	private Dialog exitDialog;

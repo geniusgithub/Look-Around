@@ -29,6 +29,113 @@
         android:textSize="20sp" />
 
 	</RelativeLayout>
+	    
+	
+    <LinearLayout 
+         style="@style/leba_bg_layout">                  
+          <!--  新浪微博	-->   
+          <RelativeLayout 
+              style="@style/leba_bg_top_layout"
+              android:padding="2dp"
+              android:clickable="false">
+              <TextView 
+                  android:textSize="16.0dip" 
+                  android:textColor="#ff333333" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" 
+                  android:layout_marginLeft="20.0dip" 
+                  android:text="@string/sinaweibo" 
+                  android:layout_centerVertical="true"/>
+ 
+              <com.geniusgithub.lookaround.widget.SwitchButton 
+                  android:id="@+id/sb_sina" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" 
+                  android:layout_marginRight="15dp"
+                  android:layout_alignParentRight="true"/> 
+                  
+              <TextView    
+                  android:id="@+id/tv_sina_owner"
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content"
+                  android:layout_toLeftOf="@id/sb_sina" 
+                  android:layout_centerVertical="true"
+                  android:textSize="14.0dip" 
+                  android:textColor="#ff666666" 
+                  android:text="testSina"
+                  android:layout_marginRight="10dp"/>
+          </RelativeLayout>  
+
+   
+        
+          <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />
+
+          <!--  腾讯微博 	--> 
+          <RelativeLayout 
+           	 style="@style/leba_bg_mid_layout"
+           	 android:padding="2dp"
+           	 android:clickable="false">
+              <TextView 
+                  android:textSize="16.0dip" 
+                  android:textColor="#ff333333" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" 
+                  android:layout_marginLeft="20.0dip" 
+                  android:text="@string/tencentweibo"
+                  android:layout_centerVertical="true"/>
+              <com.geniusgithub.lookaround.widget.SwitchButton 
+                  android:id="@+id/sb_tencent" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content"  
+                  android:layout_marginRight="15dp"
+                  android:layout_alignParentRight="true"/>
+              <TextView    
+                  android:id="@+id/tv_tencent_owner"
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content"
+                  android:layout_toLeftOf="@id/sb_tencent" 
+                  android:layout_centerVertical="true"
+                  android:textSize="14.0dip" 
+                  android:textColor="#ff666666" 
+                  android:text="testTencent"
+                  android:layout_marginRight="10dp"/>
+          </RelativeLayout>
+
+          <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />
+       
+          <!--  QQ空间 	--> 
+          <RelativeLayout 
+              style="@style/leba_bg_bottom_layout"
+          	  android:padding="2dp"
+              android:clickable="false">
+              <TextView 
+                  android:textSize="16.0dip" 
+                  android:textColor="#ff333333" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" 
+                  android:layout_marginLeft="20.0dip" 
+                  android:text="@string/qzone"
+                  android:layout_centerVertical="true" />
+              <com.geniusgithub.lookaround.widget.SwitchButton 
+                  android:id="@+id/sb_qzone" 
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"  
+                  android:layout_marginRight="15dp"
+                  android:layout_alignParentRight="true"/>
+               <TextView    
+                   android:id="@+id/tv_qzone_owner"
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content"
+                  android:layout_toLeftOf="@id/sb_qzone" 
+                  android:layout_centerVertical="true"
+                  android:textSize="14.0dip" 
+                  android:textColor="#ff666666" 
+                  android:text="testQZone"
+                  android:layout_marginRight="10dp"/>
+           </RelativeLayout>     
+            
+          
+     </LinearLayout>     
 
     
 </LinearLayout>
