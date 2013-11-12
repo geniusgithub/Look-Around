@@ -192,12 +192,16 @@ public class CommonUtil {
 	
 	public static String getProvidersName(Context context) {  
 
-		 String ProvidersName = null;  
+		 String ProvidersName = "";  
 		 
 		 TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);  
 		 
 		 // 返回唯一的用户ID;就是这张卡的编号神马的  
 		 String IMSI = telephonyManager.getSubscriberId();  
+		 if (IMSI == null){
+			 ProvidersName = "";
+			 return "";
+		 }
 		 
 		 // IMSI号前面3位460是国家，紧接着后面2位00 02是中国移动，01是中国联通，03是中国电信。  
 		 if (IMSI.startsWith("46000") || IMSI.startsWith("46002")) {  

@@ -126,7 +126,9 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 	public void onClick(View view) {
 		switch(view.getId()){
 			case R.id.btnRegister:
-				register();
+				String providerName = CommonUtil.getProvidersName(this);
+				log.e("providerName = " + providerName);
+//				register();
 				break;
 			case R.id.btnLogin:
 				login();

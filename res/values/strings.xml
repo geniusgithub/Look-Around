@@ -29,13 +29,17 @@
    <string name="toast_attention_success">关注成功</string>    
    <string name="toast_attention_fail">关注失败</string>    
    <string name="toast_exit_again">再按一次退出程序</string>    
-        
+   <string name="toast_bind_success">绑定成功</string>       
+   <string name="toast_bind_fail">绑定失败</string>   
         
    <string name="dia_msg_exit_title">确定要退出随便瞧瞧?</string>   
    <string name="dia_msg_exit_msg">亲，再好好考虑一下吧~_~</string>   
    <string name="dia_msg_delcollect_title">删除收藏?</string>   
    <string name="dia_msg_delcollect_msg">确定要清空所有收藏?</string>     
-     
+   <string name="dia_msg_unbind_title">解除绑定?</string>   
+   <string name="dia_msg_unbind_msg">亲，确定要解除绑定？</string>   
+   
+   
    <string name="tvt_ver_pre">随便瞧瞧</string>    
    <string name="hint_advise">您的意见将帮助我们改进产品和服务</string> 
       
@@ -56,10 +60,10 @@
    <string name="push">我的推送</string>
    <string name="collect">我的收藏</string>
    <string name="flow">节省流量模式</string>
-   <string name="clear_cache">清除缓存</string>
+   <string name="clear_cache">清除图片缓存</string>
    <string name="share_grade">分享该应用</string>
    <string name="check_update">检查更新</string>
-   <string name="support_developer">支持开发者</string>
+   <string name="support_developer">开发者面板</string>
    <string name="attention_weibo">关注官方微博</string>
    
    

@@ -81,20 +81,18 @@
           <!--  检查更新 	--> 
            <LinearLayout 
                android:id="@+id/ll_checkupdate"
-                style="@style/leba_bg_bottom_layout">
-<!--            	 style="@style/leba_bg_mid_layout" -->
+               style="@style/leba_bg_mid_layout" >
               <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/check_update" android:layout_weight="1.0" />
               <ImageView android:id="@+id/iv_updateicon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/app_new" android:visibility="gone"/>
             </LinearLayout>
           
-<!--             <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />  -->
+         <View android:background="@drawable/leba_shape_line" android:layout_width="fill_parent" android:layout_height="1.0px" />  
           
        
-         <!--  支持开发者	-->  
+         <!--  开发者面板	-->  
             <LinearLayout 
               android:id="@+id/ll_support"
-              style="@style/leba_bg_bottom_layout"
-              android:visibility="gone">
+              style="@style/leba_bg_bottom_layout">
               <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="@string/support_developer" android:layout_weight="1.0" />
               <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@drawable/setting_arrow"/>
             </LinearLayout>     
