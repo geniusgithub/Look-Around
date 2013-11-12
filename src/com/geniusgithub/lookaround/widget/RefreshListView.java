@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
 
 import android.content.Context;
 import android.provider.ContactsContract.Data;
@@ -26,10 +28,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.LinearLayout.LayoutParams;
 
 
 public class RefreshListView extends ListView implements OnScrollListener, OnClickListener{
 
+	private static final CommonLog log = LogFactory.createLog();
+	
 	public interface IListViewState
 	{
 		int LVS_NORMAL = 0;					//  普通状态
@@ -45,7 +50,7 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 	}
 	
 	
-	private View mHeadView;				
+	private LinearLayout mHeadView;				
 	private TextView mRefreshTextview;
 	private TextView mLastUpdateTextView;
 	private ImageView mArrowImageView;
@@ -53,7 +58,8 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 	
 	private int mHeadContentWidth;
 	private int mHeadContentHeight;
-
+	
+	
 	private IOnRefreshListener mOnRefreshListener;			// 头部刷新监听器
 	
 	// 用于保证startY的值在一个完整的touch事件中只被记录一次
@@ -73,7 +79,9 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 	private RotateAnimation reverseAnimation;
 	private boolean mBack = false;
 	
-
+	private View mBannerView = null;
+	private int mBannerHeight = 0;
+	
 	
 	public RefreshListView(Context context) {
 		super(context);
@@ -81,6 +89,30 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 		init(context);
 	}
 
+	public void addBannerView(View view){
+		mBannerView = view;
+		mBannerHeight = mBannerView.getHeight();
+		log.e("addBannerView mBannerHeight = " + mBannerHeight);
+		
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		mHeadView.addView(mBannerView, lp);
+	
+		measureView(mHeadView);
+		mHeadContentHeight = mHeadView.getHeight();
+		log.e("addBannerView mHeadContentHeight = " + mHeadContentHeight);
+	}
+	
+	public void removeBannerView(){
+		if (mBannerView != null){
+			mHeadView.removeView(mBannerView);
+			mBannerHeight = 0;
+		}
+		
+		measureView(mHeadView);
+		mHeadContentHeight = mHeadView.getMeasuredHeight();
+		mHeadContentWidth = mHeadView.getMeasuredWidth();
+		log.e("removeBannerView mHeadContentHeight = " + mHeadContentHeight);
+	}
 	
 	public RefreshListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -102,7 +134,7 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 	
 	public void onRefreshComplete()
 	{
-		mHeadView.setPadding(0,  -1 * mHeadContentHeight, 0, 0);
+		mHeadView.setPadding(0,  -1 * mHeadContentHeight + mBannerHeight, 0, 0);
 		mLastUpdateTextView.setText("最近更新:" + getCurDataTime());
 		switchViewState(IListViewState.LVS_NORMAL);
 	}
@@ -120,7 +152,8 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 	// 初始化headview试图
 	private void initHeadView(Context context)
 	{
-		mHeadView = LayoutInflater.from(context).inflate(R.layout.head, null);
+		mHeadView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.head, null);
+		
 
 		mArrowImageView = (ImageView) mHeadView.findViewById(R.id.head_arrowImageView);
 		mArrowImageView.setMinimumWidth(60);
@@ -262,7 +295,7 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 			{
 				if (offset > 0)
 				{		
-					mHeadView.setPadding(0, offset - mHeadContentHeight, 0, 0);
+					mHeadView.setPadding(0, offset - mHeadContentHeight + mBannerHeight, 0, 0);
 					switchViewState(IListViewState.LVS_PULL_REFRESH);
 				}
 			}
@@ -319,7 +352,7 @@ public class RefreshListView extends ListView implements OnScrollListener, OnCli
 		
 			break;
 		case IListViewState.LVS_PULL_REFRESH:
-			mHeadView.setPadding(0, -1 * mHeadContentHeight, 0, 0);
+			mHeadView.setPadding(0, -1 * mHeadContentHeight + mBannerHeight, 0, 0);
 			switchViewState(IListViewState.LVS_NORMAL);
 			break;
 		case IListViewState.LVS_RELEASE_REFRESH:

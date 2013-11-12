@@ -67,7 +67,6 @@ public class InfoContentAdapter extends BaseAdapter{
 
 	@Override
 	public int getItemViewType(int position) {	
-	
 		BaseType.InfoItem item = data.get(position); 
 		return item.mBannerType;
 	}
@@ -82,11 +81,6 @@ public class InfoContentAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
-
-		if (pos == 0){
-			return getADBanner(view);
-		}
-		
 		BaseType.InfoItem item = data.get(pos); 
 		int type = item.mBannerType;
 	
@@ -104,16 +98,6 @@ public class InfoContentAdapter extends BaseAdapter{
 		return getBanner_0_View(pos, view);
 	}
 	
-	private View getADBanner(View view){
-		
-		if (view == null)
-		{
-			view = LayoutInflater.from(mContext).inflate(R.layout.content_banner_layout, null);			
-		}else{
-			
-		}
-		return view;
-	}
 	
 	private View getBanner_0_View(int pos, View view){
 		ViewHolder0 holder = null; 

@@ -50,6 +50,7 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 	private RefreshListView mListView;
 	private InfoContentAdapter mAdapter;	
 	
+	private View mBannerView;
 	
 	private Context mContext;
 	private List<BaseType.InfoItem> mContentData = new ArrayList<BaseType.InfoItem>();
@@ -116,6 +117,10 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 		mListView.setOnRefreshListener(this);
 		mListView.setOnLoadMoreListener(this);
 		mListView.setOnItemClickListener(this);
+		
+		mBannerView = LayoutInflater.from(mContext).inflate(R.layout.banner_layout, null);
+		log.e("getHeight = " + mBannerView.getHeight() + ", getMeasuredHeight = " + mBannerView.getMeasuredHeight());
+		
 		mInfoRequestProxy = new InfoRequestProxy(mContext, mTypeData, this);
 		
 		mHandler = new Handler(){
@@ -168,7 +173,7 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 		mInfoRequestProxy.requestRefreshInfo();
 	}
 
-
+	private boolean isFirst = true;
 	@Override
 	public void onSuccess(boolean isLoadMore) {
 
@@ -176,11 +181,16 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
 		mContentData = mInfoRequestProxy.getData();
 		mAdapter.refreshData(mContentData);
 		
-		
+		log.e("onSuccess isLoadMore = " + isLoadMore + ", isfrist = "  + isFirst);
 		if (isLoadMore){
 			mListView.onLoadMoreComplete(false);
 		}else{
 			mListView.onRefreshComplete();
+			if (isFirst){
+				isFirst = false;
+				mListView.addBannerView(mBannerView);
+			}
+		
 		}
 	}
 
