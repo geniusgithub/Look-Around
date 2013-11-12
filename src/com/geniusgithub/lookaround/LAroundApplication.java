@@ -25,7 +25,7 @@ import com.geniusgithub.lookaround.activity.WelcomActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.gfan.sdk.statitistics.GFAgent;
+import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
@@ -59,7 +59,7 @@ public class LAroundApplication extends Application implements ItatisticsEvent{
 		startBackgroundService();
 		MobclickAgent.setDebugMode(true);
 		
-		GFAgent.init(this);
+		TCAgent.init(this);
 		ShareSDK.initSDK(this);
 	}
 	
@@ -115,29 +115,29 @@ public class LAroundApplication extends Application implements ItatisticsEvent{
 		log.e("eventID = " + eventID);
 		
 		MobclickAgent.onEvent(this, eventID);
-		GFAgent.onEvent(this, eventID);
+		TCAgent.onEvent(this, eventID);
 	}
 
 	@Override
 	public void onEvent(String eventID, HashMap<String, String> map) {
 		log.e("eventID = " + eventID);
-		
+	
 		MobclickAgent.onEvent(this, eventID, map);
-		GFAgent.onEvent(this, eventID, map);
+		TCAgent.onEvent(this, eventID, "", map);
 	}
 	
 	public static void onPause(Activity context){
 		MobclickAgent.onPause(context);
-		GFAgent.onPause(context);
+		TCAgent.onPause(context);
 	}
 	
 	public static void onResume(Activity context){
 		MobclickAgent.onResume(context);
-		GFAgent.onResume(context);
+		TCAgent.onResume(context);
 	}
 	
 	public static void onCatchError(Context context){
 		MobclickAgent.onError(context);
-		GFAgent.setReportUncaughtExceptions(true);
+		TCAgent.setReportUncaughtExceptions(true);
 	}
 }

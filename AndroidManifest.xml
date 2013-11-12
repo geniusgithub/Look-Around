@@ -27,8 +27,8 @@
         <meta-data android:name="UMENG_APPKEY" android:value="522b3fba56240bf2741196f1"/>           
         <meta-data android:name="UMENG_CHANNEL"  android:value="gfan.com"/>
 
-        <meta-data android:name="gfan_statistics_appkey" android:value="0CBBF474977FFDCD0941E98EE7E95C3D" /> 
-        <meta-data android:name="gfan_cpid" android:value="gfan.com" />
+        <meta-data android:name="TD_APP_ID" android:value="0CBBF474977FFDCD0941E98EE7E95C3D" /> 
+        <meta-data android:name="TD_CHANNEL_ID" android:value="gfan.com" />
         
         <service android:name="com.geniusgithub.lookaround.BackgroundService" android:enabled="true">
 		</service>

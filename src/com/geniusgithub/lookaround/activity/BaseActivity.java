@@ -1,7 +1,6 @@
 package com.geniusgithub.lookaround.activity;
 
 import com.geniusgithub.lookaround.LAroundApplication;
-import com.gfan.sdk.statitistics.GFAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
