@@ -19,6 +19,11 @@ Example screenshot below:
 
 ![github](http://img.my.csdn.net/uploads/201312/25/1387964984_3610.png "github") 
 
+if you want to run the project, You should download the dependent library below:
+* [ActionBarSherklock](https://github.com/JakeWharton/ActionBarSherlock)
+* [SlidingMenu](https://github.com/jfeinstein10/SlidingMenu)
+* [satellite-menu](https://github.com/geniusgithub/android-satellite-menu)
+
 
 Run requirements
 ------------------------------
@@ -27,8 +32,12 @@ Tested with: Samsung, HTC, HuaWei Phone and so on...
 
 ## Acknowledgements
 It uses open source libraries below:
-
-
+* [ActionBarSherklock](https://github.com/JakeWharton/ActionBarSherlock)
+* [SlidingMenu](https://github.com/jfeinstein10/SlidingMenu)
+* [satellite-menu](https://github.com/geniusgithub/android-satellite-menu)
+* [greenDAO](https://github.com/greenrobot/greenDAO)
+* [android-async-http](https://github.com/geniusgithub/android-async-http)
+* [shareSDK](http://sharesdk.cn/Download)
 
 Contributing
 ------------------------------
