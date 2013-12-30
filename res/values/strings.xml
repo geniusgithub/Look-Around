@@ -63,9 +63,9 @@
    <string name="clear_cache">清除图片缓存</string>
    <string name="share_grade">分享该应用</string>
    <string name="check_update">检查更新</string>
-   <string name="support_developer">开发者面板</string>
+   <string name="support_developer">支持开发者</string>
    <string name="attention_weibo">关注官方微博</string>
-   
+   <string name="support_content">每下载一个应用就可为“希望工程”捐一毛钱，贫困山区的失学儿童们在等待大家拯救@_@</string>
    
    <string name="about">关于</string>
    <string name="unbind">未绑定</string>  

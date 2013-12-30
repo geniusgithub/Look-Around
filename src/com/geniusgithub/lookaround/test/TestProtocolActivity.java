@@ -15,8 +15,6 @@ import android.view.ext.SatelliteMenu;
 import android.view.ext.SatelliteMenu.SateliteClickedListener;
 import android.view.ext.SatelliteMenuItem;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.animation.MyAnimations;

@@ -1,14 +1,23 @@
 package com.geniusgithub.lookaround.activity.set;
 
 import com.geniusgithub.lookaround.R;
+import com.umeng.newxp.common.ExchangeConstants;
+import com.umeng.newxp.controller.ExchangeDataService;
+import com.umeng.newxp.view.ExchangeViewManager;
+import com.umeng.newxp.view.GridTemplateConfig;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class SupportActivity extends Activity implements OnClickListener{
+public class SupportActivity extends Activity implements OnClickListener,OnItemClickListener{
 
 	private Button mBtnBack;
 
@@ -28,7 +37,18 @@ public class SupportActivity extends Activity implements OnClickListener{
     }
     
     private void initData(){
+    	ExchangeConstants.CONTAINER_AUTOEXPANDED = false;
 
+		ViewGroup fatherLayout = (ViewGroup) findViewById(R.id.ad);
+		ListView listView = (ListView) findViewById(R.id.list);
+
+		ExchangeDataService exchangeDataService = new ExchangeDataService("");
+		exchangeDataService.setTemplate(1);
+		ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this, exchangeDataService);
+		exchangeViewManager.setGridTemplateConfig(new GridTemplateConfig().setMaxPsize(9).setNumColumns(3).setVerticalSpacing(13));
+		exchangeViewManager.addView(fatherLayout, listView);
+		
+		listView.setOnItemClickListener(this);
     }
 
 
@@ -39,6 +59,12 @@ public class SupportActivity extends Activity implements OnClickListener{
 				finish();
 				break;
 		}
+	}
+
+
+	@Override
+	public void onItemClick(AdapterView<?> view, View arg1, int pos, long arg3) {
+		Toast.makeText(this, "pos = " + pos, Toast.LENGTH_SHORT).show();
 	}
 	
 }
