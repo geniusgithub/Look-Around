@@ -187,6 +187,9 @@ public class CommonUtil {
 	public static String getIMSI(Context context){
 		 TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);  
 		 String IMSI = telephonyManager.getSubscriberId();  
+		 if (IMSI == null){
+			 IMSI = "";
+		 }
 		 return IMSI;
 	}
 	
