@@ -13,6 +13,9 @@ Example screenshot below:
 
 ![github](http://img.my.csdn.net/uploads/201312/25/1387964969_4050.png "github")  
 
+![github](http://img.my.csdn.net/uploads/201312/30/1388390737_4580.png "github")  
+
+
 ![github](http://img.my.csdn.net/uploads/201312/25/1387964969_1229.png "github")  
 
 ![github](http://img.my.csdn.net/uploads/201312/25/1387964983_8294.png "github")  
@@ -35,6 +38,9 @@ It uses open source libraries below:
 * [ActionBarSherklock](https://github.com/JakeWharton/ActionBarSherlock)
 * [SlidingMenu](https://github.com/jfeinstein10/SlidingMenu)
 * [satellite-menu](https://github.com/geniusgithub/android-satellite-menu)
+* [SwitchButton](https://github.com/Issacw0ng/SwitchButton)
+* [ImageLoaderEx](https://github.com/geniusgithub/SyncLoaderBitmapDemo)
+* [RefreshListView](https://github.com/chrisbanes/Android-PullToRefresh)
 * [greenDAO](https://github.com/greenrobot/greenDAO)
 * [android-async-http](https://github.com/geniusgithub/android-async-http)
 * [shareSDK](http://sharesdk.cn/Download)
