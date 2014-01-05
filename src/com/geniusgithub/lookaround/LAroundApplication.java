@@ -18,6 +18,10 @@ package com.geniusgithub.lookaround;
 
 import java.util.HashMap;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
@@ -28,12 +32,7 @@ import com.geniusgithub.lookaround.util.LogFactory;
 import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-
-public class LAroundApplication extends Application implements ItatisticsEvent{
+public class LAroundApplication extends Application  implements ItatisticsEvent{
 
 	private static final CommonLog log = LogFactory.createLog();
 	

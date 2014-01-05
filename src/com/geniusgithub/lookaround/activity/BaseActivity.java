@@ -1,12 +1,14 @@
 package com.geniusgithub.lookaround.activity;
 
+import roboguice.activity.RoboActivity;
+
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class BaseActivity extends Activity{
+public class BaseActivity extends RoboActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

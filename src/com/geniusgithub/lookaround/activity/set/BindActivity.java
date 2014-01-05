@@ -2,6 +2,8 @@ package com.geniusgithub.lookaround.activity.set;
 
 import java.util.HashMap;
 
+import roboguice.inject.InjectView;
+
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.os.Bundle;
@@ -42,15 +44,15 @@ public class BindActivity extends BaseActivity implements OnClickListener,
 	
 	private static final CommonLog log = LogFactory.createLog();
 	
-	private Button mBtnBack;
 	
-	private SwitchButton mCBSina;
-	private SwitchButton mCBTencent;
-	private SwitchButton mCBQZone;
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.sb_sina) SwitchButton mCBSina;  
+	@InjectView (R.id.sb_tencent) SwitchButton mCBTencent;  
+	@InjectView (R.id.sb_qzone) SwitchButton mCBQZone;  
+	@InjectView (R.id.tv_sina_owner) TextView mTVSina;  
+	@InjectView (R.id.tv_tencent_owner) TextView mTVTencent;  
+	@InjectView (R.id.tv_qzone_owner) TextView mTVQZone;  
 
-	private TextView mTVSina;
-	private TextView mTVTencent;
-	private TextView mTVQZone;
 	
 	private Platform mPlatformSina;
 	private Platform mPlatformTencent;
@@ -67,20 +69,11 @@ public class BindActivity extends BaseActivity implements OnClickListener,
     
     
     private void setupViews(){
-    	mBtnBack = (Button) findViewById(R.id.btn_back);
-    	mBtnBack.setOnClickListener(this);
-    	
-    	mCBSina = (SwitchButton) findViewById(R.id.sb_sina);
-    	mCBTencent = (SwitchButton) findViewById(R.id.sb_tencent);
-    	mCBQZone = (SwitchButton) findViewById(R.id.sb_qzone);
-    	
+
+    	mBtnBack.setOnClickListener(this);	
     	mCBSina.setOnCheckedChangeListener(this);
     	mCBTencent.setOnCheckedChangeListener(this);
     	mCBQZone.setOnCheckedChangeListener(this);
-    	
-    	mTVSina = (TextView) findViewById(R.id.tv_sina_owner);
-    	mTVTencent = (TextView) findViewById(R.id.tv_tencent_owner);
-    	mTVQZone = (TextView) findViewById(R.id.tv_qzone_owner);
     	
     }
     

@@ -1,5 +1,6 @@
 package com.geniusgithub.lookaround.activity.set;
 
+import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,14 +32,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
-	private Button mBtnBack;
-	private View mBindView;
-	private View mMyPushView;
-	private View mMyCollectView;
-	private View mClieaCacheView;	
-	private View mAboutView;
-	
-	private ImageView mIVUpageIcon;
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.ll_bindaccount) View mBindView;  
+	@InjectView (R.id.ll_mypush) View mMyPushView;  
+	@InjectView (R.id.ll_mycollect) View mMyCollectView;  
+	@InjectView (R.id.ll_clearcache) View mClieaCacheView;  
+	@InjectView (R.id.ll_about) View mAboutView;  
+	@InjectView (R.id.iv_updateicon) ImageView mIVUpageIcon; 
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,23 +50,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
     }
     
     
-    private void setupViews(){
-    	mBtnBack = (Button) findViewById(R.id.btn_back);  	
-    	mBtnBack.setOnClickListener(this);  	
-
-    	mBindView = findViewById(R.id.ll_bindaccount);
-    	mMyPushView = findViewById(R.id.ll_mypush);
-    	mMyCollectView = findViewById(R.id.ll_mycollect);
-    	mClieaCacheView = findViewById(R.id.ll_clearcache);
-    	mAboutView = findViewById(R.id.ll_about);   	
-    	
+    private void setupViews(){	
+    	mBtnBack.setOnClickListener(this);  	 		
     	mBindView.setOnClickListener(this);
     	mMyPushView.setOnClickListener(this);
     	mMyCollectView.setOnClickListener(this);
     	mClieaCacheView.setOnClickListener(this);	
     	mAboutView.setOnClickListener(this);   	
-    	
-    	mIVUpageIcon = (ImageView) findViewById(R.id.iv_updateicon);
     }
     
     private void initData(){

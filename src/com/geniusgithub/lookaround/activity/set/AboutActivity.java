@@ -5,6 +5,16 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import roboguice.inject.InjectView;
+import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -25,17 +35,6 @@ import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 public class AboutActivity extends BaseActivity implements OnClickListener,
 															IRequestDataPacketCallback,
 															IDialogInterface,
@@ -43,16 +42,14 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 
 	private static final CommonLog log = LogFactory.createLog();
 	
-	private Button mBtnBack;
-	
-	private View mAdviseView;
-	private View mAttentionWeiboView;
-	private View mCheckUpdateView;
-	private View mSupportDevelopterView;
-	
-	private ImageView mIVUpageIcon;
-	private TextView mTVVersion;
-	
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.ll_advise)  View mAdviseView;
+	@InjectView (R.id.ll_attention) View mAttentionWeiboView; 
+	@InjectView (R.id.ll_checkupdate) View mCheckUpdateView; 
+	@InjectView (R.id.ll_support) View mSupportDevelopterView; 
+	@InjectView (R.id.iv_updateicon) ImageView mIVUpageIcon; 
+	@InjectView (R.id.tv_version) TextView mTVVersion; 	
+		
 	private ClientEngine mClientEngine;	
 	private PublicType.CheckUpdateResult object = null; 
 
@@ -67,23 +64,12 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
     
     
     private void setupViews(){
-    	mBtnBack = (Button) findViewById(R.id.btn_back);  	
-    	mBtnBack.setOnClickListener(this);    	
 
-    	mSupportDevelopterView = findViewById(R.id.ll_support);
-    	mAttentionWeiboView = findViewById(R.id.ll_attention);
-    	mCheckUpdateView = findViewById(R.id.ll_checkupdate);
-    	mAdviseView = findViewById(R.id.ll_advise);       	
-    
-    	
+    	mBtnBack.setOnClickListener(this);    		
     	mSupportDevelopterView.setOnClickListener(this);
     	mAttentionWeiboView.setOnClickListener(this);
     	mCheckUpdateView.setOnClickListener(this);
     	mAdviseView.setOnClickListener(this);
-    	
-    	mTVVersion = (TextView) findViewById(R.id.tv_version);
-
-    	mIVUpageIcon = (ImageView) findViewById(R.id.iv_updateicon);
 
     }
     

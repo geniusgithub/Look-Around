@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import roboguice.inject.InjectView;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -53,17 +55,19 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	private static final int MSG_CANCEL_NOTIFY = 3;
 	
 	private static final int MAX_TEXT_LENGTH = 140;
+
+
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.btn_right) Button mBtnShare;  
+	@InjectView (R.id.btn_cancelimage) Button mBtnCancelImage;  
+	@InjectView (R.id.iv_pic) ImageView mIVShareImage;  
+	@InjectView (R.id.et_content) EditText mETContent;
+	@InjectView (R.id.tv_target) TextView mTVTarget;  
+	@InjectView (R.id.tv_live) TextView mTVLive;  
+	@InjectView (R.id.tv_bartitle) TextView mTVTitle;  
+	@InjectView (R.id.fl_phoneframe) View phoneFrameView;  
 	
-	private Button mBtnBack;
-	private Button mBtnShare;
-	private Button mBtnCancelImage;
-	private ImageView mIVShareImage;
-	
-	private EditText mETContent;
-	private TextView mTVTarget;
-	private TextView mTVLive;
-	private TextView mTVTitle;
-	
+
 	private int notifyIcon;
 	private String notifyTitle;
 	private String sharePath;
@@ -71,8 +75,7 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	
 	private Platform mPlatform;
 	private HashMap<String, Object> reqMap;
-	
-	private View phoneFrameView;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,26 +94,13 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	}
 
 	
-	private void setupViews(){
+	private void setupViews(){	
+		setNotification(R.drawable.logo_icon,"Look Around");		
 
-		
-		setNotification(R.drawable.logo_icon,"Look Around");
-		
-		mBtnBack = (Button) findViewById(R.id.btn_back);
-		mBtnShare = (Button) findViewById(R.id.btn_right);
-		mBtnCancelImage = (Button) findViewById(R.id.btn_cancelimage);
-		mIVShareImage = (ImageView) findViewById(R.id.iv_pic);
 		mBtnBack.setOnClickListener(this);
 		mBtnShare.setOnClickListener(this);
 		mBtnCancelImage.setOnClickListener(this);
-		
-		mETContent = (EditText) findViewById(R.id.et_content);
-		mTVTarget = (TextView) findViewById(R.id.tv_target);
 		mETContent.addTextChangedListener(this);
-		mTVLive = (TextView) findViewById(R.id.tv_live);
-		mTVTitle = (TextView) findViewById(R.id.tv_bartitle);
-		
-		phoneFrameView = findViewById(R.id.fl_phoneframe);
 	}
 	
 	private void initData(){
@@ -123,6 +113,7 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 			mETContent.setText(value);
 			mETContent.setSelection(value.length());
 		}
+		updateTVLive();
 		
 		sharePath = ShareItem.getShareImagePath();
 		log.e("sharePath = " + sharePath);
@@ -394,10 +385,15 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		updateTVLive();
+	}
+
+	
+	
+	private void updateTVLive(){
 		int remain = MAX_TEXT_LENGTH - mETContent.length();
 		mTVLive.setText("您还可以输入" + String.valueOf(remain) + "字");
 		mTVLive.setTextColor(remain > 0 ? 0xffcfcfcf : 0xffff0000);
 	}
-
 
 }

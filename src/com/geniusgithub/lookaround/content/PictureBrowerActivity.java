@@ -3,6 +3,8 @@ package com.geniusgithub.lookaround.content;
 import java.util.List;
 import java.util.logging.FileHandler;
 
+import roboguice.inject.InjectView;
+
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
@@ -43,18 +45,17 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 	// 屏幕高度
 	public static int screenHeight;
 	
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.btn_right) Button mBtnSave;  
+	@InjectView (R.id.tv_title) TextView mTVTitle;
+	@InjectView (R.id.pic_gallery) PicGallery gallery;  
 
-	private Button mBtnBack;
-	private Button mBtnSave;
 	
-	private PicGallery gallery;
 	private GalleryAdapterEx mAdapter;
 
 	private BaseType.InfoItem mItem = new BaseType.InfoItem();
 	private int mCurPos = 0;
 	private int mTotalNum = 0;
-	
-	private TextView mTVTitle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,17 +79,15 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 		screenHeight = getWindow().getWindowManager().getDefaultDisplay()
 				.getHeight();	
 
-		gallery = (PicGallery)findViewById(R.id.pic_gallery);
+
 		gallery.setVerticalFadingEdgeEnabled(false);// 取消竖直渐变边框
 		gallery.setHorizontalFadingEdgeEnabled(false);// 取消水平渐变边框
 		gallery.setDetector(new GestureDetector(this, new MySimpleGesture()));
 
-		mBtnBack = (Button) findViewById(R.id.btn_back);
+
 		mBtnBack.setOnClickListener(this);
-		mBtnSave = (Button) findViewById(R.id.btn_right);
 		mBtnSave.setOnClickListener(this);
 		
-		mTVTitle = (TextView) findViewById(R.id.tv_title);
 	}
 	
 	

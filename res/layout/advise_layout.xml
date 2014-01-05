@@ -94,7 +94,7 @@
         android:layout_marginBottom="5dp"
         android:textColor="@color/silver"
         android:textSize="16sp"
-        android:text="您还可以输入50字" />
+        android:text="" />
          
     </RelativeLayout>
     

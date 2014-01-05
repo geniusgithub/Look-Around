@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import roboguice.inject.InjectView;
+
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
@@ -43,10 +45,11 @@ public class CollectActivity extends BaseActivity implements OnClickListener,
 												OnItemClickListener, IDialogInterface{
 	
 	private static final CommonLog log = LogFactory.createLog();
-	private Button mBtnBack;
-	private Button mBtnClear;
-	private TextView mTVTitle;
-	private ListView mListView;
+	
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.btn_right) Button mBtnClear;  
+	@InjectView (R.id.tv_bartitle) TextView mTVTitle;  
+	@InjectView (R.id.listview) ListView mListView;  
 
 	private InfoContentExAdapter mAdapter;	
 	private List<BaseType.InfoItemEx> mContentData = new ArrayList<BaseType.InfoItemEx>();
@@ -82,14 +85,8 @@ public class CollectActivity extends BaseActivity implements OnClickListener,
 
 
 	private void setupViews(){
-    	mBtnBack = (Button) findViewById(R.id.btn_back);
     	mBtnBack.setOnClickListener(this);
-    	mBtnClear = (Button) findViewById(R.id.btn_right);
     	mBtnClear.setOnClickListener(this);
-    	
-    	mTVTitle = (TextView) findViewById(R.id.tv_bartitle);
-    	
-    	mListView = (ListView) findViewById(R.id.listview);
     	mListView.setOnItemClickListener(this);
     }
     

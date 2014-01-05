@@ -2,6 +2,8 @@ package com.geniusgithub.lookaround.activity.set;
 
 import java.util.HashMap;
 
+import roboguice.inject.InjectView;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,17 +48,17 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 	
 	private static final int MAX_TEXT_LENGTH = 100;
 	
-	private Button mBtnBack;
-	private Button mBtnShare;
 	
-	private EditText mETContent;
-	private TextView mTVTarget;
-	private TextView mTVLive;
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.btn_right)  Button mBtnShare;
+	@InjectView (R.id.et_content) EditText mETContent; 
+	@InjectView (R.id.tv_target) TextView mTVTarget; 
+	@InjectView (R.id.tv_live) TextView mTVLive; 
 	
+
 	private int notifyIcon;
 	private String notifyTitle;
 	private String sharePath;
-	
 	
 	private Platform mPlatform;
 	
@@ -81,16 +84,10 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 
 		
 		setNotification(R.drawable.logo_icon,"Look Around");
-		
-		mBtnBack = (Button) findViewById(R.id.btn_back);
-		mBtnShare = (Button) findViewById(R.id.btn_right);
+
 		mBtnBack.setOnClickListener(this);
-		mBtnShare.setOnClickListener(this);
-		
-		mETContent = (EditText) findViewById(R.id.et_content);
-		mTVTarget = (TextView) findViewById(R.id.tv_target);
+		mBtnShare.setOnClickListener(this);		
 		mETContent.addTextChangedListener(this);
-		mTVLive = (TextView) findViewById(R.id.tv_live);
 
 	}
 	
@@ -102,7 +99,7 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 		if (nickname != null){
 			mTVTarget.setText(nickname);
 		}
-		
+		updateTVLive();
 	}
 	
 	
@@ -292,9 +289,12 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		updateTVLive();
+	}
+
+	private void updateTVLive(){
 		int remain = MAX_TEXT_LENGTH - mETContent.length();
 		mTVLive.setText("您还可以输入" + String.valueOf(remain) + "字");
 		mTVLive.setTextColor(remain > 0 ? 0xffcfcfcf : 0xffff0000);
 	}
-
 }

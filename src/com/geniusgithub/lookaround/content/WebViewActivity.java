@@ -1,5 +1,6 @@
 package com.geniusgithub.lookaround.content;
 
+import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,11 +11,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
+import com.geniusgithub.lookaround.widget.PicGallery;
 
 
 public class WebViewActivity extends BaseActivity implements OnClickListener{
@@ -23,9 +26,10 @@ public class WebViewActivity extends BaseActivity implements OnClickListener{
 	
 	public static final String INTENT_EXTRA_URL = "INTENT_EXTRA_URL";
 	
-	private Button mBtnBack;
-	private WebView mWebView;
-	private View progressBar;
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.webview) WebView mWebView;  
+	@InjectView (R.id.show_request_progress_bar) View progressBar;
+
 	
 	private ScanWebViewClient mWeiboWebViewClient;
 	
@@ -42,7 +46,7 @@ public class WebViewActivity extends BaseActivity implements OnClickListener{
 
 	public void initView()
 	{
-		mWebView = (WebView) findViewById(R.id.webview);
+
 	    mWebView.setVerticalScrollBarEnabled(false);
 	    mWebView.setHorizontalScrollBarEnabled(false);
 	    mWebView.requestFocus();
@@ -53,9 +57,6 @@ public class WebViewActivity extends BaseActivity implements OnClickListener{
 		webSettings.setSupportZoom(true);
 		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		
-		progressBar = findViewById(R.id.show_request_progress_bar);
-		
-		mBtnBack = (Button) findViewById(R.id.btn_back);
 		mBtnBack.setOnClickListener(this);
 	}
 

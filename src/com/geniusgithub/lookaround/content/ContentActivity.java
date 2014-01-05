@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import roboguice.inject.InjectView;
+
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
@@ -51,24 +53,23 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	private final static int WECHAT_MOM_ID = 4;
 	private final static int QZONE = 5;
 
-	private Button mBtnBack;
-	private Button mBtnCollect;
-	private Button mBtnReadOrign;
-	private TextView mTVBarTitle;
-	private TextView mTVTitle;
-	private TextView mTVArtist;
-	private TextView mTVContent;
-	private TextView mTVTime;
-	private TextView mTVSource;
-	private ImageView mIVContent;
+	@InjectView (R.id.btn_back) Button mBtnBack;  
+	@InjectView (R.id.btn_right) Button mBtnCollect;  
+	@InjectView (R.id.btn_readorign) Button mBtnReadOrign;  	
+	@InjectView (R.id.tv_bartitle) TextView mTVBarTitle;  
+	@InjectView (R.id.tv_title) TextView mTVTitle;  
+	@InjectView (R.id.tv_artist) TextView mTVArtist;  
+	@InjectView (R.id.tv_content) TextView mTVContent;  
+	@InjectView (R.id.tv_time) TextView mTVTime;  
+	@InjectView (R.id.tv_source) TextView mTVSource;  
+	@InjectView (R.id.iv_content) ImageView mIVContent;  
+	@InjectView (R.id.SatelliteMenu) SatelliteMenu SatelliteMenu;  
 	
-
+	
 	private BaseType.ListItem mTypeItem = new BaseType.ListItem();
 	private BaseType.InfoItemEx mInfoItem = new BaseType.InfoItemEx();
 	
 	private SimpleImageLoader mImageLoader;
-	
-	private SatelliteMenu SatelliteMenu; 
 	
 	
     private DaoMaster daoMaster;
@@ -91,6 +92,8 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 			return ;
 		}
 		
+		setContentView(R.layout.info_content_layout);
+		
 		setupViews();	
 		initData();
 
@@ -109,25 +112,12 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	
 	
 	private void setupViews(){
-		setContentView(R.layout.info_content_layout);
-		
-		mBtnBack = (Button) findViewById(R.id.btn_back);
-		mBtnCollect = (Button) findViewById(R.id.btn_right);
-		mBtnReadOrign = (Button) findViewById(R.id.btn_readorign);
-		mTVBarTitle = (TextView) findViewById(R.id.tv_bartitle);
-		mTVTitle = (TextView) findViewById(R.id.tv_title);
-		mTVArtist = (TextView) findViewById(R.id.tv_artist);
-		mTVContent = (TextView) findViewById(R.id.tv_content);
-		mTVTime = (TextView) findViewById(R.id.tv_time);
-		mTVSource = (TextView) findViewById(R.id.tv_source);
-		mIVContent = (ImageView) findViewById(R.id.iv_content);
-		
+
 		mBtnBack.setOnClickListener(this);
 		mBtnCollect.setOnClickListener(this);
 		mBtnReadOrign.setOnClickListener(this);
 		mIVContent.setOnClickListener(this);
-		
-		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);	   
+
 	}
 	
 

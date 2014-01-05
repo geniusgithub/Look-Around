@@ -3,22 +3,19 @@ package com.geniusgithub.lookaround.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import roboguice.inject.InjectView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.geniusgithub.lookaround.FragmentControlCenter;
-
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.set.SettingActivity;
@@ -33,12 +30,15 @@ import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import com.umeng.analytics.MobclickAgent;
 
 
 public class MainLookAroundActivity extends SlidingFragmentActivity implements OnClickListener, IDialogInterface{
 
 	private static final CommonLog log = LogFactory.createLog();
+	
+//	@InjectView (R.id.iv_left_icon) Button mLeftIcon;  
+//	@InjectView (R.id.iv_right_icon)  Button mRightIcon;
+//	@InjectView (R.id.tv_title) TextView mTitleTextView; 
 	
 	private CommonFragmentEx mContentFragment;
 	
@@ -127,9 +127,10 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayShowHomeEnabled(false);
-		
+
 		mLeftIcon = (Button) findViewById(R.id.iv_left_icon);
-		mRightIcon = (Button) findViewById(R.id.iv_right_icon);
+	    mRightIcon = (Button) findViewById(R.id.iv_right_icon);
+		
 		mLeftIcon.setOnClickListener(this);
 		mRightIcon.setOnClickListener(this);
 		

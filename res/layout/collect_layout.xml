@@ -53,7 +53,8 @@
 			android:divider="@null"
 		    android:dividerHeight="5dp"
 		    android:cacheColorHint="@color/transparent"
-		    android:clickable="true"/>
+		    android:clickable="true"
+		    android:listSelector="@drawable/selector_content_item"/>
 	    
    		 
     </RelativeLayout>

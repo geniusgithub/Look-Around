@@ -1,6 +1,9 @@
 package com.geniusgithub.lookaround.activity.set;
 
+import roboguice.inject.InjectView;
+
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.umeng.newxp.common.ExchangeConstants;
 import com.umeng.newxp.controller.ExchangeDataService;
 import com.umeng.newxp.view.ExchangeViewManager;
@@ -17,9 +20,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SupportActivity extends Activity implements OnClickListener,OnItemClickListener{
+public class SupportActivity extends BaseActivity implements OnClickListener,OnItemClickListener{
 
-	private Button mBtnBack;
+	@InjectView (R.id.btn_back) Button mBtnBack;  
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,9 +33,7 @@ public class SupportActivity extends Activity implements OnClickListener,OnItemC
         initData();
     }
     
-    
     private void setupViews(){
-    	mBtnBack = (Button) findViewById(R.id.btn_back);
     	mBtnBack.setOnClickListener(this);
     }
     
