@@ -1,6 +1,7 @@
 package com.geniusgithub.lookaround.fragment;
 
 
+import roboguice.fragment.RoboFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-public class CommonFragment  extends Fragment{
+public class CommonFragment  extends RoboFragment{
 
 	public static final CommonLog log = LogFactory.createLog();
 	
@@ -26,9 +27,7 @@ public class CommonFragment  extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-	
-		
+		super.onCreateView(inflater, container, savedInstanceState);	
 		return null;
 	}
 
