@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+   <string name="adv_id">a152d35b10d8916</string>
    <string name="app_name">随便瞧瞧</string>
 
    <string name="getdata_fail">获取数据失败,请稍后再试</string>  
