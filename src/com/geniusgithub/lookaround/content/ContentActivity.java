@@ -6,7 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import roboguice.inject.InjectView;
-
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ext.SatelliteMenu;
+import android.view.ext.SatelliteMenu.SateliteClickedListener;
+import android.view.ext.SatelliteMenuItem;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
@@ -19,31 +29,22 @@ import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.cache.FileCache;
 import com.geniusgithub.lookaround.cache.SimpleImageLoader;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
+import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.datastore.DaoSession;
 import com.geniusgithub.lookaround.datastore.InfoItemDao;
-import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
 import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
-import com.umeng.analytics.MobclickAgent;
+import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
+import com.google.ads.Ad;
+import com.google.ads.AdListener;
+import com.google.ads.AdRequest.ErrorCode;
+import com.google.ads.AdView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ext.SatelliteMenu;
-import android.view.ext.SatelliteMenuItem;
-import android.view.ext.SatelliteMenu.SateliteClickedListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-public class ContentActivity extends BaseActivity implements OnClickListener, SateliteClickedListener{
+public class ContentActivity extends BaseActivity implements OnClickListener, 
+										SateliteClickedListener, AdListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 		
@@ -63,9 +64,10 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 	@InjectView (R.id.tv_time) TextView mTVTime;  
 	@InjectView (R.id.tv_source) TextView mTVSource;  
 	@InjectView (R.id.iv_content) ImageView mIVContent;  
-	@InjectView (R.id.SatelliteMenu) SatelliteMenu SatelliteMenu;  
+	@InjectView (R.id.SatelliteMenu) SatelliteMenu SatelliteMenu;
+	@InjectView (R.id.adView) AdView adView;  
 	
-	
+
 	private BaseType.ListItem mTypeItem = new BaseType.ListItem();
 	private BaseType.InfoItemEx mInfoItem = new BaseType.InfoItemEx();
 	
@@ -106,6 +108,9 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 			db.close();
 		}
 		
+		if (adView != null){
+			adView.destroy();
+		}
 		
 		super.onDestroy();
 	}
@@ -156,6 +161,10 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
         SatelliteMenu.setOnItemClickedListener(this);
         
         inidDataBase();
+        
+        adView = (AdView) findViewById(R.id.adView);
+		adView.setAdListener(this);
+	
 	}
 	
 	private void inidDataBase(){
@@ -344,6 +353,36 @@ public class ContentActivity extends BaseActivity implements OnClickListener, Sa
 		Intent intent = new Intent();
 		intent.setClass(this, ShareActivity.class);
 		startActivity(intent);
+	}
+
+	@Override
+	public void onDismissScreen(Ad arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLeaveApplication(Ad arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPresentScreen(Ad arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onReceiveAd(Ad arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

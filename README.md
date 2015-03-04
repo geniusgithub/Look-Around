@@ -46,6 +46,7 @@ It uses open source libraries below:
 * [RefreshListView](https://github.com/chrisbanes/Android-PullToRefresh)
 * [greenDAO](https://github.com/greenrobot/greenDAO)
 * [android-async-http](https://github.com/geniusgithub/android-async-http)
+* [RoboGuice](https://github.com/geniusgithub/RoboGuice)
 * [shareSDK](http://sharesdk.cn/Download)
 
 Contributing

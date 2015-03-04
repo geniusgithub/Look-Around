@@ -1,9 +1,16 @@
 package com.geniusgithub.lookaround.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import roboguice.RoboGuice;
+import roboguice.activity.event.OnContentChangedEvent;
+import roboguice.event.EventManager;
 import roboguice.inject.InjectView;
+import roboguice.inject.RoboInjector;
+import roboguice.util.RoboContext;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,33 +35,32 @@ import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
+import com.google.inject.Key;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 
-public class MainLookAroundActivity extends SlidingFragmentActivity implements OnClickListener, IDialogInterface{
+public class MainLookAroundActivity extends SlidingFragmentActivity implements 
+															OnClickListener, IDialogInterface,
+															RoboContext {
 
 	private static final CommonLog log = LogFactory.createLog();
 	
-//	@InjectView (R.id.iv_left_icon) Button mLeftIcon;  
-//	@InjectView (R.id.iv_right_icon)  Button mRightIcon;
-//	@InjectView (R.id.tv_title) TextView mTitleTextView; 
+	private Button mLeftIcon;  
+	private  Button mRightIcon;
+	private TextView mTitleTextView; 
 	
-	private CommonFragmentEx mContentFragment;
-	
-	private Button mLeftIcon;
-	private Button mRightIcon;
-	private TextView mTitleTextView;
-	
+	private CommonFragmentEx mContentFragment;	
 	private FragmentControlCenter mControlCenter;
 	
 	private List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
 	private NavChannelAdapter mAdapter;
 	
-	
+	protected HashMap<Key<?>,Object> scopedObjects = new HashMap<Key<?>, Object>();
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		log.e("MainLookAroundActivity  onCreate!!!");
+	    RoboGuice.getInjector(this).injectMembersWithoutViews(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_slidemenu_layout);	
 		boolean loginStatus = LAroundApplication.getInstance().getLoginStatus();
@@ -66,11 +72,8 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		}
 		
 		setupViews();	
-	
-		initData();
-		
-		LAroundApplication.onCatchError(this);
-		
+		initData();		
+		LAroundApplication.onCatchError(this);		
 	}
 
 	@Override
@@ -86,15 +89,23 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		
 		LAroundApplication.onResume(this);
 	}
-
+	
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        RoboGuice.getInjector(this).injectViewMembers(this);
+    }
+    
+	@Override
+	protected void onDestroy() {	
+		RoboGuice.destroyInjector(this);	   
+		super.onDestroy();
+	}
 	
 	
-	private void setupViews(){
-		
-		initActionBar();
-		
-		initSlideMenu();
-	
+	private void setupViews(){		
+		initActionBar();	
+		initSlideMenu();	
 	}
 	
 	private void initSlideMenu(){
@@ -114,26 +125,19 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 		.commit();
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		sm.setBehindScrollScale(0);
-		sm.setFadeDegree(0.25f);
-
-		
+		sm.setFadeDegree(0.25f);	
 	}
 	
 	private void initActionBar(){
 	
 		ActionBar actionBar = getSupportActionBar();
-
 		actionBar.setCustomView(R.layout.actionbar_layout);
-
 		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setDisplayShowHomeEnabled(false);
-
-		mLeftIcon = (Button) findViewById(R.id.iv_left_icon);
-	    mRightIcon = (Button) findViewById(R.id.iv_right_icon);
-		
+		actionBar.setDisplayShowHomeEnabled(false);	
+	    mLeftIcon = (Button) findViewById(R.id.iv_left_icon);
+        mRightIcon = (Button) findViewById(R.id.iv_right_icon);
 		mLeftIcon.setOnClickListener(this);
 		mRightIcon.setOnClickListener(this);
-		
 		mTitleTextView = (TextView) findViewById(R.id.tv_title);
 	}
 	
@@ -257,6 +261,12 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements O
 			exitDialog.dismiss();
 		}
 		
+	}
+
+	@Override
+	public Map<Key<?>, Object> getScopedObjectMap() {
+		// TODO Auto-generated method stub
+		return scopedObjects;
 	}
 
 }
