@@ -196,7 +196,7 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 	
 	
 	private void onTransdelRegister(ResponseDataPacket dataPacket){
-		log.e("Register success...");
+		log.e("Register success...dataPacket = " + dataPacket.toString());
 		PublicType.UserRegisterResult object = new PublicType.UserRegisterResult();
 		try {
 			object.parseJson(dataPacket.data);

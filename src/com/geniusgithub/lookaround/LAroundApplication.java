@@ -59,6 +59,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 		MobclickAgent.setDebugMode(true);
 		
 		TCAgent.init(this);
+		TCAgent.setReportUncaughtExceptions(true);
 		ShareSDK.initSDK(this);
 	}
 	
