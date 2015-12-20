@@ -1,0 +1,1 @@
+include ':app', ':actionbarsherlock', ':actionbarsherlock', ':satellite-menu', ':slidingmenu'
