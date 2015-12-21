@@ -23,15 +23,9 @@ Example screenshot below:
 ![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m8.png?raw=true  "github")  
 
 
-if you want to run the project, You should download the dependent library below:
-* [ActionBarSherklock](https://github.com/JakeWharton/ActionBarSherlock)
-* [SlidingMenu](https://github.com/jfeinstein10/SlidingMenu)
-* [satellite-menu](https://github.com/geniusgithub/android-satellite-menu)
-
-
 Run requirements
 ------------------------------
-Android OS 2.3x and up<br />
+Android OS 4.4x and up<br />
 Tested with: Samsung, HTC, HuaWei Phone and so on...
 
 ## Acknowledgements
