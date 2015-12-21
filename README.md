@@ -9,7 +9,6 @@ Example screenshot below:
 
 ![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m2.png?raw=true "github")  
 
-
 ![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m3.png?raw=true "github")  
 
 ![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m4.png?raw=true "github")  
@@ -19,9 +18,9 @@ Example screenshot below:
 ![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m6.png?raw=true "github")  
 
 
-![github]((https://github.com/geniusgithub/Look-Around/blob/master/images/m7.png?raw=true  "github")  
+![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m7.png?raw=true  "github")  
 
-![github]((https://github.com/geniusgithub/Look-Around/blob/master/images/m8.png?raw=true  "github")  
+![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m8.png?raw=true  "github")  
 
 
 if you want to run the project, You should download the dependent library below:
