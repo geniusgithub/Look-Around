@@ -1,18 +1,18 @@
 package com.geniusgithub.lookaround.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/*import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;*/
 
 public class PublicType {
 

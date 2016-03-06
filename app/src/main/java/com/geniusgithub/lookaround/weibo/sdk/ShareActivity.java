@@ -1,10 +1,34 @@
 package com.geniusgithub.lookaround.weibo.sdk;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.activity.BaseActivity;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map.Entry;
-
-import roboguice.inject.InjectView;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -16,34 +40,7 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
-
-import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
-
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.os.Message;
-import android.os.Handler.Callback;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import roboguice.inject.InjectView;
 
 public class ShareActivity extends BaseActivity implements Callback , TextWatcher,
 												OnClickListener, PlatformActionListener{
@@ -317,11 +314,17 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 					nm.cancel(id);
 
 					long when = System.currentTimeMillis();
-					Notification notification = new Notification(notifyIcon, text, when);
 					PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(), 0);
-					notification.setLatestEventInfo(this, notifyTitle, text, pi);
-					notification.flags = Notification.FLAG_AUTO_CANCEL;
-					nm.notify(id, notification);
+					Notification.Builder builder = new Notification.Builder(this);
+					builder.setSmallIcon(notifyIcon);
+					builder.setContentText(text);
+					builder.setWhen(when);
+					builder.setContentTitle(notifyTitle);
+					builder.setContentIntent(pi);
+					builder.setAutoCancel(true);
+
+
+					nm.notify(id, builder.build());
 
 					if (cancelTime > 0) {
 						Message msg = new Message();

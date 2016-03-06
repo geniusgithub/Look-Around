@@ -1,6 +1,6 @@
 package com.geniusgithub.lookaround.dialog;
 
-import org.apache.http.conn.params.ConnConnectionParamBean;
+/*import org.apache.http.conn.params.ConnConnectionParamBean;*/
 
 import android.app.AlertDialog;
 import android.app.Dialog;

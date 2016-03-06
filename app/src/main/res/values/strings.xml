@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">>
    <string name="adv_id">a152d35b10d8916</string>
    <string name="app_name">随便瞧瞧</string>
 
@@ -98,4 +98,12 @@
 	
 	<string name="about_connect">新浪微博(android火星人)</string>
 	<string name="about_bottom">Copyright @2015 LookAround\nAll Rights Reserved</string>
+
+
+
+
+   <string name="permission_title" >提醒</string>
+   <string name="permission_setting_guidedialog">lookaround的<xliff:g id="permission">%s</xliff:g>被禁用，导致应用无法正常运行，请尝试进入权限管理，打开上述权限后，重新运行。</string>
+   <string name="permission_gosetting" >去设置</string>
+   <string name="permission_know" >知道了</string>
 </resources>

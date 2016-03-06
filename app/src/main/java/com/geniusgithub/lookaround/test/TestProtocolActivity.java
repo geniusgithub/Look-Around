@@ -163,7 +163,7 @@ public class TestProtocolActivity extends Activity implements OnClickListener, I
 		log.e("mac = " + mac);
 		String imsi = CommonUtil.getIMSI(this);
 		log.e("imsi = " + imsi);
-		String providerString = CommonUtil.getProvidersName(this);
+		String providerString = "";//CommonUtil.getProvidersName(this);
 		log.e("providerString = " + providerString);
 	}
 	

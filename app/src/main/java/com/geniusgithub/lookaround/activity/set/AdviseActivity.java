@@ -1,15 +1,21 @@
 package com.geniusgithub.lookaround.activity.set;
 
-import java.util.HashMap;
-
-import roboguice.inject.InjectView;
-
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.PlatformDb;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.utils.UIHandler;
-import cn.sharesdk.sina.weibo.SinaWeibo;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
@@ -18,24 +24,15 @@ import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.weibo.sdk.ShareCore;
 
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Message;
-import android.os.Handler.Callback;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.PlatformDb;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.framework.utils.UIHandler;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import roboguice.inject.InjectView;
 
 public class AdviseActivity extends BaseActivity implements Callback , TextWatcher,
 											OnClickListener, PlatformActionListener{
@@ -221,11 +218,15 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 					nm.cancel(id);
 
 					long when = System.currentTimeMillis();
-					Notification notification = new Notification(notifyIcon, text, when);
+					Notification.Builder builder = new Notification.Builder(this);
+					builder.setSmallIcon(notifyIcon);
+					builder.setContentText(text);
+					builder.setWhen(when);
+					builder.setContentTitle(notifyTitle);
 					PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(), 0);
-					notification.setLatestEventInfo(this, notifyTitle, text, pi);
-					notification.flags = Notification.FLAG_AUTO_CANCEL;
-					nm.notify(id, notification);
+					builder.setContentIntent(pi);
+					builder.setAutoCancel(true);
+					nm.notify(id, builder.build());
 
 					if (cancelTime > 0) {
 						Message msg = new Message();

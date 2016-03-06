@@ -1,27 +1,22 @@
 package com.geniusgithub.lookaround.util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 
 public class CommonUtil {
 
@@ -183,9 +178,12 @@ public class CommonUtil {
 	{
 		return android.os.Build.MODEL;
 	}
-	
+
 	public static String getIMSI(Context context){
-		 TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);  
+		 if (PermissionsUtil.sIsAtLeastM){
+			 return "";
+		 }
+		 TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		 String IMSI = telephonyManager.getSubscriberId();  
 		 if (IMSI == null){
 			 IMSI = "";
@@ -193,8 +191,10 @@ public class CommonUtil {
 		 return IMSI;
 	}
 	
-	public static String getProvidersName(Context context) {  
-
+	public static String getProvidersName(Context context) {
+		if (PermissionsUtil.sIsAtLeastM){
+			return "";
+		}
 		 String ProvidersName = "";  
 		 
 		 TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);  
@@ -216,7 +216,7 @@ public class CommonUtil {
 		 }  
 	
 		 return ProvidersName;  
-      }  
+      }
 	
 	public static String getScreeenSize(Context context){
 		int width = getScreenWidth(context);
