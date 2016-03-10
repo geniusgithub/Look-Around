@@ -1,12 +1,15 @@
 package com.geniusgithub.lookaround.activity;
 
-import java.util.List;
-
-import org.json.JSONException;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.R.string;
 import com.geniusgithub.lookaround.datastore.LocalConfigSharePreference;
 import com.geniusgithub.lookaround.dialog.DialogBuilder;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
@@ -19,14 +22,9 @@ import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
+import com.geniusgithub.lookaround.util.PermissionsUtil;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import org.json.JSONException;
 
 public class WelcomActivity extends BaseActivity implements IRequestDataPacketCallback, IDialogInterface{
 
@@ -234,14 +232,7 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			
 				return ;
 			}
-			
-			if (object.mHaveNewVer != 0){				
-				CommonUtil.showToast(R.string.toast_update_warn, this);
-			}
-					
-			
-			
-		
+
 			
 			mApplication.setUserLoginResult(object);
 			mApplication.setLoginStatus(true);
@@ -254,12 +245,63 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 	}
 	
 	private void goMainActivity(){
-		Intent intent = new Intent();
-		intent.setClass(this, MainLookAroundActivity.class);
-		startActivity(intent);
-		finish();
+
+		if (PermissionsUtil.hasNecessaryRequiredPermissions(this)){
+			if (object.mHaveNewVer != 0){
+				CommonUtil.showToast(R.string.toast_update_warn, this);
+			}
+
+			Intent intent = new Intent();
+			intent.setClass(this, MainLookAroundActivity.class);
+			startActivity(intent);
+			finish();
+		}else{
+			requestNecessaryRequiredPermissions();
+		}
+
+
+
 	}
-	
+
+	private final int REQUEST_STORAGE_PERMISSION =  0X0001;
+	private void requestNecessaryRequiredPermissions(){
+		requestSpecialPermissions(PermissionsUtil.STORAGE, REQUEST_STORAGE_PERMISSION);
+	}
+
+
+	private void requestSpecialPermissions(String permission, int requestCode){
+		String []permissions = new String[]{permission};
+		requestPermissions(permissions, requestCode);
+	}
+
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+		switch(requestCode){
+			case REQUEST_STORAGE_PERMISSION:
+				doStoragePermission(grantResults);
+				break;
+
+			default:
+				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+				break;
+		}
+
+
+	}
+
+	private void doStoragePermission(int[] grantResults){
+		if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+			log.e("doStoragePermission is denied!!!" );
+			Dialog dialog = PermissionsUtil.createPermissionSettingDialog(this, "存储权限");
+			dialog.show();
+		}else if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			log.i("doStoragePermission, is granted!!!" );
+			goMainActivity();
+		}
+
+	}
 	
 	private Dialog forceUpdateDialog;
 	private Dialog getForceUpdateDialog(PublicType.UserLoginResult object){
