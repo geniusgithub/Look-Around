@@ -2,7 +2,7 @@ package com.geniusgithub.lookaround.util;
 
 
 public class LogFactory {
-	private static final String TAG = "Util-library";
+	private static final String TAG = "Look-Around";
 	private static CommonLog log = null;
 
 	public static CommonLog createLog() {
