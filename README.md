@@ -49,6 +49,7 @@ If you want to add something that will require some for of persistence incl. per
 
 ### Links
 csdn blog : [http://blog.csdn.net/geniuseoe2012](http://blog.csdn.net/lancees/article/details/17696805)<br /> 
+cnblog : [http://www.cnblogs.com/lance2016/](http://www.cnblogs.com/lance2016/p/5204318.html)<br /> 
 
 
 ### Development
