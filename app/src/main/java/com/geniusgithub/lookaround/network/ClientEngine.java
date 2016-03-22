@@ -3,7 +3,6 @@ package com.geniusgithub.lookaround.network;
 
 import android.content.Context;
 
-import com.geniusgithub.lookaround.model.IToStringMap;
 import com.geniusgithub.lookaround.model.ServerUrlBuilder;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -52,7 +51,7 @@ public class ClientEngine {
 		
 		log.e("httpGetRequest url = " + url);
 		RequestParams param = new RequestParams(packet.object.toStringMap());
-		
+
 		HttpResponseHandler handler = new HttpResponseHandler(packet.action, callback, null, packet.extra);	
 		client.get(packet.context, url,  param, handler);
 		

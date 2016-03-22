@@ -15,7 +15,12 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
     </style>
-            
+
+    <style name="Theme.AppStartLoad" parent="android:Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/welcome</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
      <style name="MainTheme" parent="@style/Theme.Sherlock.Light">
        
     </style>

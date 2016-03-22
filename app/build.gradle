@@ -8,8 +8,8 @@ android {
         applicationId "com.geniusgithub.lookaround"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 10101
-        versionName "1.01.01"
+        versionCode 10201
+        versionName "1.02.01"
     }
     buildTypes {
         release {
