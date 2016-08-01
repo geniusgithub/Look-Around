@@ -1,24 +1,17 @@
 package com.geniusgithub.lookaround.activity.set;
 
-import roboguice.inject.InjectView;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.BaseActivity;
-import com.umeng.newxp.common.ExchangeConstants;
-import com.umeng.newxp.controller.ExchangeDataService;
-import com.umeng.newxp.view.ExchangeViewManager;
-import com.umeng.newxp.view.GridTemplateConfig;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+import roboguice.inject.InjectView;
 
 public class SupportActivity extends BaseActivity implements OnClickListener,OnItemClickListener{
 
@@ -38,7 +31,7 @@ public class SupportActivity extends BaseActivity implements OnClickListener,OnI
     }
     
     private void initData(){
-    	ExchangeConstants.CONTAINER_AUTOEXPANDED = false;
+/*    	ExchangeConstants.CONTAINER_AUTOEXPANDED = false;
 
 		ViewGroup fatherLayout = (ViewGroup) findViewById(R.id.ad);
 		ListView listView = (ListView) findViewById(R.id.list);
@@ -49,7 +42,7 @@ public class SupportActivity extends BaseActivity implements OnClickListener,OnI
 		exchangeViewManager.setGridTemplateConfig(new GridTemplateConfig().setMaxPsize(9).setNumColumns(3).setVerticalSpacing(13));
 		exchangeViewManager.addView(fatherLayout, listView);
 		
-		listView.setOnItemClickListener(this);
+		listView.setOnItemClickListener(this);*/
     }
 
 

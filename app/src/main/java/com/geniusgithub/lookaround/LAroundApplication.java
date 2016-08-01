@@ -16,13 +16,10 @@
 package com.geniusgithub.lookaround;
 
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import cn.sharesdk.framework.ShareSDK;
 
 import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
 import com.geniusgithub.lookaround.activity.WelcomActivity;
@@ -31,6 +28,10 @@ import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.ShareSDK;
 
 public class LAroundApplication extends Application  implements ItatisticsEvent{
 
@@ -137,7 +138,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 	}
 	
 	public static void onCatchError(Context context){
-		MobclickAgent.onError(context);
+
 		TCAgent.setReportUncaughtExceptions(true);
 	}
 }

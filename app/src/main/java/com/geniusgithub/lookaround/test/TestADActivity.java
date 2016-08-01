@@ -3,14 +3,9 @@ package com.geniusgithub.lookaround.test;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.geniusgithub.lookaround.R;
-import com.umeng.newxp.common.ExchangeConstants;
-import com.umeng.newxp.controller.ExchangeDataService;
-import com.umeng.newxp.view.ExchangeViewManager;
-import com.umeng.newxp.view.GridTemplateConfig;
+
 
 public class TestADActivity extends FragmentActivity{
 
@@ -34,7 +29,7 @@ public class TestADActivity extends FragmentActivity{
 	
 	
 	private void setupViews(){
-		ExchangeConstants.CONTAINER_AUTOEXPANDED = false;
+/*		ExchangeConstants.CONTAINER_AUTOEXPANDED = false;
 
 		ViewGroup fatherLayout = (ViewGroup) findViewById(R.id.ad);
 		ListView listView = (ListView) findViewById(R.id.list);
@@ -43,7 +38,7 @@ public class TestADActivity extends FragmentActivity{
 		exchangeDataService.setTemplate(1);
 		ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this, exchangeDataService);
 		exchangeViewManager.setGridTemplateConfig(new GridTemplateConfig().setMaxPsize(9).setNumColumns(3).setVerticalSpacing(13));
-		exchangeViewManager.addView(fatherLayout, listView);
+		exchangeViewManager.addView(fatherLayout, listView);*/
 		
 	}
 	

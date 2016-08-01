@@ -25,4 +25,5 @@ dependencies {
     compile project(':satellite-menu')
     compile project(':slidingmenu')
     compile project(':actionbarsherlock')
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

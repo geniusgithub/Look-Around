@@ -1,12 +1,14 @@
 package com.geniusgithub.lookaround.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
@@ -25,6 +27,11 @@ import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.util.PermissionsUtil;
 
 import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class WelcomActivity extends BaseActivity implements IRequestDataPacketCallback, IDialogInterface{
 
@@ -255,6 +262,8 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			intent.setClass(this, MainLookAroundActivity.class);
 			startActivity(intent);
 			finish();
+
+		//	log.i("getDeviceInfo = " + getDeviceInfo(this));
 		}else{
 			requestNecessaryRequiredPermissions();
 		}
@@ -264,6 +273,7 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 	}
 
 	private final int REQUEST_STORAGE_PERMISSION =  0X0001;
+	private final int REQUEST_PHONE_PERMISSION =  0X0002;
 	private void requestNecessaryRequiredPermissions(){
 		requestSpecialPermissions(PermissionsUtil.STORAGE, REQUEST_STORAGE_PERMISSION);
 	}
@@ -282,6 +292,9 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			case REQUEST_STORAGE_PERMISSION:
 				doStoragePermission(grantResults);
 				break;
+			case REQUEST_PHONE_PERMISSION:
+				doPhonePermission(grantResults);
+				break;
 
 			default:
 				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -298,6 +311,18 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 			dialog.show();
 		}else if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
 			log.i("doStoragePermission, is granted!!!" );
+			requestSpecialPermissions(PermissionsUtil.PHONE, REQUEST_PHONE_PERMISSION);
+		}
+
+	}
+
+	private void doPhonePermission(int[] grantResults){
+		if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+			log.e("doPhonePermission is denied!!!" );
+			Dialog dialog = PermissionsUtil.createPermissionSettingDialog(this, "读电话权限");
+			dialog.show();
+		}else if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			log.i("doPhonePermission, is granted!!!" );
 			goMainActivity();
 		}
 
@@ -339,4 +364,59 @@ public class WelcomActivity extends BaseActivity implements IRequestDataPacketCa
 		finish();
 		
 	}
+
+
+/*	public static String getDeviceInfo(Context context) {
+		try {
+			org.json.JSONObject json = new org.json.JSONObject();
+			android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
+					.getSystemService(Context.TELEPHONY_SERVICE);
+			String device_id = null;
+			device_id = tm.getDeviceId();
+
+			String mac = null;
+			FileReader fstream = null;
+			try {
+				fstream = new FileReader("/sys/class/net/wlan0/address");
+			} catch (FileNotFoundException e) {
+				fstream = new FileReader("/sys/class/net/eth0/address");
+			}
+			BufferedReader in = null;
+			if (fstream != null) {
+				try {
+					in = new BufferedReader(fstream, 1024);
+					mac = in.readLine();
+				} catch (IOException e) {
+				} finally {
+					if (fstream != null) {
+						try {
+							fstream.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					if (in != null) {
+						try {
+							in.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			json.put("mac", mac);
+			if (TextUtils.isEmpty(device_id)) {
+				device_id = mac;
+			}
+			if (TextUtils.isEmpty(device_id)) {
+				device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),
+						android.provider.Settings.Secure.ANDROID_ID);
+			}
+			json.put("device_id", device_id);
+			return json.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}*/
 }
