@@ -63,7 +63,7 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements
 		boolean loginStatus = LAroundApplication.getInstance().getLoginStatus();
 		if (!loginStatus){
 			log.e("loginStatus is false ,jump to welcome view!!!");		
-			LAroundApplication.getInstance().startToWelcomeActivity();
+			LAroundApplication.getInstance().startToSplashActivity();
 			finish();
 			return ;
 		}

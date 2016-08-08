@@ -22,8 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
-import com.geniusgithub.lookaround.activity.WelcomActivity;
 import com.geniusgithub.lookaround.model.PublicType;
+import com.geniusgithub.lookaround.splash.SplashActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.tendcloud.tenddata.TCAgent;
@@ -90,9 +90,9 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 		return isLogin;
 	}
 	
-	public void startToWelcomeActivity(){
+	public void startToSplashActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, WelcomActivity.class);
+		intent.setClass(this, SplashActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
