@@ -1,1 +1,1 @@
-include ':app', ':actionbarsherlock', ':satellite-menu', ':slidingmenu'
+include ':app' , ':satellite-menu'
