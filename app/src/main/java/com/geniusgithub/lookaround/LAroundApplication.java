@@ -21,7 +21,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
+
+import com.geniusgithub.lookaround.activity.MainActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.splash.SplashActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -99,7 +100,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 
 	public void startToMainActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, MainLookAroundActivity.class);
+		intent.setClass(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);

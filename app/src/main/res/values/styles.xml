@@ -12,8 +12,12 @@
         -->
     </style>
 
+
+
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
+
     </style>
 
     <style name="Theme.AppStartLoad" parent="android:Theme.Black.NoTitleBar.Fullscreen">
@@ -21,13 +25,37 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-     <style name="MainTheme" parent="@style/Theme.Sherlock.Light">
-       
+
+
+    <!-- App Theme Light -->
+    <style name="BaseAppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:listDivider">@color/list_divider_light</item>
+<!--        <item name="widgetBackground">@color/selectable_item_background_general_light_normal</item>
+        <item name="widgetBackgroundDark">@color/selectable_item_background_general_light_pressed</item>
+        <item name="widgetBackgroundTitle">@android:color/white</item>-->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <style name="AppThemeLight" parent="BaseAppThemeLight">
+<!--        <item name="themeColor">@color/md_green_500</item>-->
+    </style>
+
+    <style name="AppThemeLight.NoTranslucent" parent="BaseAppThemeLight">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+<!--     <style name="MainTheme" parent="@style/Theme.Sherlock.Light">
+       
+    </style>-->
     
     <style name="NavigationTextStyle" >
       <item name="android:textSize">16sp</item>
-      <item name="android:textColor">@color/gainsboro</item>
+      <item name="android:textColor">@color/black</item>
     </style>
     
     <style name="leba_bg_layout">

@@ -1,3 +1,4 @@
+/*
 package com.geniusgithub.lookaround.fragment;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ import com.geniusgithub.lookaround.FragmentControlCenter;
 import com.geniusgithub.lookaround.FragmentModel;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.BaseType.ListItem;
@@ -126,3 +126,4 @@ private static final CommonLog log = LogFactory.createLog();
 
 
 }
+*/

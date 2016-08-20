@@ -10,6 +10,7 @@ import roboguice.inject.InjectView;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.adapter.InfoContentAdapter;
+import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.content.ContentActivity;
 import com.geniusgithub.lookaround.content.ContentCache;
 import com.geniusgithub.lookaround.model.BaseType;
@@ -31,17 +32,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
-public  class CommonFragmentEx extends CommonFragment implements InfoRequestProxy.IRequestResult,
+public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.IRequestResult,
                                                         RefreshListView.IOnRefreshListener, RefreshListView.IOnLoadMoreListener,
                                                         OnItemClickListener{
 
     private static final CommonLog log = LogFactory.createLog();
-    
-	@InjectView (R.id.invalid_view) View mInvalidView;
-	@InjectView (R.id.load_view) View mLoadView;
-	@InjectView (R.id.content_view) View mContentView;  
-	@InjectView (R.id.listview) RefreshListView mListView;  
+
+	private View mInvalidView;
+    private View mLoadView;
+    private View mContentView;
+    private RefreshListView mListView;
    
     private BaseType.ListItem mTypeData;
     private InfoContentAdapter mAdapter;        
@@ -69,13 +71,15 @@ public  class CommonFragmentEx extends CommonFragment implements InfoRequestProx
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                    Bundle savedInstanceState) {
-            log.e("CommonFragmentEx onCreateView");
-            View view = inflater.inflate(R.layout.common_layout, null);
-  
-            
-            return view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            log.i("CommonFragmentEx onCreateView");
+       View view = inflater.inflate(R.layout.common_layout, null);
+       mInvalidView = view.findViewById(R.id.invalid_view);
+        mLoadView = view.findViewById(R.id.load_view);
+        mContentView = view.findViewById(R.id.content_view);
+        mListView = (RefreshListView) view.findViewById(R.id.listview);
+
+        return view;
     }
     
     @Override

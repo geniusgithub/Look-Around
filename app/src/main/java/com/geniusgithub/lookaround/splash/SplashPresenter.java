@@ -6,7 +6,7 @@ import android.net.Uri;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.MainLookAroundActivity;
+import com.geniusgithub.lookaround.activity.MainActivity;
 import com.geniusgithub.lookaround.datastore.LocalConfigSharePreference;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.model.PublicType;
@@ -225,13 +225,15 @@ public class SplashPresenter implements SplashContract.IPresenter, IRequestDataP
                     "mVerCode = " + object.mVerCode + "\n" +
                     "mVerName = " + object.mVerName + "\n" +
                     "mAppUrl = " + object.mAppUrl + "\n" +
-                    "mVerDescribre = " + object.mVerDescribre);
+                    "mVerDescribre = " + object.mVerDescribre +
+                    "\nmDataList.size = " + object.mDataList.size());
 
             if (object.mForceUpdate != 0) {
                 mView.showForceUpdateDialog(mParentActivity, object);
                 return;
             }
 
+            ;
             mApplication.setUserLoginResult(object);
             mApplication.setLoginStatus(true);
             goMainActivity();
@@ -244,7 +246,7 @@ public class SplashPresenter implements SplashContract.IPresenter, IRequestDataP
 
     private void goMainActivity(){
         Intent intent = new Intent();
-        intent.setClass(mParentActivity, MainLookAroundActivity.class);
+        intent.setClass(mParentActivity, MainActivity.class);
         mParentActivity.startActivity(intent);
         exit();
     }

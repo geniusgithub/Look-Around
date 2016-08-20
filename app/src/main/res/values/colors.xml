@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="window_background">#FFF5F5F5</color>
+
+    <color name="list_divider_light">#ffe0e0e0</color>
+    <color name="selectable_item_background_general_light_normal">@android:color/white</color>
+    <color name="selectable_item_background_general_light_pressed">#ffeeeeee</color>
+    <color name="md_green_500">#259b24</color>
 </resources>

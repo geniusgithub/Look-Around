@@ -1,20 +1,19 @@
 package com.geniusgithub.lookaround.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NavChannelAdapter extends BaseAdapter{
 
@@ -57,7 +56,7 @@ public class NavChannelAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
-		
+
 		ViewHolder holder = null; 
 
 

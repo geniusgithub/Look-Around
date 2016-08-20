@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.geniusgithub.lookaround"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 10201
         versionName "1.02.01"
@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':satellite-menu')
-    compile project(':slidingmenu')
-    compile project(':actionbarsherlock')
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
 }

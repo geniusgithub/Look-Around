@@ -1,5 +1,17 @@
 package com.geniusgithub.lookaround.cache;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,19 +25,6 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
-
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.widget.ImageView;
 
 public class ImageLoaderEx {
 	
@@ -43,12 +42,15 @@ public class ImageLoaderEx {
 	private Bitmap mDefaultBitmap = null;
 	
 	private boolean mIsLoadLocalBitmapQuick = false;
-	
+	private Handler mHandler;
 	
 	
 	public ImageLoaderEx(Context context) {
 		fileCache = new FileCache(context);
 		executorService = Executors.newFixedThreadPool(5);
+		mHandler = new Handler(){
+
+		};
 	}
 	
 	public void setScaleParam(int request_size){
@@ -72,7 +74,7 @@ public class ImageLoaderEx {
 		if (url == null || url.length() < 1 || imageView == null){
 			return false;
 		}
-		
+
 		
 		imageViews.put(imageView, url);
 		// 先从内存缓存中查找
@@ -209,16 +211,21 @@ public class ImageLoaderEx {
 
 		@Override
 		public void run() {
-			if (imageViewReused(photoToLoad))
+
+			if (imageViewReused(photoToLoad)){
 				return;
+			}
+
 			Bitmap bmp = getBitmap(photoToLoad.url);
 			memoryCache.put(photoToLoad.url, bmp);
-			if (imageViewReused(photoToLoad))
+			if (imageViewReused(photoToLoad)){
+
 				return;
+			}
+
 			BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
 			// 更新的操作放在UI线程中
-			Activity a = (Activity) photoToLoad.imageView.getContext();
-			a.runOnUiThread(bd);
+			mHandler.post(bd);
 		}
 	}
 
@@ -246,7 +253,6 @@ public class ImageLoaderEx {
 		}
 
 		public void run() {
-		//	log.e("BitmapDisplayer run...");
 			if (imageViewReused(photoToLoad))
 				return;
 			if (bitmap != null)

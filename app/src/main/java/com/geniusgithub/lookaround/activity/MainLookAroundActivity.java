@@ -1,3 +1,4 @@
+/*
 package com.geniusgithub.lookaround.activity;
 
 import android.app.Dialog;
@@ -268,3 +269,4 @@ public class MainLookAroundActivity extends SlidingFragmentActivity implements
 
 }
 
+*/
