@@ -75,7 +75,7 @@ public class ImageLoaderEx {
 			return false;
 		}
 
-		
+	//	log.i("DisplayImage url = " + url);
 		imageViews.put(imageView, url);
 		// 先从内存缓存中查找
 

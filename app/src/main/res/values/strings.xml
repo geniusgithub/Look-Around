@@ -6,6 +6,7 @@
    <string name="open">打开</string>
    <string name="close">关闭</string>
 
+   <string name="has_no_data_more">没有更多数据</string>
 
    <string name="getdata_fail">获取数据失败,请稍后再试</string>  
    

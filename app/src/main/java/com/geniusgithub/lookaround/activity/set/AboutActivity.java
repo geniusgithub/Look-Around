@@ -1,24 +1,15 @@
 package com.geniusgithub.lookaround.activity.set;
 
-import java.util.HashMap;
-import java.util.List;
-
-import org.json.JSONException;
-
-import roboguice.inject.InjectView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
@@ -35,6 +26,17 @@ import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.List;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import roboguice.inject.InjectView;
+
 public class AboutActivity extends BaseActivity implements OnClickListener,
 															IRequestDataPacketCallback,
 															IDialogInterface,
@@ -47,19 +49,27 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 	@InjectView (R.id.ll_attention) View mAttentionWeiboView; 
 	@InjectView (R.id.ll_checkupdate) View mCheckUpdateView; 
 	@InjectView (R.id.ll_support) View mSupportDevelopterView; 
-	@InjectView (R.id.iv_updateicon) ImageView mIVUpageIcon; 
+	@InjectView (R.id.iv_updateicon) ImageView mIVUpageIcon;
+	@InjectView (R.id.iv_updateicon) ImageView mLogoIcon;
 	@InjectView (R.id.tv_version) TextView mTVVersion; 	
 		
 	private ClientEngine mClientEngine;	
-	private PublicType.CheckUpdateResult object = null; 
+	private PublicType.CheckUpdateResult object = null;
+
+	private Handler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.abount_layout);
-        
+
+
         setupViews();
         initData();
+
+
+
+
     }
     
     
@@ -89,8 +99,12 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
     		packet.extra = new Object();
     		mClientEngine.httpGetRequestEx(packet, this);
     	}
-    	
+
+
     	updateView();
+
+		mHandler = new Handler();
+
     }
     
     private void showUpdateIcon(boolean flag){

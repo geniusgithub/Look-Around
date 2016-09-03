@@ -1,9 +1,6 @@
 package com.geniusgithub.lookaround.proxy;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
+import android.content.Context;
 
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.PublicType;
@@ -15,7 +12,10 @@ import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-import android.content.Context;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoRequestProxy implements IRequestDataPacketCallback{
 	
@@ -26,7 +26,7 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 	
 	public static interface IRequestResult{
 		
-		public void onSuccess(boolean isLoadMore);
+		public void onSuccess(boolean isLoadMore, boolean isLoadDataComplete);
 		public void onRequestFailure(boolean isLoadMore);
 		public void onAnylizeFailure(boolean isLoadMore);
 	}
@@ -50,10 +50,12 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 	}
 	
 	public void requestRefreshInfo(){
+		log.i("requestRefreshInfo");
 		getInfoByPage(0, FLAG_REFRESH);
 	}
 	
 	public void requestMoreInfo(){
+		log.i("requestMoreInfo");
 		getInfoByPage(mPage + 1, FLAG_LOADMORE);
 	}
 	
@@ -120,16 +122,21 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 		
 		try {
 			object.parseJson(dataPacket.data);
-			log.e("mDataList.size = " + object.mDataList.size());
+			log.i("mDataList.size = " + object.mDataList.size());
 			
 			if (type == FLAG_REFRESH){
 				mContentData = object.mDataList;
 				mPage = 0;
-				mCallback.onSuccess(false);
+				mCallback.onSuccess(false, false);
 			}else if (type == FLAG_LOADMORE){
 				mContentData.addAll(object.mDataList);
 				mPage++;
-				mCallback.onSuccess(true);
+				if (object.mDataList.size() == 0){
+					mCallback.onSuccess(true, true);
+				}else{
+					mCallback.onSuccess(true, false);
+				}
+
 			}
 
 		} catch (JSONException e) {

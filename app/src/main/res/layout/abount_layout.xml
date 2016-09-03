@@ -41,8 +41,9 @@
     android:gravity="center">
        
           <ImageView
-          android:layout_width="wrap_content" 
-          android:layout_height="wrap_content"
+          android:id="@+id/iv_logo"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
           android:src="@drawable/logo_icon_big">	                
           </ImageView>
                    
