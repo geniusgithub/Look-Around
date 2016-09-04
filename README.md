@@ -5,40 +5,24 @@ a Application name LookAround run in Android Platinum
 
 Example screenshot below:
 
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m1.png?raw=true "github")  
+![github](https://github.com/geniusgithub/Look-Around/blob/master/storage/m1.jpg?raw=true "github")  
 
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m2.png?raw=true "github")  
+![github](https://github.com/geniusgithub/Look-Around/blob/master/storage/m2.jpg?raw=true "github")  
 
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m3.png?raw=true "github")  
-
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m4.png?raw=true "github")  
-
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m5.png?raw=true "github")  
-
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m6.png?raw=true "github")  
-
-
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m7.png?raw=true  "github")  
-
-![github](https://github.com/geniusgithub/Look-Around/blob/master/images/m8.png?raw=true  "github")  
 
 
 Run requirements
 ------------------------------
-Android OS 4.4x and up<br />
+Android OS 5.0 and up<br />
 Tested with: Samsung, HTC, HuaWei Phone and so on...
 
 ## Acknowledgements
 It uses open source libraries below:
-* [ActionBarSherklock](https://github.com/JakeWharton/ActionBarSherlock)
-* [SlidingMenu](https://github.com/jfeinstein10/SlidingMenu)
 * [satellite-menu](https://github.com/geniusgithub/android-satellite-menu)
 * [SwitchButton](https://github.com/Issacw0ng/SwitchButton)
 * [ImageLoaderEx](https://github.com/geniusgithub/SyncLoaderBitmapDemo)
-* [RefreshListView](https://github.com/chrisbanes/Android-PullToRefresh)
 * [greenDAO](https://github.com/greenrobot/greenDAO)
 * [android-async-http](https://github.com/geniusgithub/android-async-http)
-* [RoboGuice](https://github.com/geniusgithub/RoboGuice)
 * [shareSDK](http://sharesdk.cn/Download)
 
 Contributing
