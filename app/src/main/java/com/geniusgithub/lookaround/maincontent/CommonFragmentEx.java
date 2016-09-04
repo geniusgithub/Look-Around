@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.fragment;
+package com.geniusgithub.lookaround.maincontent;
 
 import android.content.Context;
 import android.content.Intent;
@@ -283,7 +283,8 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
             map.put(BaseType.ListItem.KEY_TYPEID, mTypeData.mTypeID);
             map.put(BaseType.ListItem.KEY_TITLE, itemEx.mTitle);
             LAroundApplication.getInstance().onEvent("UMID0002", map);
-            
+
+    //        log.i("setTypeItem = \n" + mTypeData.getShowString() + "\nsetInfoItem = " + itemEx.toString());
             
             goContentActivity();
     }

@@ -1,14 +1,13 @@
 package com.geniusgithub.lookaround.content;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ext.SatelliteMenu;
@@ -17,15 +16,10 @@ import android.view.ext.SatelliteMenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.tencent.weibo.TencentWeibo;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.cache.FileCache;
 import com.geniusgithub.lookaround.cache.SimpleImageLoader;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
@@ -43,7 +37,17 @@ import com.google.ads.AdListener;
 import com.google.ads.AdRequest.ErrorCode;
 import com.google.ads.AdView;
 
-public class ContentActivity extends BaseActivity implements OnClickListener, 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.tencent.weibo.TencentWeibo;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
+
+public class ContentActivity extends BaseActivityEx implements OnClickListener,
 										SateliteClickedListener, AdListener{
 
 	private static final CommonLog log = LogFactory.createLog();
@@ -54,18 +58,16 @@ public class ContentActivity extends BaseActivity implements OnClickListener,
 	private final static int WECHAT_MOM_ID = 4;
 	private final static int QZONE = 5;
 
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.btn_right) Button mBtnCollect;  
-	@InjectView (R.id.btn_readorign) Button mBtnReadOrign;  	
-	@InjectView (R.id.tv_bartitle) TextView mTVBarTitle;  
-	@InjectView (R.id.tv_title) TextView mTVTitle;  
-	@InjectView (R.id.tv_artist) TextView mTVArtist;  
-	@InjectView (R.id.tv_content) TextView mTVContent;  
-	@InjectView (R.id.tv_time) TextView mTVTime;  
-	@InjectView (R.id.tv_source) TextView mTVSource;  
-	@InjectView (R.id.iv_content) ImageView mIVContent;  
-	@InjectView (R.id.SatelliteMenu) SatelliteMenu SatelliteMenu;
-	@InjectView (R.id.adView) AdView adView;  
+	private Toolbar toolbar;
+	private Button mBtnReadOrign;
+	private TextView mTVTitle;
+	private TextView mTVArtist;
+	private TextView mTVContent;
+	private TextView mTVTime;
+	private TextView mTVSource;
+	private ImageView mIVContent;
+	private SatelliteMenu SatelliteMenu;
+	private AdView adView;
 	
 
 	private BaseType.ListItem mTypeItem = new BaseType.ListItem();
@@ -114,15 +116,69 @@ public class ContentActivity extends BaseActivity implements OnClickListener,
 		
 		super.onDestroy();
 	}
-	
-	
+
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+	    getMenuInflater().inflate(R.menu.content_options_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		MenuItem item = menu.findItem(R.id.menu_collect);
+		item.setVisible(!isCollect);
+
+		return  super.onPrepareOptionsMenu(menu);
+
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+			case R.id.menu_collect:
+				collect();
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
 	private void setupViews(){
 
-		mBtnBack.setOnClickListener(this);
-		mBtnCollect.setOnClickListener(this);
+		initToolBar();
+
+		 mBtnReadOrign = (Button) findViewById(R.id.btn_readorign);
+		mTVTitle = (TextView) findViewById(R.id.tv_title);
+		mTVArtist = (TextView) findViewById(R.id.tv_artist);
+		mTVContent = (TextView) findViewById(R.id.tv_content);
+		mTVTime = (TextView) findViewById(R.id.tv_time);
+		mTVSource = (TextView) findViewById(R.id.tv_source);
+		mIVContent = (ImageView) findViewById(R.id.iv_content);
+		SatelliteMenu = (SatelliteMenu) findViewById(R.id.SatelliteMenu);
+		adView = (AdView) findViewById(R.id.adView);
+
 		mBtnReadOrign.setOnClickListener(this);
 		mIVContent.setOnClickListener(this);
 
+	}
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle("");
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
 	}
 	
 
@@ -135,9 +191,9 @@ public class ContentActivity extends BaseActivity implements OnClickListener,
 		mTypeItem = mContentCache.getTypeItem();
 		mInfoItem = mContentCache.getInfoItem();
 		
-		//log.e("infoItem --> \n" + mInfoItem.toString());
-		
-		mTVBarTitle.setText(mTypeItem.mTitle);
+		log.i("mTypeItem --> \n" + mTypeItem.getShowString());
+
+		toolbar.setTitle(mTypeItem.mTitle);
 		mTVTitle.setText(mInfoItem.mTitle);
 		mTVArtist.setText(mInfoItem.mUserName);
 		mTVContent.setText(mInfoItem.mContent);
@@ -176,21 +232,13 @@ public class ContentActivity extends BaseActivity implements OnClickListener,
         infoItemDao = daoSession.getInfoItemDao();
 
         isCollect = infoItemDao.isCollect(mInfoItem);
-        if (isCollect){
-        	mBtnCollect.setVisibility(View.GONE);
-        }
+
 	}
 
 	@Override
 	public void onClick(View view) {
 
 		switch(view.getId()){
-			case R.id.btn_back:
-				finish();
-				break;
-			case R.id.btn_right:
-				collect();
-				break;
 			case R.id.btn_readorign:
 				goWebviewActivity();
 				break;
@@ -203,7 +251,7 @@ public class ContentActivity extends BaseActivity implements OnClickListener,
 	
 
 	private void collect(){
-		
+		log.i("collect");
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put(BaseType.ListItem.KEY_TYPEID, mTypeItem.mTypeID);
 		map.put(BaseType.ListItem.KEY_TITLE, mInfoItem.mTitle);
@@ -211,7 +259,8 @@ public class ContentActivity extends BaseActivity implements OnClickListener,
 		
 		infoItemDao.insert(mInfoItem);
 		CommonUtil.showToast(R.string.toast_collect_success, this);
-		mBtnCollect.setVisibility(View.GONE);
+		isCollect = true;
+		invalidateOptionsMenu();
 	}
 	
 	private void goWebviewActivity(){

@@ -22,7 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
-import com.geniusgithub.lookaround.activity.MainActivity;
+import com.geniusgithub.lookaround.maincontent.MainActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.splash.SplashActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -33,7 +33,33 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 
 import cn.sharesdk.framework.ShareSDK;
-
+/*
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         佛祖保佑       永无BUG
+*/
+/**
+ * @author lance
+ * @cnblog http://www.cnblogs.com/lance2016/
+ * @github https://github.com/geniusgithub
+ */
 public class LAroundApplication extends Application  implements ItatisticsEvent{
 
 	private static final CommonLog log = LogFactory.createLog();

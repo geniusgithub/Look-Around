@@ -10,9 +10,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,12 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-import java.io.File;
 import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
@@ -40,9 +42,8 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
-import roboguice.inject.InjectView;
 
-public class ShareActivity extends BaseActivity implements Callback , TextWatcher,
+public class ShareActivity extends BaseActivityEx implements Callback , TextWatcher,
 												OnClickListener, PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
@@ -54,15 +55,13 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	private static final int MAX_TEXT_LENGTH = 140;
 
 
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.btn_right) Button mBtnShare;  
-	@InjectView (R.id.btn_cancelimage) Button mBtnCancelImage;  
-	@InjectView (R.id.iv_pic) ImageView mIVShareImage;  
-	@InjectView (R.id.et_content) EditText mETContent;
-	@InjectView (R.id.tv_target) TextView mTVTarget;  
-	@InjectView (R.id.tv_live) TextView mTVLive;  
-	@InjectView (R.id.tv_bartitle) TextView mTVTitle;  
-	@InjectView (R.id.fl_phoneframe) View phoneFrameView;  
+	private Toolbar toolbar;
+	private Button mBtnCancelImage;
+	private ImageView mIVShareImage;
+	private EditText mETContent;
+	private TextView mTVTarget;
+	private TextView mTVLive;
+	private View phoneFrameView;
 	
 
 	private int notifyIcon;
@@ -90,16 +89,68 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 		super.onDestroy();
 	}
 
-	
-	private void setupViews(){	
-		setNotification(R.drawable.logo_icon,"Look Around");		
 
-		mBtnBack.setOnClickListener(this);
-		mBtnShare.setOnClickListener(this);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.share_options_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		return  super.onPrepareOptionsMenu(menu);
+
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+			case R.id.menu_share:
+				share(mPlatform, reqMap);
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
+
+
+	private void setupViews(){	
+		setNotification(R.drawable.logo_icon,"Look Around");
+		initToolBar();
+
+		mBtnCancelImage = (Button)findViewById(R.id.btn_cancelimage);
+		mIVShareImage = (ImageView) findViewById(R.id.iv_pic);
+		mETContent = (EditText) findViewById(R.id.et_content);
+		mTVTarget = (TextView) findViewById(R.id.tv_target);
+		mTVLive = (TextView) findViewById(R.id.tv_live);
+		phoneFrameView = findViewById(R.id.fl_phoneframe);
+
+
 		mBtnCancelImage.setOnClickListener(this);
 		mETContent.addTextChangedListener(this);
 	}
-	
+
+
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle("");
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
+
 	private void initData(){
 	
 		reqMap = ShareItem.reqMap;
@@ -149,8 +200,9 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 		}else if (name.equals(WechatMoments.NAME)){
 			value += "微信朋友圈";
 		}
-		
-		mTVTitle.setText(value);
+
+		log.i("share title = " + value);
+		toolbar.setTitle(value);
 		
 	}
 	
@@ -181,8 +233,10 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 				CommonUtil.showToast(R.string.toast_too_txtcount, this);
 				return ;
 			}
+
+				Toast.makeText(this, "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
 			
-			String value = mETContent.getText().toString();
+		/*	String value = mETContent.getText().toString();
 			reqMap.put("text", value);
 			
 			String name = plat.getName();
@@ -232,7 +286,7 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 			}
 			mPlatform.setPlatformActionListener(this);
 			ShareCore shareCore = new ShareCore();
-			shareCore.share(plat, data);
+			shareCore.share(plat, data);*/
 	
 	}
 	
@@ -240,12 +294,6 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-		case R.id.btn_back:
-			finish();
-			break;
-		case R.id.btn_right:
-			share(mPlatform, reqMap);
-			break;
 		case R.id.btn_cancelimage:
 			showShareImage(false);
 			sharePath = null;

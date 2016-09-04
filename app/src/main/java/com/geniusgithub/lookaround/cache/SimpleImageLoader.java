@@ -1,5 +1,15 @@
 package com.geniusgithub.lookaround.cache;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,34 +18,28 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
-import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.widget.ImageView;
-
 
 public class SimpleImageLoader {
-
-
+	private static final String TAG = SimpleImageLoader.class.getSimpleName();
+	private static final CommonLog log = LogFactory.createLog();
 	private AbstractFileCache fileCache;
+	private Handler mHandler;
 	// 线程池
 	private ExecutorService executorService;
 
 	public SimpleImageLoader(Context context) {
 		fileCache = new FileCache(context);
 		executorService = Executors.newFixedThreadPool(1);
+		mHandler = new Handler() {
+		};
 	}
 
 	// 最主要的方法
 	public void DisplayImage(String url, ImageView imageView) {
+		Log.i(TAG, "DisplayImage url = " + url);
 		if (url == null || url.length() < 1 || imageView == null){
 			return ;
 		}
@@ -76,7 +80,7 @@ public class SimpleImageLoader {
 			bitmap = decodeFile(f);
 			return bitmap;
 		} catch (Exception ex) {
-			Log.e("", "getBitmap catch Exception...\nmessage = " + ex.getMessage());
+			Log.e(TAG, "getBitmap catch Exception...\nmessage = " + ex.getMessage());
 			return null;
 		}
 	}
@@ -132,11 +136,12 @@ public class SimpleImageLoader {
 
 		@Override
 		public void run() {
+			Log.i(TAG, "PhotosLoader run url = " + photoToLoad.url);
 			Bitmap bmp = getBitmap(photoToLoad.url);
+			Log.i(TAG, "getBitmap = " + bmp);
 			BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
 			// 更新的操作放在UI线程中
-			Activity a = (Activity) photoToLoad.imageView.getContext();
-			a.runOnUiThread(bd);
+			mHandler.post(bd);
 		}
 	}
 
@@ -152,6 +157,7 @@ public class SimpleImageLoader {
 		}
 
 		public void run() {
+			Log.i(TAG, "BitmapDisplayer run bitmap = " + bitmap);
 			if (bitmap != null)
 				photoToLoad.imageView.setImageBitmap(bitmap);
 	

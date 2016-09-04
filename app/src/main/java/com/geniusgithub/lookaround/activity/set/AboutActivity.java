@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.dialog.DialogBuilder;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.model.PublicType;
@@ -33,25 +36,23 @@ import java.util.List;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import roboguice.inject.InjectView;
 
-public class AboutActivity extends BaseActivity implements OnClickListener,
+public class AboutActivity extends BaseActivityEx implements OnClickListener,
 															IRequestDataPacketCallback,
 															IDialogInterface,
 															 PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.ll_advise)  View mAdviseView;
-	@InjectView (R.id.ll_attention) View mAttentionWeiboView; 
-	@InjectView (R.id.ll_checkupdate) View mCheckUpdateView; 
-	@InjectView (R.id.ll_support) View mSupportDevelopterView; 
-	@InjectView (R.id.iv_updateicon) ImageView mIVUpageIcon;
-	@InjectView (R.id.iv_updateicon) ImageView mLogoIcon;
-	@InjectView (R.id.tv_version) TextView mTVVersion; 	
+
+
+
+	private Toolbar toolbar;
+	private  View mAdviseView;
+	private View mAttentionWeiboView;
+	private View mCheckUpdateView;
+	private ImageView mIVUpageIcon;
+	private ImageView mLogoIcon;
+	private TextView mTVVersion;
 		
 	private ClientEngine mClientEngine;	
 	private PublicType.CheckUpdateResult object = null;
@@ -63,20 +64,36 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.abount_layout);
 
-
         setupViews();
         initData();
 
-
-
-
     }
-    
-    
-    private void setupViews(){
 
-    	mBtnBack.setOnClickListener(this);    		
-    	mSupportDevelopterView.setOnClickListener(this);
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
+
+	private void setupViews(){
+		initToolBar();
+
+		mAdviseView = findViewById(R.id.ll_advise);
+		mAttentionWeiboView = findViewById(R.id.ll_attention);
+		mCheckUpdateView = findViewById(R.id.ll_checkupdate);
+		mIVUpageIcon = (ImageView)findViewById(R.id.iv_updateicon);
+		mLogoIcon = (ImageView)findViewById(R.id.iv_logo);
+		mTVVersion = (TextView) findViewById(R.id.tv_version);
+
+
     	mAttentionWeiboView.setOnClickListener(this);
     	mCheckUpdateView.setOnClickListener(this);
     	mAdviseView.setOnClickListener(this);
@@ -106,7 +123,17 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 		mHandler = new Handler();
 
     }
-    
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.about);
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
     private void showUpdateIcon(boolean flag){
     	if (flag){
     		mIVUpageIcon.setVisibility(View.VISIBLE);
@@ -118,9 +145,6 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()){
-			case R.id.btn_back:
-				finish();
-				break;
 			case R.id.ll_advise:
 				goAdviseActivity();
 				break;
@@ -129,9 +153,6 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 				break;
 			case R.id.ll_checkupdate:
 				checkUpdate();
-				break;
-			case R.id.ll_support:
-				support();
 				break;
 		}
 	}
@@ -149,9 +170,10 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 	}
 	
 	private void attention(){
-		Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+		Toast.makeText(this, "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
+		/*Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
 		plat.setPlatformActionListener(this);
-		plat.followFriend("2881812642");
+		plat.followFriend("2881812642");*/
 	}
 	
 
@@ -178,12 +200,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener,
 
 
 	}
-	
-	private void support(){
-		Intent intent = new Intent();
-		intent.setClass(this, SupportActivity.class);
-		startActivity(intent);
-	}
+
 	
 	@Override
 	public void onSuccess(int requestAction, ResponseDataPacket dataPacket,

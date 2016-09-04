@@ -1,26 +1,17 @@
 package com.geniusgithub.lookaround.activity.set;
 
-import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.tencent.weibo.TencentWeibo;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
-
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
-import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
@@ -28,17 +19,18 @@ import com.geniusgithub.lookaround.util.FileHelper;
 import com.geniusgithub.lookaround.util.FileManager;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-public class SettingActivity extends BaseActivity implements OnClickListener{
+public class SettingActivity extends BaseActivityEx implements OnClickListener{
 
 	private static final CommonLog log = LogFactory.createLog();
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.ll_bindaccount) View mBindView;  
-	@InjectView (R.id.ll_mypush) View mMyPushView;  
-	@InjectView (R.id.ll_mycollect) View mMyCollectView;  
-	@InjectView (R.id.ll_clearcache) View mClieaCacheView;  
-	@InjectView (R.id.ll_about) View mAboutView;  
-	@InjectView (R.id.iv_updateicon) ImageView mIVUpageIcon; 
+
+	private Toolbar toolbar;
+
+	private View mBindView;
+	private View mMyPushView;
+	private View mMyCollectView;
+	private View mClieaCacheView;
+	private View mAboutView;
+	private ImageView mIVUpageIcon;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,16 +42,35 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
     }
     
     
-    private void setupViews(){	
-    	mBtnBack.setOnClickListener(this);  	 		
+    private void setupViews(){
+		initToolBar();
+
+		mBindView = findViewById(R.id.ll_bindaccount);
+		mMyPushView = findViewById(R.id.ll_mypush);
+		mMyCollectView = findViewById(R.id.ll_mycollect);
+		mClieaCacheView = findViewById(R.id.ll_clearcache);
+		mAboutView = findViewById(R.id.ll_about);
+		mIVUpageIcon = (ImageView)findViewById(R.id.iv_updateicon);
+
+
     	mBindView.setOnClickListener(this);
     	mMyPushView.setOnClickListener(this);
     	mMyCollectView.setOnClickListener(this);
     	mClieaCacheView.setOnClickListener(this);	
     	mAboutView.setOnClickListener(this);   	
     }
-    
-    private void initData(){
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.setting);
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
+	private void initData(){
     	PublicType.UserLoginResult object = LAroundApplication.getInstance().getUserLoginResult();
     	log.e("object.mHaveNewVer = " + object.mHaveNewVer);
     	if (object.mHaveNewVer != 0){
@@ -72,9 +83,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View view) {
 	
 		switch(view.getId()){
-			case R.id.btn_back:
-				finish();
-				break;
 			case R.id.ll_bindaccount:
 				goBindActivity();
 				break;
@@ -94,9 +102,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void goBindActivity(){
-		Intent intent = new Intent();
+		Toast.makeText(this, "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
+/*		Intent intent = new Intent();
 		intent.setClass(this, BindActivity.class);
-		startActivity(intent);
+		startActivity(intent);*/
 	}
 	
 	private void goCollectActivity(){

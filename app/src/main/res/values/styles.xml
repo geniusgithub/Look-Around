@@ -46,7 +46,7 @@
     </style>
 
     <style name="AppThemeLight.NoTranslucent" parent="BaseAppThemeLight">
-        <item name="android:windowIsTranslucent">false</item>
+   <!--     <item name="android:windowIsTranslucent">false</item>-->
     </style>
 
 <!--     <style name="MainTheme" parent="@style/Theme.Sherlock.Light">

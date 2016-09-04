@@ -1,14 +1,23 @@
 package com.geniusgithub.lookaround.content;
 
-import java.util.List;
-import java.util.logging.FileHandler;
-
-import roboguice.inject.InjectView;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.adapter.GalleryAdapterEx;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.cache.FileCache;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -18,37 +27,18 @@ import com.geniusgithub.lookaround.util.FileManager;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.widget.ImageViewEx;
 import com.geniusgithub.lookaround.widget.PicGallery;
-import com.umeng.analytics.MobclickAgent;
 
+import java.util.List;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-
-public class PictureBrowerActivity extends BaseActivity implements OnItemSelectedListener,
-													OnClickListener
-{
+public class PictureBrowerActivity extends BaseActivityEx implements OnItemSelectedListener{
 	private static final CommonLog log = LogFactory.createLog();
 	// 屏幕宽度
 	public static int screenWidth;
 	// 屏幕高度
 	public static int screenHeight;
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.btn_right) Button mBtnSave;  
-	@InjectView (R.id.tv_title) TextView mTVTitle;
-	@InjectView (R.id.pic_gallery) PicGallery gallery;  
+
+	private Toolbar toolbar;
+	private PicGallery gallery;
 
 	
 	private GalleryAdapterEx mAdapter;
@@ -60,9 +50,6 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		log.e("PictureBrowerActivity onCreate");
 		setContentView(R.layout.picture_view_activity);
@@ -71,23 +58,63 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 		initData();
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.browse_options_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		return  super.onPrepareOptionsMenu(menu);
+
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+			case R.id.menu_download:
+				save();
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
 	@SuppressWarnings("deprecation")
 	private void initViews() {
+		initToolBar();
 
 		screenWidth = getWindow().getWindowManager().getDefaultDisplay()
 				.getWidth();
 		screenHeight = getWindow().getWindowManager().getDefaultDisplay()
-				.getHeight();	
+				.getHeight();
 
 
+		gallery = (PicGallery)findViewById(R.id.pic_gallery);
 		gallery.setVerticalFadingEdgeEnabled(false);// 取消竖直渐变边框
 		gallery.setHorizontalFadingEdgeEnabled(false);// 取消水平渐变边框
 		gallery.setDetector(new GestureDetector(this, new MySimpleGesture()));
 
-
-		mBtnBack.setOnClickListener(this);
-		mBtnSave.setOnClickListener(this);
 		
+	}
+
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setBackgroundColor(Color.parseColor("#00ffffff"));
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
 	}
 	
 	
@@ -117,7 +144,7 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 	}
 	
 	private void updateTitle(int pos){
-		mTVTitle.setText(String.valueOf(pos + 1) + "/" + String.valueOf(mTotalNum));
+		toolbar.setTitle(String.valueOf(pos + 1) + "/" + String.valueOf(mTotalNum));
 	}
 	
 	private class MySimpleGesture extends SimpleOnGestureListener {
@@ -173,18 +200,6 @@ public class PictureBrowerActivity extends BaseActivity implements OnItemSelecte
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.btn_back:
-			finish();
-			break;
-		case R.id.btn_right:
-			save();
-			break;
-		}
 	}
 	
 	

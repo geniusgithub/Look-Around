@@ -1,34 +1,31 @@
 package com.geniusgithub.lookaround.content;
 
-import roboguice.inject.InjectView;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.widget.PicGallery;
 
 
-public class WebViewActivity extends BaseActivity implements OnClickListener{
+public class WebViewActivity extends BaseActivityEx {
 
 	private static final CommonLog log = LogFactory.createLog();
 	
 	public static final String INTENT_EXTRA_URL = "INTENT_EXTRA_URL";
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.webview) WebView mWebView;  
-	@InjectView (R.id.show_request_progress_bar) View progressBar;
+
+
+	private Toolbar toolbar;
+	private WebView mWebView;
+	private View progressBar;
 
 	
 	private ScanWebViewClient mWeiboWebViewClient;
@@ -46,6 +43,11 @@ public class WebViewActivity extends BaseActivity implements OnClickListener{
 
 	public void initView()
 	{
+		initToolBar();
+
+
+		mWebView = (WebView) findViewById(R.id.webView);
+		progressBar = findViewById(R.id.show_request_progress_bar);
 
 	    mWebView.setVerticalScrollBarEnabled(false);
 	    mWebView.setHorizontalScrollBarEnabled(false);
@@ -56,11 +58,20 @@ public class WebViewActivity extends BaseActivity implements OnClickListener{
 		webSettings.setBuiltInZoomControls(true);
 		webSettings.setSupportZoom(true);
 		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-		
-		mBtnBack.setOnClickListener(this);
+
 	}
 
-	
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.page);
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
+
 	public void initData(Intent intent)
 	{
 		mWeiboWebViewClient = new ScanWebViewClient();
@@ -148,17 +159,6 @@ public class WebViewActivity extends BaseActivity implements OnClickListener{
 	 }
 
 
-
-
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-			case R.id.btn_back:
-				finish();
-				break;
-		}
-	}
-	 
 
 	
 }

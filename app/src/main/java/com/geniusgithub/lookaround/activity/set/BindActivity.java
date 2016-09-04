@@ -1,22 +1,27 @@
 package com.geniusgithub.lookaround.activity.set;
 
-import java.util.HashMap;
-
-import roboguice.inject.InjectView;
-
 import android.app.Dialog;
-import android.app.NotificationManager;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler.Callback;
-import android.text.TextWatcher;
+import android.os.Message;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TextView;
+
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
+import com.geniusgithub.lookaround.dialog.DialogBuilder;
+import com.geniusgithub.lookaround.dialog.IDialogInterface;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.LogFactory;
+import com.geniusgithub.lookaround.widget.SwitchButton;
+
+import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -27,31 +32,21 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
 
-import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
-import com.geniusgithub.lookaround.dialog.DialogBuilder;
-import com.geniusgithub.lookaround.dialog.IDialogInterface;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.widget.SwitchButton;
-
-public class BindActivity extends BaseActivity implements OnClickListener, 
-														OnCheckedChangeListener,
+public class BindActivity extends BaseActivityEx implements OnCheckedChangeListener,
 														PlatformActionListener,
 														Callback,
 														IDialogInterface{
 	
 	private static final CommonLog log = LogFactory.createLog();
-	
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.sb_sina) SwitchButton mCBSina;  
-	@InjectView (R.id.sb_tencent) SwitchButton mCBTencent;  
-	@InjectView (R.id.sb_qzone) SwitchButton mCBQZone;  
-	@InjectView (R.id.tv_sina_owner) TextView mTVSina;  
-	@InjectView (R.id.tv_tencent_owner) TextView mTVTencent;  
-	@InjectView (R.id.tv_qzone_owner) TextView mTVQZone;  
+
+	private Toolbar toolbar;
+
+	private SwitchButton mCBSina;
+	private SwitchButton mCBTencent;
+	private SwitchButton mCBQZone;
+	private TextView mTVSina;
+	private TextView mTVTencent;
+	private TextView mTVQZone;
 
 	
 	private Platform mPlatformSina;
@@ -69,15 +64,36 @@ public class BindActivity extends BaseActivity implements OnClickListener,
     
     
     private void setupViews(){
+		initToolBar();
 
-    	mBtnBack.setOnClickListener(this);	
+		mCBSina = (SwitchButton)findViewById(R.id.sb_sina);
+		mCBTencent = (SwitchButton)findViewById(R.id.sb_tencent);
+		mCBQZone = (SwitchButton)findViewById(R.id.sb_qzone);
+		mTVSina = (TextView) findViewById(R.id.tv_sina_owner);
+		mTVTencent = (TextView)findViewById(R.id.tv_tencent_owner);
+		mTVQZone = (TextView)findViewById(R.id.tv_qzone_owner);
+
+
     	mCBSina.setOnCheckedChangeListener(this);
     	mCBTencent.setOnCheckedChangeListener(this);
     	mCBQZone.setOnCheckedChangeListener(this);
     	
     }
-    
-    private void initData(){
+
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.bind);
+		setSupportActionBar(toolbar);
+
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
+
+	private void initData(){
     	mPlatformSina = ShareSDK.getPlatform(this, SinaWeibo.NAME);
     	mPlatformTencent = ShareSDK.getPlatform(this, TencentWeibo.NAME);
     	mPlatformQZone = ShareSDK.getPlatform(this, QZone.NAME);    	
@@ -139,14 +155,6 @@ public class BindActivity extends BaseActivity implements OnClickListener,
     	}
     }
 
-	@Override
-	public void onClick(View view) {
-		switch(view.getId()){
-			case R.id.btn_back:
-				finish();
-				break;
-		}
-	}
 
 
 	@Override

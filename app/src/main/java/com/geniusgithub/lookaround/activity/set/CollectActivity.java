@@ -1,55 +1,44 @@
 package com.geniusgithub.lookaround.activity.set;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.app.Dialog;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
-import org.json.JSONException;
-
-import roboguice.inject.InjectView;
-
-import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
 import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.content.ContentActivity;
 import com.geniusgithub.lookaround.content.ContentCache;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
+import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.datastore.DaoSession;
 import com.geniusgithub.lookaround.datastore.InfoItemDao;
-import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
 import com.geniusgithub.lookaround.dialog.DialogBuilder;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.BaseType.InfoItemEx;
-import com.geniusgithub.lookaround.network.ResponseDataPacket;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CollectActivity extends BaseActivity implements OnClickListener,
-												OnItemClickListener, IDialogInterface{
+public class CollectActivity extends BaseActivityEx implements OnItemClickListener, IDialogInterface{
 	
 	private static final CommonLog log = LogFactory.createLog();
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.btn_right) Button mBtnClear;  
-	@InjectView (R.id.tv_bartitle) TextView mTVTitle;  
-	@InjectView (R.id.listview) ListView mListView;  
+
+	private Toolbar toolbar;
+	private ListView mListView;
 
 	private InfoContentExAdapter mAdapter;	
 	private List<BaseType.InfoItemEx> mContentData = new ArrayList<BaseType.InfoItemEx>();
@@ -69,8 +58,17 @@ public class CollectActivity extends BaseActivity implements OnClickListener,
         setupViews();
         initData();
     }
-    
-    
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.collect);
+		setSupportActionBar(toolbar);
+
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
     
     
     @Override
@@ -82,11 +80,40 @@ public class CollectActivity extends BaseActivity implements OnClickListener,
 	}
 
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.collect_options_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return  super.onPrepareOptionsMenu(menu);
+
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+			case R.id.menu_delete:
+				showDeleteDialog();
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
 
 
 	private void setupViews(){
-    	mBtnBack.setOnClickListener(this);
-    	mBtnClear.setOnClickListener(this);
+		initToolBar();
+
+		mListView = (ListView) findViewById(R.id.listview);
     	mListView.setOnItemClickListener(this);
     }
     
@@ -123,19 +150,6 @@ public class CollectActivity extends BaseActivity implements OnClickListener,
 		mAdapter.refreshData(mContentData);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch(view.getId()){
-			case R.id.btn_back:
-				finish();
-				break;
-			case R.id.btn_right:
-				showDeleteDialog();
-				break;
-		}
-	}
-
-	
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {

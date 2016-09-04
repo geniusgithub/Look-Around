@@ -1,44 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/window_bg" 
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent">
 
-    <RelativeLayout 
-    android:id="@+id/rl_top"
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:background="@drawable/map_top_bg">
-    
-   		<Button
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"
-        android:background="@drawable/selector_btn_cancel"/>
-    
-        <TextView
-        android:id="@+id/tv_bartitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:text="@string/advise" />
-       
-        <Button
-        android:id="@+id/btn_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-		android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/selector_btn_complete"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        />
 
-	</RelativeLayout>
-	       
+
     <LinearLayout 
         android:id="@+id/ll_bottom"
         android:layout_alignParentBottom="true"
@@ -70,7 +47,7 @@
         android:layout_width="fill_parent" 
         android:layout_height="fill_parent"
         android:layout_above="@id/ll_bottom"
-        android:layout_below="@id/rl_top"
+        android:layout_below="@id/toolbar"
         android:layout_margin="10dp"
         android:background="@drawable/sharekey_info_bg">
 

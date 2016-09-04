@@ -33,9 +33,7 @@
                 android:layout_height="fill_parent"
                 android:paddingLeft="10.0dip"
                 android:paddingRight="10.0dip"
-                android:layout_marginTop="10.0dip"
-                android:cacheColorHint="@color/transparent"
-                android:clickable="true"/>
+                android:layout_marginTop="10.0dip"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </FrameLayout>

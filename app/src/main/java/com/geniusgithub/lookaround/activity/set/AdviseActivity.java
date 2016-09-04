@@ -8,21 +8,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.BaseActivity;
+import com.geniusgithub.lookaround.base.BaseActivityEx;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareCore;
 
 import java.util.HashMap;
 
@@ -32,10 +32,8 @@ import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
-import roboguice.inject.InjectView;
 
-public class AdviseActivity extends BaseActivity implements Callback , TextWatcher,
-											OnClickListener, PlatformActionListener{
+public class AdviseActivity extends BaseActivityEx implements Callback , TextWatcher, PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
@@ -44,13 +42,11 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 	private static final int MSG_CANCEL_NOTIFY = 3;
 	
 	private static final int MAX_TEXT_LENGTH = 100;
-	
-	
-	@InjectView (R.id.btn_back) Button mBtnBack;  
-	@InjectView (R.id.btn_right)  Button mBtnShare;
-	@InjectView (R.id.et_content) EditText mETContent; 
-	@InjectView (R.id.tv_target) TextView mTVTarget; 
-	@InjectView (R.id.tv_live) TextView mTVLive; 
+
+	private Toolbar toolbar;
+	private EditText mETContent;
+	private TextView mTVTarget;
+	private TextView mTVLive;
 	
 
 	private int notifyIcon;
@@ -68,6 +64,8 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 		initData();
 	}
 
+
+
 	@Override
 	protected void onDestroy() {
 		
@@ -76,18 +74,60 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 		super.onDestroy();
 	}
 
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.advise_options_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		return  super.onPrepareOptionsMenu(menu);
+
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+			case R.id.menu_advise:
+				share();
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
 	
 	private void setupViews(){
 
-		
+		initToolBar();
 		setNotification(R.drawable.logo_icon,"Look Around");
 
-		mBtnBack.setOnClickListener(this);
-		mBtnShare.setOnClickListener(this);		
+		mETContent = (EditText) findViewById(R.id.et_content);
+		mTVTarget = (TextView) findViewById(R.id.tv_target);
+		mTVLive = (TextView) findViewById(R.id.tv_live);
 		mETContent.addTextChangedListener(this);
 
 	}
-	
+
+	private void initToolBar() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.advise);
+		setSupportActionBar(toolbar);
+
+		final ActionBar ab = getSupportActionBar();
+		ab.setHomeButtonEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
 	private void initData(){
 
 		mPlatform = ShareSDK.getPlatform(this, SinaWeibo.NAME);		
@@ -122,7 +162,9 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 				return ;
 			}
 
-			int shareType = Platform.SHARE_TEXT;
+			Toast.makeText(this, "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
+
+		/*	int shareType = Platform.SHARE_TEXT;
 			HashMap<String, Object> reqMap = new HashMap<String, Object>();
 			reqMap.put("shareType", shareType);
 			
@@ -138,7 +180,7 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 			
 			mPlatform.setPlatformActionListener(this);
 			ShareCore shareCore = new ShareCore();
-			shareCore.share(mPlatform, reqMap);
+			shareCore.share(mPlatform, reqMap);*/
 	
 	}
 	
@@ -160,17 +202,7 @@ public class AdviseActivity extends BaseActivity implements Callback , TextWatch
 					", 系统" + CommonUtil.getOSVersion() + ")";
 		return value;
 	}
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.btn_back:
-			finish();
-			break;
-		case R.id.btn_right:
-			share();
-			break;
-		}
-	}
+
 
 	
 	@Override

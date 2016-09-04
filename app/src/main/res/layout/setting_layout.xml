@@ -1,49 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
+<RelativeLayout
+	xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads" 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-  <LinearLayout 
-    android:orientation="vertical" 
-    android:background="@color/window_bg" 
-    android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" 
-   >
-  
-	    <RelativeLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="45dp"
-	    android:background="@drawable/map_top_bg">
+
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="?attr/colorPrimary"
+		app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+		/>
 
 
-         
-	    	<Button
-	        android:id="@+id/btn_back"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="10dp"
-	        android:layout_centerVertical="true"
-	        android:textColor="#ffffff" 
-	        android:background="@drawable/selector_btn_back"/>
-	    
-	       <TextView
-	        android:id="@+id/tv_title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_centerInParent="true"
-	        android:text="@string/setting"
-	        android:textColor="@color/black"
-	        android:textSize="20sp" />
-	
-		</RelativeLayout>
-
-    	<ScrollView 
+	<ScrollView
         android:scrollbarThumbVertical="@drawable/scrollbar_handle_vertical" 
         android:focusableInTouchMode="true" 
         android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" >    
+        android:layout_height="wrap_content"
+		android:layout_below="@id/toolbar">
         <LinearLayout 
             android:orientation="vertical" 
             android:layout_width="fill_parent" 
@@ -108,8 +86,7 @@
                 
         	</LinearLayout>     
     	</ScrollView>   
-	</LinearLayout>
-	
+
   
 	 <com.google.ads.AdView 
 	  android:id="@+id/adView" 

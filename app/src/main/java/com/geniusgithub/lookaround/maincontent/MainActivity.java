@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.activity;
+package com.geniusgithub.lookaround.maincontent;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,6 @@ import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.activity.set.SettingActivity;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.base.BaseActivityEx;
-import com.geniusgithub.lookaround.fragment.CommonFragmentEx;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
