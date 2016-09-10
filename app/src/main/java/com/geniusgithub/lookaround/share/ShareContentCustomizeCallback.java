@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.weibo.sdk;
+package com.geniusgithub.lookaround.share;
 
 import cn.sharesdk.framework.Platform;
 

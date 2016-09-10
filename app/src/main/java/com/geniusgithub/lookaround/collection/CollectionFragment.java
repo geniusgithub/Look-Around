@@ -1,21 +1,20 @@
-package com.geniusgithub.lookaround.setting;
+package com.geniusgithub.lookaround.collection;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
 import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
 import com.geniusgithub.lookaround.datastore.DaoSession;
@@ -32,12 +31,13 @@ import com.geniusgithub.lookaround.util.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectFragment extends BaseFragment implements AdapterView.OnItemClickListener, IDialogInterface{
+public class CollectionFragment extends BaseFragment implements IDialogInterface, IContentItemClick{
     private static final CommonLog log = LogFactory.createLog();
 
-    private ListView mListView;
 
-    private InfoContentExAdapter mAdapter;
+    private RecyclerView mListView;
+    private LinearLayoutManager mLayoutManager;
+    private CollectionAdapter mAdapter;
     private List<BaseType.InfoItemEx> mContentData = new ArrayList<BaseType.InfoItemEx>();
 
 
@@ -88,18 +88,6 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapter, View arg1, int pos, long arg3) {
-
-        BaseType.InfoItemEx item = (BaseType.InfoItemEx) adapter.getItemAtPosition(pos);
-        DetailCache.getInstance().setTypeItem(item.mType);
-        DetailCache.getInstance().setInfoItem(item);
-
-        goContentActivity();
-    }
-
-
-
-    @Override
     public void onSure() {
         if (deleteDialog != null){
             deleteDialog.dismiss();
@@ -117,10 +105,23 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
     }
 
 
+    @Override
+    public void onItemClick(BaseType.InfoItemEx item){
+        DetailCache.getInstance().setTypeItem(item.mType);
+        DetailCache.getInstance().setInfoItem(item);
+        log.i("onItemClick typeitem --> \n" + item.mType.getShowString());
+
+        goContentActivity();
+    }
+
+
 
     private void onUIReady(View view){
-        mListView = (ListView) view.findViewById(R.id.listview);
-        mListView.setOnItemClickListener(this);
+        mListView = (RecyclerView) view.findViewById(R.id.recycle_listview);
+        mListView.setHasFixedSize(true);
+        mListView.setNestedScrollingEnabled(false);
+        mLayoutManager = new LinearLayoutManager(getParentActivity());
+        mListView.setLayoutManager(mLayoutManager);
 
         initData();
 
@@ -128,7 +129,8 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
 
     private void initData(){
 
-        mAdapter = new InfoContentExAdapter(getParentActivity(), mContentData);
+        mAdapter = new CollectionAdapter(getParentActivity(), mContentData);
+        mAdapter.setOnItemClickListener(this);
         mListView.setAdapter(mAdapter);
 
         inidDataBase();

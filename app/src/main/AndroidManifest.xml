@@ -137,7 +137,7 @@
         </activity>
         
         <activity
-            android:name=".setting.BindActivityEx"
+            android:name=".setting.BindActivity"
             android:theme="@style/AppThemeLight">
 <!--             <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->
@@ -147,7 +147,7 @@
         
               
         <activity
-            android:name=".setting.CollectActivity"
+            android:name=".collection.CollectionActivity"
             android:theme="@style/AppThemeLight">
         </activity>
         
@@ -171,7 +171,7 @@
 
         
         <activity
-            android:name="com.geniusgithub.lookaround.weibo.sdk.ShareActivityEx"
+            android:name=".share.ShareActivity"
             android:theme="@style/AppThemeLight">
         </activity>
         
@@ -194,7 +194,7 @@
         </activity>
         
          <activity
-            android:name="com.geniusgithub.lookaround.weibo.sdk.WXEntryActivity"
+            android:name=".share.WXEntryActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
             android:screenOrientation="portrait" />

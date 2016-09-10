@@ -3,16 +3,12 @@ package com.geniusgithub.lookaround.maincontent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.geniusgithub.lookaround.FragmentControlCenter;
@@ -31,157 +27,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements OnItemClickListener, NavigationViewEx.INavClickListener{
+public class MainActivity extends BaseActivity {
     private static final CommonLog log = LogFactory.createLog();
+    public static final String TAG = MainActivity.class.getSimpleName();
+
     private Context mContext;
 
-    private NavigationViewEx navigationView;
-    private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
+
+    private View mRootView;
+    private MainPresenter mMainPresenter;
+    private MainContract.IView mMainView;
 
 
-    private ListView mListView;
-    private List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
-    private NavChannelAdapter mAdapter;
-
-
-    private ContentFragment mContentFragment;
-    private FragmentControlCenter mControlCenter;
-    private boolean loginStatus = false;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
 
-        loginStatus = LAroundApplication.getInstance().getLoginStatus();
-        if (!loginStatus){
-            log.e("loginStatus is false ,jump to welcome view!!!");
-            LAroundApplication.getInstance().startToSplashActivity();
-            finish();
-            return ;
-        }
-
-        initView();
         initData();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if(keyCode == KeyEvent.KEYCODE_MENU) {
-            boolean ret = drawerLayout.isDrawerOpen(Gravity.LEFT);
-            if (!ret){
-                goSettingActivity();
-            }
-            return false;
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
 
-    @Override
-    public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        BaseType.ListItem item = (BaseType.ListItem) adapter.getItemAtPosition(position);
-
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put(BaseType.ListItem.KEY_TYPEID, item.mTypeID);
-        map.put(BaseType.ListItem.KEY_TITLE, item.mTitle);
-        LAroundApplication.getInstance().onEvent("UMID0020", map);
-
-        ContentFragment fragmentEx = mControlCenter.getCommonFragmentEx(item);
-        switchContent(fragmentEx);
-
-    }
-
-    @Override
-    public void onSettingClick() {
-        goSettingActivity();
-    }
 
     @Override
     public void onBackPressed() {
-        if(showExitToast()){
+        if (showExitToast()) {
             finish();
-        }else{
+        } else {
             CommonUtil.showToast(R.string.toast_exit_again, this);
         }
 
     }
 
-    private void initView(){
-        initToolBar();
-        initDrawLayout();
-
-    }
-
-    private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void initDrawLayout() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        ActionBarDrawerToggle mDrawerToggle =
-                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        mDrawerToggle.syncState();
-        drawerLayout.addDrawerListener(mDrawerToggle);
-
-        navigationView = (NavigationViewEx) findViewById(R.id.navigationView);
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
-        }
-
-
-    }
-
-    private void setupDrawerContent(NavigationViewEx navigationView) {
-        mListView = (ListView) navigationView.getmNavListview();
-        mListView.setOnItemClickListener(this);
-        navigationView.setmNavListener(this);
-    }
-
-    private void initData(){
-        mControlCenter = FragmentControlCenter.getInstance(getApplicationContext());
-
-        mDataList = LAroundApplication.getInstance().getUserLoginResult().mDataList;
-        mAdapter = new NavChannelAdapter(mContext, mDataList);
-        mListView.setAdapter(mAdapter);
-        int size = mDataList.size();
-        if (size > 0){
-            mContentFragment = mControlCenter.getCommonFragmentEx(mDataList.get(0));
-            switchContent(mContentFragment);
-        }
-
-    }
-
-
-
-    public void switchContent(final ContentFragment fragment) {
-        mContentFragment = fragment;
-
-        getFragmentManager().beginTransaction().replace(R.id.content, mContentFragment).commit();
-
-        toolbar.setTitle(mContentFragment.getData().mTitle);
-        drawerLayout.closeDrawers();
-    }
-
-    private void goSettingActivity(){
-        Intent intent = new Intent();
-        intent.setClass(this, SettingActivity.class);
-        startActivity(intent);
-    }
-
     private long curMillios = 0;
-    private boolean showExitToast(){
+
+    private boolean showExitToast() {
         long time = System.currentTimeMillis();
-        if (time - curMillios < 2000){
+        if (time - curMillios < 2000) {
             return true;
         }
 
@@ -189,5 +74,133 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, N
         return false;
     }
 
+    private void initData() {
+        mRootView = findViewById(R.id.drawerLayout);
 
+        mMainPresenter = new MainPresenter();
+        mMainView = new MainView();
+        mMainView.setupView(mRootView);
+        mMainPresenter.bindView(mMainView);
+        mMainPresenter.onUiCreate(this);
+    }
+
+    private class MainView implements MainContract.IView, AdapterView.OnItemClickListener, NavigationViewEx.INavClickListener {
+
+
+        private MainContract.IPresenter mPresenter;
+        private View mRootView;
+
+        private NavigationViewEx navigationView;
+        private DrawerLayout drawerLayout;
+        private Toolbar toolbar;
+
+
+        private ListView mListView;
+        private List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
+        private NavChannelAdapter mAdapter;
+
+
+        private ContentFragment mContentFragment;
+        private FragmentControlCenter mControlCenter;
+
+
+        @Override
+        public void bindPresenter(MainContract.IPresenter presenter) {
+            mPresenter = presenter;
+        }
+
+        @Override
+        public void setupView(View rootView) {
+            mRootView = rootView;
+
+            initToolBar();
+            initDrawLayout();
+            initFragmentControl();
+        }
+
+        @Override
+        public void updateNavView(List<BaseType.ListItem> dataList) {
+            mDataList = dataList;
+            int size = mDataList.size();
+            log.i("mDataList.size = " + size);
+            mAdapter.refreshData(mDataList);
+            if (size > 0) {
+                mContentFragment = mControlCenter.getCommonFragmentEx(mDataList.get(0));
+                switchContent(mContentFragment);
+            }
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+            BaseType.ListItem item = (BaseType.ListItem) adapter.getItemAtPosition(position);
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put(BaseType.ListItem.KEY_TYPEID, item.mTypeID);
+            map.put(BaseType.ListItem.KEY_TITLE, item.mTitle);
+            LAroundApplication.getInstance().onEvent("UMID0020", map);
+
+            ContentFragment fragmentEx = mControlCenter.getCommonFragmentEx(item);
+            switchContent(fragmentEx);
+        }
+
+        @Override
+        public void onSettingClick() {
+            goSettingActivity();
+        }
+
+        private void initToolBar() {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            final ActionBar ab = getSupportActionBar();
+            ab.setHomeButtonEnabled(true);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
+        private void initDrawLayout() {
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+            ActionBarDrawerToggle mDrawerToggle =
+                    new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.open, R.string.close);
+            mDrawerToggle.syncState();
+            drawerLayout.addDrawerListener(mDrawerToggle);
+
+            navigationView = (NavigationViewEx) findViewById(R.id.navigationView);
+            if (navigationView != null) {
+                setupDrawerContent(navigationView);
+            }
+
+
+        }
+
+        private void setupDrawerContent(NavigationViewEx navigationView) {
+            mListView = (ListView) navigationView.getmNavListview();
+            mListView.setOnItemClickListener(this);
+            navigationView.setmNavListener(this);
+        }
+
+
+        private void initFragmentControl() {
+            mControlCenter = FragmentControlCenter.getInstance(getApplicationContext());
+            mAdapter = new NavChannelAdapter(mContext, mDataList);
+            mListView.setAdapter(mAdapter);
+
+        }
+
+        public void switchContent(final ContentFragment fragment) {
+            mContentFragment = fragment;
+
+            getFragmentManager().beginTransaction().replace(R.id.content, mContentFragment).commit();
+
+            toolbar.setTitle(mContentFragment.getData().mTitle);
+            drawerLayout.closeDrawers();
+        }
+
+
+        private void goSettingActivity() {
+            Intent intent = new Intent();
+            intent.setClass(mContext, SettingActivity.class);
+            mContext.startActivity(intent);
+        };
+
+    }
 }

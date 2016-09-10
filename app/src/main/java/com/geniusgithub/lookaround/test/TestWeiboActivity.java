@@ -14,8 +14,8 @@ import android.widget.Button;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareActivityEx;
-import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
+import com.geniusgithub.lookaround.share.ShareActivity;
+import com.geniusgithub.lookaround.share.ShareItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -180,7 +180,7 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 
 	private void goShareActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, ShareActivityEx.class);
+		intent.setClass(this, ShareActivity.class);
 		startActivity(intent);
 	}
 

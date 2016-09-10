@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.adapter;
+package com.geniusgithub.lookaround.test;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,7 +17,7 @@ import com.geniusgithub.lookaround.util.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoContentExAdapter extends BaseAdapter{
+public class TestContentExAdapter extends BaseAdapter{
 
 	private static final CommonLog log = LogFactory.createLog();
 	
@@ -26,7 +26,7 @@ public class InfoContentExAdapter extends BaseAdapter{
 	private boolean mBusy = false;
 	private ImageLoaderEx mImageLoader;
 	
-	public InfoContentExAdapter(Context context, List<BaseType.InfoItemEx> data)
+	public TestContentExAdapter(Context context, List<BaseType.InfoItemEx> data)
 	{
 		mContext = context;
 		this.data = data;

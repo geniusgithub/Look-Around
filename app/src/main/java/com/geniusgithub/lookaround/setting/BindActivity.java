@@ -7,19 +7,19 @@ import android.support.annotation.Nullable;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.ToolbarFragmentActivity;
 
-public class CollectActivity extends ToolbarFragmentActivity {
+public class BindActivity extends ToolbarFragmentActivity {
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        updateToolTitle(getString(R.string.collect));
+        updateToolTitle(getString(R.string.bind));
     }
 
 
     @Override
     public Fragment newContentFragment() {
-        return new CollectFragment();
+        return new BindFragment();
     }
 }

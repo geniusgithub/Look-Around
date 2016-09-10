@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
+import com.geniusgithub.lookaround.collection.CollectionActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.FileHelper;
@@ -93,7 +94,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     private void goCollectActivity(){
         Intent intent = new Intent();
-        intent.setClass(getParentActivity(), CollectActivity.class);
+        intent.setClass(getParentActivity(), CollectionActivity.class);
         startActivity(intent);
     }
 

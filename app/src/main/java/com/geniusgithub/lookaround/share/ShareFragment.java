@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.weibo.sdk;
+package com.geniusgithub.lookaround.share;
 
 import android.app.Notification;
 import android.app.NotificationManager;

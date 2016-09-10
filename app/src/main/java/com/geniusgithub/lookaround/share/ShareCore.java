@@ -6,7 +6,7 @@
  * Copyright (c) 2013年 ShareSDK.cn. All rights reserved.
  */
 
-package com.geniusgithub.lookaround.weibo.sdk;
+package com.geniusgithub.lookaround.share;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

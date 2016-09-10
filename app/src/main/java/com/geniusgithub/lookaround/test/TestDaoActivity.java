@@ -1,21 +1,6 @@
 package com.geniusgithub.lookaround.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.adapter.InfoContentExAdapter;
-import com.geniusgithub.lookaround.datastore.DaoMaster;
-import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
-import com.geniusgithub.lookaround.datastore.DaoSession;
-import com.geniusgithub.lookaround.datastore.InfoItemDao;
-import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.model.BaseType.InfoItem;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
 import android.app.Activity;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +10,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.datastore.DaoMaster;
+import com.geniusgithub.lookaround.datastore.DaoMaster.DevOpenHelper;
+import com.geniusgithub.lookaround.datastore.DaoSession;
+import com.geniusgithub.lookaround.datastore.InfoItemDao;
+import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.model.BaseType.InfoItem;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestDaoActivity extends Activity implements OnClickListener, OnItemClickListener{
 
@@ -40,7 +37,7 @@ private static final CommonLog log = LogFactory.createLog();
     private InfoItemDao infoItemDao;
     private SQLiteDatabase db;
     
-    private InfoContentExAdapter mAdapter;
+    private TestContentExAdapter mAdapter;
 	private List<BaseType.InfoItemEx> data = new ArrayList<BaseType.InfoItemEx>();
     
 	@Override
@@ -85,7 +82,7 @@ private static final CommonLog log = LogFactory.createLog();
         infoItemDao = daoSession.getInfoItemDao();
 
 
-        mAdapter = new InfoContentExAdapter(this, data);        
+        mAdapter = new TestContentExAdapter(this, data);
         listView.setAdapter(mAdapter);
 
     	data = infoItemDao.loadAll();

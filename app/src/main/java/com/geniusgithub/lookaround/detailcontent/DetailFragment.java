@@ -28,8 +28,8 @@ import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareActivityEx;
-import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
+import com.geniusgithub.lookaround.share.ShareActivity;
+import com.geniusgithub.lookaround.share.ShareItem;
 import com.google.ads.AdView;
 
 import java.util.ArrayList;
@@ -389,7 +389,7 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
 
 
         Intent intent = new Intent();
-        intent.setClass(getParentActivity(), ShareActivityEx.class);
+        intent.setClass(getParentActivity(), ShareActivity.class);
         startActivity(intent);
     }
 

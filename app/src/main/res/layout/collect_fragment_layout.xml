@@ -2,7 +2,6 @@
 <LinearLayout
 	xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sat="http://schemas.android.com/apk/res/com.geniusgithub.lookaround"
     android:orientation="vertical" 
     android:background="@color/window_bg" 
     android:layout_width="fill_parent" 
@@ -11,18 +10,14 @@
 	<RelativeLayout
         android:layout_width="fill_parent" 
     	android:layout_height="fill_parent">
-       
-		<ListView
-		    android:id="@+id/listview"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:layout_marginLeft="10.0dip" 
-			android:layout_marginTop="10.0dip" 
-			android:layout_marginRight="10.0dip"
-			android:divider="@null"
-		    android:dividerHeight="5dp"
-		    android:cacheColorHint="@color/transparent"
-		    android:clickable="true"/>
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/recycle_listview"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:paddingLeft="10.0dip"
+			android:paddingRight="10.0dip"
+			android:layout_marginTop="10.0dip"/>
 	    
    		 
     </RelativeLayout>
