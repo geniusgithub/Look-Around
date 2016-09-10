@@ -19,10 +19,10 @@ import com.geniusgithub.lookaround.FragmentControlCenter;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.NavigationViewEx;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.activity.set.SettingActivity;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
-import com.geniusgithub.lookaround.base.BaseActivityEx;
+import com.geniusgithub.lookaround.base.BaseActivity;
 import com.geniusgithub.lookaround.model.BaseType;
+import com.geniusgithub.lookaround.setting.SettingActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends BaseActivityEx implements OnItemClickListener, NavigationViewEx.INavClickListener{
+public class MainActivity extends BaseActivity implements OnItemClickListener, NavigationViewEx.INavClickListener{
     private static final CommonLog log = LogFactory.createLog();
     private Context mContext;
 
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivityEx implements OnItemClickListener,
     private NavChannelAdapter mAdapter;
 
 
-    private CommonFragmentEx mContentFragment;
+    private ContentFragment mContentFragment;
     private FragmentControlCenter mControlCenter;
     private boolean loginStatus = false;
 
@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivityEx implements OnItemClickListener,
         map.put(BaseType.ListItem.KEY_TITLE, item.mTitle);
         LAroundApplication.getInstance().onEvent("UMID0020", map);
 
-        CommonFragmentEx fragmentEx = mControlCenter.getCommonFragmentEx(item);
+        ContentFragment fragmentEx = mControlCenter.getCommonFragmentEx(item);
         switchContent(fragmentEx);
 
     }
@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivityEx implements OnItemClickListener,
 
 
 
-    public void switchContent(final CommonFragmentEx fragment) {
+    public void switchContent(final ContentFragment fragment) {
         mContentFragment = fragment;
 
         getFragmentManager().beginTransaction().replace(R.id.content, mContentFragment).commit();

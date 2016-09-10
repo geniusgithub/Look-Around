@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 
-public class BaseActivityEx extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {

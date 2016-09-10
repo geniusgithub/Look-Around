@@ -113,22 +113,22 @@
       
         
         <activity
-            android:name="com.geniusgithub.lookaround.content.PictureBrowerActivity"
+            android:name=".detailcontent.PictureBrowerActivity"
             android:theme="@style/AppThemeLight">
         </activity>
         
        <activity
-            android:name="com.geniusgithub.lookaround.content.WebViewActivity"
+            android:name=".detailcontent.WebViewActivity"
             android:theme="@style/AppThemeLight">
         </activity>
          
        <activity
-            android:name="com.geniusgithub.lookaround.content.ContentActivity"
+            android:name=".detailcontent.DetailActivity"
             android:theme="@style/AppThemeLight.NoTranslucent" >
         </activity>
         
        <activity
-            android:name="com.geniusgithub.lookaround.activity.set.SettingActivity"
+            android:name=".setting.SettingActivity"
             android:theme="@style/AppThemeLight">
 <!--            <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->
@@ -137,7 +137,7 @@
         </activity>
         
         <activity
-            android:name="com.geniusgithub.lookaround.activity.set.BindActivity"
+            android:name=".setting.BindActivityEx"
             android:theme="@style/AppThemeLight">
 <!--             <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->
@@ -147,12 +147,12 @@
         
               
         <activity
-            android:name="com.geniusgithub.lookaround.activity.set.CollectActivity"
+            android:name=".setting.CollectActivity"
             android:theme="@style/AppThemeLight">
         </activity>
         
         <activity
-            android:name="com.geniusgithub.lookaround.activity.set.AboutActivity"
+            android:name=".setting.AboutActivity"
             android:theme="@style/AppThemeLight">
 <!--             <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->
@@ -161,7 +161,7 @@
         </activity>
         
         <activity
-            android:name="com.geniusgithub.lookaround.activity.set.AdviseActivity"
+            android:name=".setting.AdviseActivity"
             android:theme="@style/AppThemeLight">
 <!--             <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->

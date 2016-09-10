@@ -15,10 +15,8 @@ import android.view.ViewGroup;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
-import com.geniusgithub.lookaround.content.ContentActivity;
-import com.geniusgithub.lookaround.content.ContentCache;
-import com.geniusgithub.lookaround.maincontent.InfoAdapter;
-import com.geniusgithub.lookaround.maincontent.IContentItemClick;
+import com.geniusgithub.lookaround.detailcontent.DetailActivity;
+import com.geniusgithub.lookaround.detailcontent.DetailCache;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.BaseType.InfoItem;
 import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.IRequestResult,
+public  class ContentFragment extends BaseFragment implements InfoRequestProxy.IRequestResult,
                                                      SwipeRefreshLayout.OnRefreshListener,
                                                     IContentItemClick{
 
@@ -41,7 +39,7 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
     private RecyclerView mListView;
     private LinearLayoutManager mLayoutManager;
     private BaseType.ListItem mTypeData;
-    private InfoAdapter mAdapter;
+    private ContentAdapter mAdapter;
     private Context mContext;
     private List<BaseType.InfoItem> mContentData = new ArrayList<BaseType.InfoItem>();
     private InfoRequestProxy mInfoRequestProxy;
@@ -56,25 +54,24 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
     private boolean loading = false;
     private boolean bottom = false;
 
-    public CommonFragmentEx(BaseType.ListItem data){
+    public ContentFragment(BaseType.ListItem data){
             mTypeData = data;        
     }
     
-    public CommonFragmentEx(){
+    public ContentFragment(){
     
     }
     
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-            log.e("CommonFragmentEx onCreate");
             super.onCreate(savedInstanceState);
         loginStatus = LAroundApplication.getInstance().getLoginStatus();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            log.i("CommonFragmentEx onCreateView");
+
        View view = inflater.inflate(R.layout.commonex_layout, null);
        mInvalidView = view.findViewById(R.id.invalid_view);
         mListView = (RecyclerView) view.findViewById(R.id.recycle_listview);
@@ -85,7 +82,6 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            log.i("CommonFragmentEx onActivityCreated");
             
             if (loginStatus){
                     setupViews();                        
@@ -107,7 +103,6 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
 
     @Override
     public void onDestroy() {
-        log.e("CommonFragmentEx onDestroy");
         if (loginStatus){
             mInfoRequestProxy.cancelRequest();
         }
@@ -125,7 +120,7 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
 
             mContext = getActivity();
     
-            mAdapter = new InfoAdapter(mContext, mContentData);
+            mAdapter = new ContentAdapter(mContext, mContentData);
              mAdapter.setOnItemClickListener(this);
             mListView.setAdapter(mAdapter);
 
@@ -155,9 +150,9 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
                         lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                         if (lastVisibleItem == totalItemCount - 1){
                             int loadMoreState = mAdapter.getLoadMoreViewState();
-                            if (loadMoreState == InfoAdapter.ILoadMoreViewState.LMVS_NORMAL){
+                            if (loadMoreState == ContentAdapter.ILoadMoreViewState.LMVS_NORMAL){
                                 mInfoRequestProxy.requestMoreInfo();
-                                mAdapter.updateLoadMoreViewState(InfoAdapter.ILoadMoreViewState.LMVS_LOADING);
+                                mAdapter.updateLoadMoreViewState(ContentAdapter.ILoadMoreViewState.LMVS_LOADING);
                             }
                         }
                     }
@@ -225,14 +220,14 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
             log.i("onSuccess isLoadMore = " + isLoadMore + ", isLoadDataComplete = " + isLoadDataComplete + ", isfrist = "  + isFirst);
             if (isLoadMore){
                 if (isLoadDataComplete){
-                    mAdapter.updateLoadMoreViewState(InfoAdapter.ILoadMoreViewState.LMVS_OVER);
+                    mAdapter.updateLoadMoreViewState(ContentAdapter.ILoadMoreViewState.LMVS_OVER);
                 }else{
-                    mAdapter.updateLoadMoreViewState(InfoAdapter.ILoadMoreViewState.LMVS_NORMAL);
+                    mAdapter.updateLoadMoreViewState(ContentAdapter.ILoadMoreViewState.LMVS_NORMAL);
                 }
 
             }else{
                 showLoadView(false);
-                mAdapter.updateLoadMoreViewState(InfoAdapter.ILoadMoreViewState.LMVS_NORMAL);
+                mAdapter.updateLoadMoreViewState(ContentAdapter.ILoadMoreViewState.LMVS_NORMAL);
             }
     }
 
@@ -241,7 +236,7 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
     public void onRequestFailure(boolean isLoadMore) {
             CommonUtil.showToast(R.string.toast_getdata_fail, mContext);
             if (isLoadMore){
-                mAdapter.updateLoadMoreViewState(InfoAdapter.ILoadMoreViewState.LMVS_NORMAL);
+                mAdapter.updateLoadMoreViewState(ContentAdapter.ILoadMoreViewState.LMVS_NORMAL);
             }else{
                 showLoadView(false);
             }
@@ -259,7 +254,7 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
     public void onAnylizeFailure(boolean isLoadMore) {
             CommonUtil.showToast(R.string.toast_anylizedata_fail, mContext);
             if (isLoadMore){
-                mAdapter.updateLoadMoreViewState(InfoAdapter.ILoadMoreViewState.LMVS_NORMAL);
+                mAdapter.updateLoadMoreViewState(ContentAdapter.ILoadMoreViewState.LMVS_NORMAL);
             }else{
                 showLoadView(false);
             }
@@ -276,8 +271,8 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
     public void onItemClick(InfoItem item) {
 
             BaseType.InfoItemEx itemEx = new BaseType.InfoItemEx(item, mTypeData);
-            ContentCache.getInstance().setTypeItem(mTypeData);
-            ContentCache.getInstance().setInfoItem(itemEx);
+            DetailCache.getInstance().setTypeItem(mTypeData);
+            DetailCache.getInstance().setInfoItem(itemEx);
             
             HashMap<String, String> map = new HashMap<String, String>();
             map.put(BaseType.ListItem.KEY_TYPEID, mTypeData.mTypeID);
@@ -292,7 +287,7 @@ public  class CommonFragmentEx extends BaseFragment implements InfoRequestProxy.
 
     private void goContentActivity(){
             Intent intent = new Intent();
-            intent.setClass(mContext, ContentActivity.class);
+            intent.setClass(mContext, DetailActivity.class);
             startActivity(intent);
     }
 

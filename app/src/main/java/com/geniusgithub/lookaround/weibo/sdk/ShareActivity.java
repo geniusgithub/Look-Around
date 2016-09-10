@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.base.BaseActivityEx;
+import com.geniusgithub.lookaround.base.BaseActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -43,7 +43,7 @@ import cn.sharesdk.tencent.weibo.TencentWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
-public class ShareActivity extends BaseActivityEx implements Callback , TextWatcher,
+public class ShareActivity extends BaseActivity implements Callback , TextWatcher,
 												OnClickListener, PlatformActionListener{
 
 	private static final CommonLog log = LogFactory.createLog();

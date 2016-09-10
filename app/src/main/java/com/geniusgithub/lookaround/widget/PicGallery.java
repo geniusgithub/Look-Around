@@ -1,7 +1,5 @@
 package com.geniusgithub.lookaround.widget;
 
-import com.geniusgithub.lookaround.content.PictureBrowerActivity;
-
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -11,6 +9,9 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Gallery;
+
+import com.geniusgithub.lookaround.detailcontent.PictureBrowseFragment;
+
 
 public class PicGallery extends Gallery {
 
@@ -80,7 +81,7 @@ public class PicGallery extends Gallery {
 		if (view instanceof ImageViewEx) {
 			
 			float xdistance = calXdistance(e1, e2);
-			float min_distance = PictureBrowerActivity.screenWidth / 4f;
+			float min_distance = PictureBrowseFragment.screenWidth / 4f;
 		
 			if (isScrollingLeft(e1, e2) && xdistance > min_distance) {
 				kEvent = KeyEvent.KEYCODE_DPAD_LEFT;
@@ -98,8 +99,8 @@ public class PicGallery extends Gallery {
 			float width = imageView.getScale() * imageView.getImageWidth();
 			float height = imageView.getScale() * imageView.getImageHeight();
 			
-			if ((int) width <= PictureBrowerActivity.screenWidth
-					&& (int) height <= PictureBrowerActivity.screenHeight)// 如果图片当前大小<屏幕大小，直接处理滑屏事件
+			if ((int) width <= PictureBrowseFragment.screenWidth
+					&& (int) height <= PictureBrowseFragment.screenHeight)// 如果图片当前大小<屏幕大小，直接处理滑屏事件
 			{
 				super.onScroll(e1, e2, distanceX, distanceY);
 			} else {
@@ -110,14 +111,14 @@ public class PicGallery extends Gallery {
 
 				if (distanceX > 0)// 向左滑动
 				{
-					if (r.left > 0 || right < PictureBrowerActivity.screenWidth) {// 判断当前ImageView是否显示完全
+					if (r.left > 0 || right < PictureBrowseFragment.screenWidth) {// 判断当前ImageView是否显示完全
 						super.onScroll(e1, e2, distanceX, distanceY);
 					} else {
 						imageView.postTranslate(-distanceX, -distanceY);
 					}
 				} else if (distanceX < 0)// 向右滑动
 				{
-					if (r.right < PictureBrowerActivity.screenWidth || left > 0) {
+					if (r.right < PictureBrowseFragment.screenWidth || left > 0) {
 						super.onScroll(e1, e2, distanceX, distanceY);
 					} else {
 						imageView.postTranslate(-distanceX, -distanceY);
@@ -171,8 +172,8 @@ public class PicGallery extends Gallery {
 				// + height + ",screenWidth="
 				// + PictureViewActivity.screenWidth + ",screenHeight="
 				// + PictureViewActivity.screenHeight);
-				if ((int) width <= PictureBrowerActivity.screenWidth
-						&& (int) height <= PictureBrowerActivity.screenHeight)// 如果图片当前大小<屏幕大小，判断边界
+				if ((int) width <= PictureBrowseFragment.screenWidth
+						&& (int) height <= PictureBrowseFragment.screenHeight)// 如果图片当前大小<屏幕大小，判断边界
 				{
 					break;
 				}
@@ -181,12 +182,12 @@ public class PicGallery extends Gallery {
 				m.getValues(v);
 				float top = v[Matrix.MTRANS_Y];
 				float bottom = top + height;
-				if (top < 0 && bottom < PictureBrowerActivity.screenHeight) {
+				if (top < 0 && bottom < PictureBrowseFragment.screenHeight) {
 //					imageView.postTranslateDur(-top, 200f);
-					imageView.postTranslateDur(PictureBrowerActivity.screenHeight
+					imageView.postTranslateDur(PictureBrowseFragment.screenHeight
 							- bottom, 200f);
 				}
-				if (top > 0 && bottom > PictureBrowerActivity.screenHeight) {
+				if (top > 0 && bottom > PictureBrowseFragment.screenHeight) {
 //					imageView.postTranslateDur(PictureViewActivity.screenHeight
 //							- bottom, 200f);
 					imageView.postTranslateDur(-top, 200f);
@@ -194,12 +195,12 @@ public class PicGallery extends Gallery {
 				
 				float left =v[Matrix.MTRANS_X];
 				float right = left + width;
-				if(left<0 && right< PictureBrowerActivity.screenWidth){
+				if(left<0 && right< PictureBrowseFragment.screenWidth){
 //					imageView.postTranslateXDur(-left, 200f);
-					imageView.postTranslateXDur(PictureBrowerActivity.screenWidth
+					imageView.postTranslateXDur(PictureBrowseFragment.screenWidth
 							- right, 200f);
 				}
-				if(left>0 && right>PictureBrowerActivity.screenWidth){
+				if(left>0 && right>PictureBrowseFragment.screenWidth){
 //					imageView.postTranslateXDur(PictureViewActivity.screenWidth
 //							- right, 200f);
 					imageView.postTranslateXDur(-left, 200f);

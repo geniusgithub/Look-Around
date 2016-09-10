@@ -1,7 +1,6 @@
 package com.geniusgithub.lookaround.splash;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -11,11 +10,12 @@ import android.os.Message;
 import android.view.View;
 
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.base.BaseActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.util.PermissionsUtil;
 
-public class SplashActivity extends Activity implements SplashPresenter.ISplashCallback{
+public class SplashActivity extends BaseActivity implements SplashPresenter.ISplashCallback{
 
     private static final CommonLog log = LogFactory.createLog();
 

@@ -1,26 +1,26 @@
-package com.geniusgithub.lookaround.content;
+package com.geniusgithub.lookaround.detailcontent;
 
 
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
-public class ContentCache {
+public class DetailCache {
 
 	private static final CommonLog log = LogFactory.createLog();
 	
-	private static ContentCache mInstance;
+	private static DetailCache mInstance;
 
 	private BaseType.ListItem mTypeItem = new BaseType.ListItem();
 	private BaseType.InfoItemEx mInfoItem = new BaseType.InfoItemEx();
 	
-	public ContentCache(){
+	public DetailCache(){
 		
 	}
 	
-	public synchronized static ContentCache getInstance(){
+	public synchronized static DetailCache getInstance(){
 		if (mInstance == null){
-			mInstance = new ContentCache();
+			mInstance = new DetailCache();
 		}
 		
 		return mInstance;

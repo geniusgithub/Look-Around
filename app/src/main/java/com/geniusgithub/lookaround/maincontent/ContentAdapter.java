@@ -17,7 +17,7 @@ import com.geniusgithub.lookaround.util.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements IContentItemClick{
+public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements IContentItemClick{
 
 /*
     public static interface onItemClickListener{
@@ -35,7 +35,7 @@ public class InfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
     public IContentItemClick mOnItemClickListener;
 
-    public InfoAdapter(Context context, List<BaseType.InfoItem> data)
+    public ContentAdapter(Context context, List<BaseType.InfoItem> data)
     {
         mContext = context;
         this.data = data;
