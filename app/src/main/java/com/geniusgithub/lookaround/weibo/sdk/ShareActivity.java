@@ -1,3 +1,4 @@
+/*
 package com.geniusgithub.lookaround.weibo.sdk;
 
 import android.app.Notification;
@@ -217,14 +218,18 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 		}
 	}
 	
-	/** 分享时Notification的图标和文字 */
+	*/
+/** 分享时Notification的图标和文字 *//*
+
 	public void setNotification(int icon, String title) {
 		notifyIcon = icon;
 		notifyTitle = title;
 	}
 
 	
-	/** 执行分享 */
+	*/
+/** 执行分享 *//*
+
 	public void share(Platform plat, HashMap<String, Object> data) {
 			boolean started = false;
 		
@@ -236,7 +241,8 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 
 				Toast.makeText(this, "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
 			
-		/*	String value = mETContent.getText().toString();
+		*/
+/*	String value = mETContent.getText().toString();
 			reqMap.put("text", value);
 			
 			String name = plat.getName();
@@ -286,7 +292,8 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 			}
 			mPlatform.setPlatformActionListener(this);
 			ShareCore shareCore = new ShareCore();
-			shareCore.share(plat, data);*/
+			shareCore.share(plat, data);*//*
+
 	
 	}
 	
@@ -448,3 +455,4 @@ public class ShareActivity extends BaseActivity implements Callback , TextWatche
 	}
 
 }
+*/

@@ -14,7 +14,7 @@ public class BaseFragment extends Fragment {
         mParentActivity = getActivity();
     }
 
-    public Activity getmParentActivity(){
+    public Activity getParentActivity(){
         return mParentActivity;
     }
 

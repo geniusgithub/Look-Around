@@ -84,16 +84,16 @@ public class PictureBrowseFragment extends BaseFragment implements AdapterView.O
     private void onUIReady(View view){
         initToolBar(view);
 
-        screenWidth = getmParentActivity().getWindow().getWindowManager().getDefaultDisplay()
+        screenWidth = getParentActivity().getWindow().getWindowManager().getDefaultDisplay()
                 .getWidth();
-        screenHeight = getmParentActivity().getWindow().getWindowManager().getDefaultDisplay()
+        screenHeight = getParentActivity().getWindow().getWindowManager().getDefaultDisplay()
                 .getHeight();
 
 
         gallery = (PicGallery)view.findViewById(R.id.pic_gallery);
         gallery.setVerticalFadingEdgeEnabled(false);// 取消竖直渐变边框
         gallery.setHorizontalFadingEdgeEnabled(false);// 取消水平渐变边框
-        gallery.setDetector(new GestureDetector(getmParentActivity(), new MySimpleGesture()));
+        gallery.setDetector(new GestureDetector(getParentActivity(), new MySimpleGesture()));
 
 
         initData();
@@ -104,8 +104,8 @@ public class PictureBrowseFragment extends BaseFragment implements AdapterView.O
         mToolbar = (android.support.v7.widget.Toolbar) view.findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         mToolbar.setBackgroundColor(Color.parseColor("#00ffffff"));
-        if (getmParentActivity() instanceof AppCompatActivity){
-            AppCompatActivity appCompatActivity = (AppCompatActivity) getmParentActivity();
+        if (getParentActivity() instanceof AppCompatActivity){
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getParentActivity();
             appCompatActivity.setSupportActionBar(mToolbar);
             final ActionBar ab = appCompatActivity.getSupportActionBar();
             ab.setHomeButtonEnabled(true);
@@ -119,7 +119,7 @@ public class PictureBrowseFragment extends BaseFragment implements AdapterView.O
         List<String> list = mItem.mImageUrlList;
         log.i("mItem.mImageUrlList.size = " + mItem.mImageUrlList.size());
         mTotalNum = mItem.mImageUrlList.size();
-        mAdapter = new GalleryAdapterEx(getmParentActivity());
+        mAdapter = new GalleryAdapterEx(getParentActivity());
         gallery.setAdapter(mAdapter);
         gallery.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -147,7 +147,7 @@ public class PictureBrowseFragment extends BaseFragment implements AdapterView.O
         LAroundApplication.getInstance().onEvent("SAVE01");
         boolean isSDCard = CommonUtil.hasSDCard();
         if (!isSDCard){
-            CommonUtil.showToast(R.string.toast_save_fail, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_save_fail, getParentActivity());
             return ;
         }
 
@@ -162,7 +162,7 @@ public class PictureBrowseFragment extends BaseFragment implements AdapterView.O
         }
 
 
-        FileCache fileCache = new FileCache(getmParentActivity());
+        FileCache fileCache = new FileCache(getParentActivity());
         String url = mItem.mImageUrlList.get(mCurPos);
         String fromPath = fileCache.getSavePath(url);
 
@@ -173,9 +173,9 @@ public class PictureBrowseFragment extends BaseFragment implements AdapterView.O
             String text = getResources().getString(R.string.toast_save_success) + "," +
                     getResources().getString(R.string.toast_savefile_end) + toPath + ".jpg";
 
-            CommonUtil.showToast(text, getmParentActivity());
+            CommonUtil.showToast(text, getParentActivity());
         }else{
-            CommonUtil.showToast(R.string.toast_save_fail2, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_save_fail2, getParentActivity());
         }
 
     }

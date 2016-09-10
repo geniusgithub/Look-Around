@@ -86,7 +86,7 @@ public class BindFragment extends BaseFragment implements CompoundButton.OnCheck
         String platName = platform.getName();
         switch(msg.what) {
             case MSG_ACTION_SUCCESS:
-                CommonUtil.showToast(R.string.toast_bind_success, getmParentActivity());
+                CommonUtil.showToast(R.string.toast_bind_success, getParentActivity());
                 updateWeiboStatus(platName);
                 break;
             case MSG_ACTION_FAIL:
@@ -105,7 +105,7 @@ public class BindFragment extends BaseFragment implements CompoundButton.OnCheck
     private Platform unbindPlatform;
     private Dialog unbindDialog;
     private Dialog getUnbindDialog(){
-        Dialog dialog = DialogBuilder.buildNormalDialog(getmParentActivity(),
+        Dialog dialog = DialogBuilder.buildNormalDialog(getParentActivity(),
                 getResources().getString(R.string.dia_msg_unbind_title),
                 getResources().getString(R.string.dia_msg_unbind_msg),
                 this);
@@ -168,12 +168,9 @@ public class BindFragment extends BaseFragment implements CompoundButton.OnCheck
     }
 
     private void initData(){
-        mPlatformSina = ShareSDK.getPlatform(getmParentActivity(), SinaWeibo.NAME);
-        mPlatformTencent = ShareSDK.getPlatform(getmParentActivity(), TencentWeibo.NAME);
-        mPlatformQZone = ShareSDK.getPlatform(getmParentActivity(), QZone.NAME);
-/*        mPlatformSina.setPlatformActionListener(getmParentActivity());
-        mPlatformTencent.setPlatformActionListener(getmParentActivity());
-        mPlatformQZone.setPlatformActionListener(getmParentActivity());*/
+        mPlatformSina = ShareSDK.getPlatform(getParentActivity(), SinaWeibo.NAME);
+        mPlatformTencent = ShareSDK.getPlatform(getParentActivity(), TencentWeibo.NAME);
+        mPlatformQZone = ShareSDK.getPlatform(getParentActivity(), QZone.NAME);
 
         updateSinaStatus();
         updateTencentStatus();

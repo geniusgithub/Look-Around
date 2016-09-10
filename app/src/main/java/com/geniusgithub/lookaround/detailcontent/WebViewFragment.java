@@ -64,7 +64,7 @@ public class WebViewFragment extends BaseFragment {
         webSettings.setSupportZoom(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-        initData(getmParentActivity().getIntent());
+        initData(getParentActivity().getIntent());
 
     }
 
@@ -86,7 +86,7 @@ public class WebViewFragment extends BaseFragment {
 
     private void showProgress()
     {
-        getmParentActivity().runOnUiThread(new Runnable() {
+        getParentActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
@@ -99,7 +99,7 @@ public class WebViewFragment extends BaseFragment {
 
     private void hideProgress()
     {
-        getmParentActivity().runOnUiThread(new Runnable() {
+        getParentActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {

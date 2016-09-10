@@ -171,7 +171,7 @@
 
         
         <activity
-            android:name="com.geniusgithub.lookaround.weibo.sdk.ShareActivity"
+            android:name="com.geniusgithub.lookaround.weibo.sdk.ShareActivityEx"
             android:theme="@style/AppThemeLight">
         </activity>
         

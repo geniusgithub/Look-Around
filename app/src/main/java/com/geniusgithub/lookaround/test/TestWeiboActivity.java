@@ -1,10 +1,5 @@
 package com.geniusgithub.lookaround.test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,25 +7,27 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.utils.UIHandler;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareCore;
+import com.geniusgithub.lookaround.weibo.sdk.ShareActivityEx;
 import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
-import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 public class TestWeiboActivity extends Activity implements OnClickListener, PlatformActionListener{
 
@@ -183,7 +180,7 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 
 	private void goShareActivity(){
 		Intent intent = new Intent();
-		intent.setClass(this, ShareActivity.class);
+		intent.setClass(this, ShareActivityEx.class);
 		startActivity(intent);
 	}
 

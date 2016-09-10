@@ -28,7 +28,7 @@ import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.geniusgithub.lookaround.weibo.sdk.ShareActivity;
+import com.geniusgithub.lookaround.weibo.sdk.ShareActivityEx;
 import com.geniusgithub.lookaround.weibo.sdk.ShareItem;
 import com.google.ads.AdView;
 
@@ -93,7 +93,7 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
         if (!loginStatus){
             log.e("loginStatus is false ,jump to welcome view!!!");
             LAroundApplication.getInstance().startToMainActivity();
-            getmParentActivity().finish();
+            getParentActivity().finish();
             return ;
         }
         onUIReady(view);
@@ -203,9 +203,9 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
-        fileCache = new FileCache(getmParentActivity());
+        fileCache = new FileCache(getParentActivity());
 
-        mImageLoader = new SimpleImageLoader(getmParentActivity());
+        mImageLoader = new SimpleImageLoader(getParentActivity());
 
         DetailCache mDetailCache = DetailCache.getInstance();
         mTypeItem = mDetailCache.getTypeItem();
@@ -243,13 +243,13 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
 
 
     protected  void updateToolTitle(String title){
-       if ( getmParentActivity() instanceof ToolbarFragmentActivity){
-           ((ToolbarFragmentActivity) getmParentActivity()).updateToolTitle(title);
+       if ( getParentActivity() instanceof ToolbarFragmentActivity){
+           ((ToolbarFragmentActivity) getParentActivity()).updateToolTitle(title);
        }
     }
 
     private void inidDataBase(){
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getmParentActivity(), "lookaround-db", null);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getParentActivity(), "lookaround-db", null);
         db = helper.getWritableDatabase();
 
         daoMaster = new DaoMaster(db);
@@ -269,17 +269,17 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
         LAroundApplication.getInstance().onEvent("UM0011", map);
 
         infoItemDao.insert(mInfoItem);
-        CommonUtil.showToast(R.string.toast_collect_success, getmParentActivity());
+        CommonUtil.showToast(R.string.toast_collect_success, getParentActivity());
         isCollect = true;
 
-        getmParentActivity().invalidateOptionsMenu();
+        getParentActivity().invalidateOptionsMenu();
     }
 
     private void goWebviewActivity(){
         log.e("goWebviewActivity ");
         LAroundApplication.getInstance().onEvent("UMID0009");
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), WebViewActivity.class);
+        intent.setClass(getParentActivity(), WebViewActivity.class);
         intent.putExtra(WebViewFragment.INTENT_EXTRA_URL, mInfoItem.mSourceUrl);
         startActivity(intent);
     }
@@ -288,7 +288,7 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
         log.e("goPhoneView ");
         LAroundApplication.getInstance().onEvent("UMID0003");
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), PictureBrowerActivity.class);
+        intent.setClass(getParentActivity(), PictureBrowerActivity.class);
         startActivity(intent);
     }
 
@@ -389,7 +389,7 @@ public class DetailFragment extends BaseFragment implements View.OnClickListener
 
 
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), ShareActivity.class);
+        intent.setClass(getParentActivity(), ShareActivityEx.class);
         startActivity(intent);
     }
 

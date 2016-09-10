@@ -111,7 +111,7 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
         switch(msg.what) {
             case MSG_TOAST: {
                 String text = String.valueOf(msg.obj);
-                Toast.makeText(getmParentActivity(), text, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentActivity(), text, Toast.LENGTH_SHORT).show();
             }
             break;
             case MSG_ACTION_CCALLBACK: {
@@ -156,7 +156,7 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
     }
 
     private void initData(){
-        mPlatform = ShareSDK.getPlatform(getmParentActivity(), SinaWeibo.NAME);
+        mPlatform = ShareSDK.getPlatform(getParentActivity(), SinaWeibo.NAME);
         PlatformDb db = mPlatform.getDb();
         String nickname = db.get("nickname");
         if (nickname != null){
@@ -178,16 +178,16 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
 
         int relen = MAX_TEXT_LENGTH -  mETContent.length();
         if (relen == MAX_TEXT_LENGTH){
-            CommonUtil.showToast(R.string.toast_no_txtcount, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_no_txtcount, getParentActivity());
             return ;
         }
 
         if (relen < 0){
-            CommonUtil.showToast(R.string.toast_too_txtcount, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_too_txtcount, getParentActivity());
             return ;
         }
 
-        Toast.makeText(getmParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
 
 		/*	int shareType = Platform.SHARE_TEXT;
 			HashMap<String, Object> reqMap = new HashMap<String, Object>();
@@ -221,7 +221,7 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
     }
 
     public String getMobileInfo(){
-        String value = "(版本" + CommonUtil.getSoftVersion(getmParentActivity()) +
+        String value = "(版本" + CommonUtil.getSoftVersion(getParentActivity()) +
                 ",厂商" + CommonUtil.getDeviceManufacturer() +
                 ", 型号" + CommonUtil.getDeviceModel() +
                 ", 系统" + CommonUtil.getOSVersion() + ")";
@@ -234,17 +234,17 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
     private void showNotification(long cancelTime, String text) {
         try {
             NotificationManager nm = (NotificationManager)
-                    getmParentActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                    getParentActivity().getSystemService(Context.NOTIFICATION_SERVICE);
             final int id = Integer.MAX_VALUE / 13 + 1;
             nm.cancel(id);
 
             long when = System.currentTimeMillis();
-            Notification.Builder builder = new Notification.Builder(getmParentActivity());
+            Notification.Builder builder = new Notification.Builder(getParentActivity());
             builder.setSmallIcon(notifyIcon);
             builder.setContentText(text);
             builder.setWhen(when);
             builder.setContentTitle(notifyTitle);
-            PendingIntent pi = PendingIntent.getActivity(getmParentActivity(), 0, new Intent(), 0);
+            PendingIntent pi = PendingIntent.getActivity(getParentActivity(), 0, new Intent(), 0);
             builder.setContentIntent(pi);
             builder.setAutoCancel(true);
             nm.notify(id, builder.build());

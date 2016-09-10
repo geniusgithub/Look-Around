@@ -128,7 +128,7 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
 
     private void initData(){
 
-        mAdapter = new InfoContentExAdapter(getmParentActivity(), mContentData);
+        mAdapter = new InfoContentExAdapter(getParentActivity(), mContentData);
         mListView.setAdapter(mAdapter);
 
         inidDataBase();
@@ -137,7 +137,7 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
     }
 
     private void inidDataBase(){
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getmParentActivity(), "lookaround-db", null);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getParentActivity(), "lookaround-db", null);
         db = helper.getWritableDatabase();
 
         daoMaster = new DaoMaster(db);
@@ -167,7 +167,7 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
 
     private void goContentActivity(){
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), DetailActivity.class);
+        intent.setClass(getParentActivity(), DetailActivity.class);
         startActivity(intent);
     }
 
@@ -178,7 +178,7 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
 
         long count = infoItemDao.count();
         if (count == 0){
-            CommonUtil.showToast(R.string.toast_no_delcollect, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_no_delcollect, getParentActivity());
             return ;
         }
         if (deleteDialog != null){
@@ -186,7 +186,7 @@ public class CollectFragment extends BaseFragment implements AdapterView.OnItemC
             return ;
         }
 
-        deleteDialog = DialogBuilder.buildNormalDialog(getmParentActivity(),
+        deleteDialog = DialogBuilder.buildNormalDialog(getParentActivity(),
                 getResources().getString(R.string.dia_msg_delcollect_title),
                 getResources().getString(R.string.dia_msg_delcollect_msg),
                 this);

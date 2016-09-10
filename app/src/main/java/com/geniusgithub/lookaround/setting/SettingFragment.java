@@ -46,7 +46,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 goBindActivity();
                 break;
             case R.id.ll_mypush:
-                CommonUtil.showToast(R.string.toast_no_push, getmParentActivity());
+                CommonUtil.showToast(R.string.toast_no_push, getParentActivity());
                 break;
             case R.id.ll_mycollect:
                 goCollectActivity();
@@ -88,27 +88,24 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
 
     private void goBindActivity(){
-        Toast.makeText(getmParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
-/*		Intent intent = new Intent();
-		intent.setClass(getmParentActivity(), BindActivityEx.class);
-		startActivity(intent);*/
+        Toast.makeText(getParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
     }
 
     private void goCollectActivity(){
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), CollectActivity.class);
+        intent.setClass(getParentActivity(), CollectActivity.class);
         startActivity(intent);
     }
 
     private void goAboutActivity(){
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), AboutActivity.class);
+        intent.setClass(getParentActivity(), AboutActivity.class);
         startActivity(intent);
     }
 
     private void clearCache(){
         LAroundApplication.getInstance().onEvent("UM004");
-        CommonUtil.showToast(R.string.toast_clear_success, getmParentActivity());
+        CommonUtil.showToast(R.string.toast_clear_success, getParentActivity());
 
         clearImageCache();
 

@@ -96,7 +96,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
     public void onRequestFailure(int requestAction, String content, Object extra) {
         log.e("onRequestFailure --> requestAction = " + requestAction);
 
-        CommonUtil.showToast(R.string.toast_getdata_fail, getmParentActivity());
+        CommonUtil.showToast(R.string.toast_getdata_fail, getParentActivity());
     }
 
 
@@ -151,7 +151,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void initData(){
-        mClientEngine=  ClientEngine.getInstance(getmParentActivity());
+        mClientEngine=  ClientEngine.getInstance(getParentActivity());
 
         object = LAroundApplication.getInstance().getNewVersion();
         if (object != null && object.mHaveNewVer != 0){
@@ -159,7 +159,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
         }else{
             showUpdateIcon(false);
 
-            PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(getmParentActivity());
+            PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(getParentActivity());
             BaseRequestPacket packet = new BaseRequestPacket();
             packet.action = PublicType.CHECK_UPDATE_MSGID;
             packet.object = object;
@@ -183,18 +183,18 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
 
     private void updateView(){
 
-        String value = getResources().getString(R.string.tvt_ver_pre) + CommonUtil.getSoftVersion(getmParentActivity());
+        String value = getResources().getString(R.string.tvt_ver_pre) + CommonUtil.getSoftVersion(getParentActivity());
         mTVVersion.setText(value);
     }
 
     private void goAdviseActivity(){
         Intent intent = new Intent();
-        intent.setClass(getmParentActivity(), AdviseActivity.class);
+        intent.setClass(getParentActivity(), AdviseActivity.class);
         startActivity(intent);
     }
 
     private void attention(){
-        Toast.makeText(getmParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
 		/*Platform plat = ShareSDK.getPlatform(this, SinaWeibo.NAME);
 		plat.setPlatformActionListener(this);
 		plat.followFriend("2881812642");*/
@@ -211,7 +211,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
             updateDialog = getUpdateDialog(object.mContentList);
             updateDialog.show();
         }else{
-            PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(getmParentActivity());
+            PublicType.CheckUpdate object = PublicTypeBuilder.buildCheckUpdate(getParentActivity());
 
 
             BaseRequestPacket packet = new BaseRequestPacket();
@@ -219,7 +219,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
             packet.object = object;
 
             mClientEngine.httpGetRequestEx(packet, this);
-            CommonUtil.showToast(R.string.toast_checking_update, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_checking_update, getParentActivity());
         }
 
 
@@ -236,7 +236,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
             //			"\nmVerName = " + object.mVerName + "\nmAppUrl = " + object.mAppUrl + "\nmContent.size = " + object.mContentList.size());
         } catch (JSONException e) {
             e.printStackTrace();
-            CommonUtil.showToast(R.string.toast_anylizedata_fail, getmParentActivity());
+            CommonUtil.showToast(R.string.toast_anylizedata_fail, getParentActivity());
             object = null;
             return ;
         }
@@ -254,7 +254,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
             LAroundApplication.getInstance().setNewVersionFlag(object);
         }else{
             if (extra == null){
-                CommonUtil.showToast(R.string.toast_no_update, getmParentActivity());
+                CommonUtil.showToast(R.string.toast_no_update, getParentActivity());
             }
 
         }
@@ -274,7 +274,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
             }
         }
         log.e("msg = " + sBuffer.toString());
-        Dialog dialog = DialogBuilder.buildNormalDialog(getmParentActivity(), "版本更新" + object.mVerName, sBuffer.toString(), this);
+        Dialog dialog = DialogBuilder.buildNormalDialog(getParentActivity(), "版本更新" + object.mVerName, sBuffer.toString(), this);
         return dialog;
     }
 

@@ -72,7 +72,7 @@ public  class ContentFragment extends BaseFragment implements InfoRequestProxy.I
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-       View view = inflater.inflate(R.layout.commonex_layout, null);
+       View view = inflater.inflate(R.layout.content_fragment_layout, null);
        mInvalidView = view.findViewById(R.id.invalid_view);
         mListView = (RecyclerView) view.findViewById(R.id.recycle_listview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.content_view);
