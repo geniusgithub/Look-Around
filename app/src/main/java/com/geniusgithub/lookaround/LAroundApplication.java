@@ -22,7 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
-import com.geniusgithub.lookaround.maincontent.MainActivity;
+import com.geniusgithub.lookaround.maincontent.main.MainActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.splash.SplashActivity;
 import com.geniusgithub.lookaround.util.CommonLog;

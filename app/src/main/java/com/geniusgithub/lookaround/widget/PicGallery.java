@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Gallery;
 
-import com.geniusgithub.lookaround.detailcontent.PictureBrowseFragment;
+import com.geniusgithub.lookaround.detailcontent.other.PictureBrowseFragment;
 
 
 public class PicGallery extends Gallery {

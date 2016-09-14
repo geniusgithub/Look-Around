@@ -1,13 +1,14 @@
 package com.geniusgithub.lookaround.datastore;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
+
 import de.greenrobot.dao.AbstractDaoMaster;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
 
@@ -18,7 +19,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 */
 public class DaoMaster extends AbstractDaoMaster {
 	private static final CommonLog log = LogFactory.createLog();
-    public static final int SCHEMA_VERSION = 1;
+    public static final int SCHEMA_VERSION = 2;
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {

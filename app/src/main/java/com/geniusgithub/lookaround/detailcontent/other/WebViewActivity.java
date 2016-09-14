@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.collection;
+package com.geniusgithub.lookaround.detailcontent.other;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,19 +7,19 @@ import android.support.annotation.Nullable;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.ToolbarFragmentActivity;
 
-public class CollectionActivity extends ToolbarFragmentActivity {
+public class WebViewActivity extends ToolbarFragmentActivity {
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        updateToolTitle(getString(R.string.collect));
+        updateToolTitle(getString(R.string.page));
     }
 
 
     @Override
     public Fragment newContentFragment() {
-        return new CollectFragment();
+        return new WebViewFragment();
     }
 }

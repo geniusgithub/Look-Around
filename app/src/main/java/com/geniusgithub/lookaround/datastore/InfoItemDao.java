@@ -1,13 +1,10 @@
 package com.geniusgithub.lookaround.datastore;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.geniusgithub.lookaround.model.BaseType;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+
+import com.geniusgithub.lookaround.model.BaseType;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
@@ -38,7 +35,8 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
         public final static Property KEY_SOURCEURL = new Property(9, String.class, BaseType.InfoItem.KEY_SOURCEURL, false, BaseType.InfoItem.KEY_SOURCEURL);
         public final static Property KEY_HEADPATH = new Property(10, String.class, BaseType.InfoItem.KEY_HEADPATH, false, BaseType.InfoItem.KEY_HEADPATH);       
         public final static Property KEY_IMAGES = new Property(11, String.class, BaseType.InfoItem.KEY_IMAGES, false, BaseType.InfoItem.KEY_IMAGES);       
-        public final static Property KEY_IMAGESTHUMBANIL = new Property(12, String.class, BaseType.InfoItem.KEY_IMAGESTHUMBANIL, false, BaseType.InfoItem.KEY_IMAGESTHUMBANIL);       
+        public final static Property KEY_IMAGESTHUMBANIL = new Property(12, String.class, BaseType.InfoItem.KEY_IMAGESTHUMBANIL, false, BaseType.InfoItem.KEY_IMAGESTHUMBANIL);
+        public final static Property KEY_TYPETITLE = new Property(13, String.class, BaseType.InfoItemEx.KEY_TYPETITLE, false, BaseType.InfoItemEx.KEY_TYPETITLE);
     };
     
 	
@@ -67,7 +65,8 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
 	                "'userName' TEXT," + 
 	                "'headPath' TEXT," + 
 	                "'images' TEXT," + 
-	                "'imagesThumbnail' TEXT);"); 
+	                "'imagesThumbnail' TEXT," +
+                    "'typeTitle' TEXT);");
     }
 
     /** Drops the underlying database table. */
@@ -95,7 +94,7 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
         stmt.bindString(11, entity.mHeadPath);
         stmt.bindString(12, entity.mImageURL_STRING);
         stmt.bindString(13, entity.mThumbnaiURL_STRING);
- 
+        stmt.bindString(14, entity.mType.mTitle);
     }
 
     /** @inheritdoc */
@@ -119,8 +118,8 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
 											            cursor.getString(offset + 9),
 											            cursor.getString(offset + 10),
 											            cursor.getString(offset + 11),
-											            cursor.getString(offset + 12)
-    													);
+											            cursor.getString(offset + 12));
+        entity.mType.mTitle =  cursor.getString(offset + 13);
 
     	entity.updateURLS();
     	
@@ -143,7 +142,7 @@ public class InfoItemDao extends AbstractDao<BaseType.InfoItemEx, String> {
         entity.mHeadPath = cursor.getString(offset + 10);
         entity.mImageURL_STRING = cursor.getString(offset + 11);
         entity.mThumbnaiURL_STRING = cursor.getString(offset + 12);
-      
+        entity.mType.mTitle = cursor.getString(offset + 13);
     	entity.updateURLS();
     }
     

@@ -96,7 +96,7 @@
 
 
         <activity
-            android:name=".maincontent.MainActivity"
+            android:name=".maincontent.main.MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:theme="@style/AppThemeLight.NoTranslucent" >
@@ -113,12 +113,12 @@
       
         
         <activity
-            android:name=".detailcontent.PictureBrowerActivity"
+            android:name=".detailcontent.other.PictureBrowerActivity"
             android:theme="@style/AppThemeLight">
         </activity>
         
        <activity
-            android:name=".detailcontent.WebViewActivity"
+            android:name=".detailcontent.other.WebViewActivity"
             android:theme="@style/AppThemeLight">
         </activity>
          

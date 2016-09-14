@@ -11,7 +11,7 @@ import com.geniusgithub.lookaround.R;
 
 public abstract  class ToolbarFragmentActivity extends BaseActivity {
 
-    private final String TAG_FRAGMENT = "ContentFragment";
+    private final String TAG_FRAGMENT = "Content_Fragment";
     protected Toolbar mToolbar;
 
     @Override

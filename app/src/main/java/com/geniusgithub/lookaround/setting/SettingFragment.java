@@ -90,6 +90,9 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     private void goBindActivity(){
         Toast.makeText(getParentActivity(), "功能暂时屏蔽，敬请谅解", Toast.LENGTH_SHORT).show();
+     /*   Intent intent = new Intent();
+        intent.setClass(getParentActivity(), BindActivity.class);
+        startActivity(intent);*/
     }
 
     private void goCollectActivity(){

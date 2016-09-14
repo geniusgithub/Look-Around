@@ -1,15 +1,13 @@
 package com.geniusgithub.lookaround.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.geniusgithub.lookaround.util.CommonLog;
+import com.geniusgithub.lookaround.util.LogFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseType {
 	private static final CommonLog log = LogFactory.createLog();
@@ -196,7 +194,8 @@ public class BaseType {
 	
 	
 	public static class InfoItemEx extends InfoItem{
-		
+
+			public final static String KEY_TYPETITLE = "typeTitle";
 			public ListItem mType = new ListItem();
 	
 			public InfoItemEx(InfoItem item, ListItem type){
@@ -254,7 +253,8 @@ public class BaseType {
 			
 			public String toString(){
 				StringBuffer stringBuffer = new StringBuffer();
-				stringBuffer.append("mKeyID = " + mKeyID +
+				stringBuffer.append("TypeTile = " + mType.mTitle +
+									"\nmKeyID = " + mKeyID +
 									"\nmBannerType = " + mBannerType +
 									"\nmTitle = " + mTitle + 
 									"\nmContent = " + mContent + 
