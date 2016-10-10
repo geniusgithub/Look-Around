@@ -164,7 +164,6 @@ public class MainActivity extends BaseActivity {
                     new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.open, R.string.close);
             mDrawerToggle.syncState();
             drawerLayout.addDrawerListener(mDrawerToggle);
-
             navigationView = (NavigationViewEx) findViewById(R.id.navigationView);
             if (navigationView != null) {
                 setupDrawerContent(navigationView);

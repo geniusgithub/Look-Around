@@ -1,13 +1,14 @@
 package com.geniusgithub.lookaround.collection;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.cache.ImageLoaderEx;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -23,24 +24,24 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 */
 
-
+    public	static Drawable placeholder;
     private static final CommonLog log = LogFactory.createLog();
 
     private List<BaseType.InfoItemEx> data = new ArrayList<BaseType.InfoItemEx>();
     private Context mContext;
     private boolean mBusy = false;
-    private ImageLoaderEx mImageLoader;
-
     public IContentItemClick mOnItemClickListener;
 
     public CollectionAdapter(Context context, List<BaseType.InfoItemEx> data)
     {
         mContext = context;
         this.data = data;
-        mImageLoader = new ImageLoaderEx(context);
-        mImageLoader.setDefaultBitmap(mContext.getResources().getDrawable(R.drawable.load_img));
+        loadDefaultDrawable(mContext.getResources());
     }
 
+    public static void  loadDefaultDrawable(Resources resource){
+        placeholder = resource.getDrawable(R.drawable.load_img);
+    }
     public void setOnItemClickListener(IContentItemClick listener){
         mOnItemClickListener = listener;
     }
@@ -138,9 +139,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
-    public ImageLoaderEx getImageLoader(){
-        return mImageLoader;
-    }
 
     private RecyclerView.ViewHolder createBanner0ViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -151,14 +149,14 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private RecyclerView.ViewHolder createBanner1ViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.content_listitem_layout1, parent, false);
-        ContentViewHolder1 viewHolder = new ContentViewHolder1(view, this);
+        ContentViewHolder1 viewHolder = new ContentViewHolder1(mContext, view, this);
         return viewHolder;
     }
 
     private RecyclerView.ViewHolder createBanner2ViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.content_listitem_layout2, parent, false);
-        ContentViewHolder2 viewHolder = new ContentViewHolder2(view, this);
+        ContentViewHolder2 viewHolder = new ContentViewHolder2(mContext, view, this);
         return viewHolder;
     }
 
@@ -172,13 +170,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void bindBanner1ViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         BaseType.InfoItemEx item = getItem(position);
         ContentViewHolder1 VH = (ContentViewHolder1) viewHolder;
-        VH.bindInfo(mImageLoader, item, mBusy);
+        VH.bindInfo(item, placeholder);
     }
 
     private void bindBanner2ViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         BaseType.InfoItemEx item = getItem(position);
         ContentViewHolder2 VH = (ContentViewHolder2) viewHolder;
-        VH.bindInfo(mImageLoader, item, mBusy);
+        VH.bindInfo(item, placeholder);
     }
 
 

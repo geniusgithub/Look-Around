@@ -1,5 +1,7 @@
 package com.geniusgithub.lookaround.maincontent.infomation;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,10 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.cache.ImageLoaderEx;
+import com.geniusgithub.lookaround.component.ImageLoader;
 import com.geniusgithub.lookaround.model.BaseType;
 
 public class ContentViewHolder1 extends  RecyclerView.ViewHolder implements View.OnClickListener{
+    private Context mContext;
     public CardView mCardView;
     public TextView tvTitle;
     public TextView tvContent;
@@ -20,8 +23,9 @@ public class ContentViewHolder1 extends  RecyclerView.ViewHolder implements View
     public BaseType.InfoItem mItem;
     public IContentItemClick mListener;
 
-    public ContentViewHolder1(View itemView, IContentItemClick listener) {
+    public ContentViewHolder1(Context context, View itemView, IContentItemClick listener) {
         super(itemView);
+        mContext = context;
         tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
         tvContent = (TextView) itemView.findViewById(R.id.tv_content);
         ivContent = (ImageView) itemView.findViewById(R.id.iv_content);
@@ -32,7 +36,7 @@ public class ContentViewHolder1 extends  RecyclerView.ViewHolder implements View
         mListener = listener;
     }
 
-    public void bindInfo(ImageLoaderEx imageLoaderEx, BaseType.InfoItem item, boolean isBusy){
+    public void bindInfo( BaseType.InfoItem item, Drawable placeHodler){
         mItem = item;
         tvTitle.setText(item.mTitle);
         tvContent.setText(item.mContent);
@@ -41,7 +45,7 @@ public class ContentViewHolder1 extends  RecyclerView.ViewHolder implements View
         int thumailImageCount = item.getThumnaiImageCount();
         tvImageCount.setText(String.valueOf(thumailImageCount));
 
-        imageLoaderEx.DisplayImage(item.getThumnaiImageURL(0), ivContent, isBusy);
+        ImageLoader.loadThumail(mContext, item.getThumnaiImageURL(0), ivContent, placeHodler);
     }
 
     @Override
