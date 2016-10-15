@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.maincontent.infomation;
+package com.geniusgithub.lookaround.maincontent.content;
 
 
 import com.geniusgithub.lookaround.base.BasePresenter;

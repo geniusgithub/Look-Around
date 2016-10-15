@@ -1,5 +1,6 @@
 package com.geniusgithub.lookaround.model;
 
+import com.geniusgithub.lookaround.maincontent.base.ContentItemModel;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
@@ -50,7 +51,7 @@ public class BaseType {
 	
 	
 	// InfoItem
-	public static class InfoItem implements IParseJson{
+	public static class InfoItem implements IParseJson, ContentItemModel {
 													
 		public final static String KEY_BANNERTYPE = "barnnerType";
 		public final static String KEY_ID = "id";
@@ -108,21 +109,45 @@ public class BaseType {
 			updateBannerType();
 			return true;
 
-		}	
-		
+		}
+
+
+
+		@Override
+		public int getBannerType() {
+			return mBannerType;
+		}
+
+		@Override
+		public String getTitle() {
+			return mTitle;
+		}
+
+		@Override
+		public String getContent() {
+			return mContent;
+		}
+
+		@Override
+		public String getUserName() {
+			return mUserName;
+		}
+
+		@Override
+		public int getThumnaiImageCount(){
+			return mThumbnaiURLList.size();
+		}
+
+		@Override
 		public String getThumnaiImageURL(int pos){
 			if (pos >= mThumbnaiURLList.size()){
 				return null;
 			}
-			
+
 			return mThumbnaiURLList.get(pos);
 		}
 
-		
-		public int getThumnaiImageCount(){
-			return mThumbnaiURLList.size();
-		}
-		
+
 		public String getImageURL(int pos){
 			if (pos >= mImageUrlList.size()){
 				return null;

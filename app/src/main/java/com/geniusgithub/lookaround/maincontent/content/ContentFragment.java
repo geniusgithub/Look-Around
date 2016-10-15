@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.maincontent.infomation;
+package com.geniusgithub.lookaround.maincontent.content;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
+import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -18,7 +19,7 @@ import com.geniusgithub.lookaround.util.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class InfomationFragment extends BaseFragment {
+public  class ContentFragment extends BaseFragment {
 
     private static final CommonLog log = LogFactory.createLog();
     private BaseType.ListItem mTypeData;
@@ -29,11 +30,11 @@ public  class InfomationFragment extends BaseFragment {
     private InfomationContract.IView mInfomationView;
     private boolean isFirstResume = true;
 
-    public InfomationFragment(BaseType.ListItem data){
+    public ContentFragment(BaseType.ListItem data){
         mTypeData = data;
     }
 
-    public InfomationFragment(){
+    public ContentFragment(){
     
     }
     
@@ -87,7 +88,7 @@ public  class InfomationFragment extends BaseFragment {
     public BaseType.ListItem getTypeData(){
         return  mTypeData;
     }
-    private class InfomationView implements InfomationContract.IView,  SwipeRefreshLayout.OnRefreshListener, IContentItemClick {
+    private class InfomationView implements InfomationContract.IView,  SwipeRefreshLayout.OnRefreshListener, OnContentItemClickListener {
 
         private Context mContext;
         private InfomationContract.IPresenter mPresenter;
@@ -98,7 +99,7 @@ public  class InfomationFragment extends BaseFragment {
         private SwipeRefreshLayout mSwipeRefreshLayout;
         private RecyclerView mListView;
         private LinearLayoutManager mLayoutManager;
-        private InfomationAdapter mAdapter;
+        private ContentAdapterEx mAdapter;
         private LoadMoreListener mLoadMoreListener;
         private int totalItemCount;
         private int lastVisibleItem;
@@ -121,7 +122,7 @@ public  class InfomationFragment extends BaseFragment {
             mSwipeRefreshLayout.setOnRefreshListener(this);
 
             mListView = (RecyclerView) rootView.findViewById(R.id.recycle_listview);
-            mLayoutManager = new LinearLayoutManager(InfomationFragment.this.getParentActivity());
+            mLayoutManager = new LinearLayoutManager(ContentFragment.this.getParentActivity());
             mListView.setLayoutManager(mLayoutManager);
             mListView.setHasFixedSize(true);
             mListView.setNestedScrollingEnabled(false);
@@ -129,7 +130,7 @@ public  class InfomationFragment extends BaseFragment {
             mLoadMoreListener = new LoadMoreListener();
             mListView.addOnScrollListener(mLoadMoreListener);
 
-            mAdapter = new InfomationAdapter(mContext, new ArrayList<BaseType.InfoItem>());
+            mAdapter = new ContentAdapterEx(mContext, new ArrayList<BaseType.InfoItem>());
             mAdapter.setOnItemClickListener(this);
             mListView.setAdapter(mAdapter);
         }
@@ -147,7 +148,7 @@ public  class InfomationFragment extends BaseFragment {
         @Override
         public void updateInfomationView(List<BaseType.InfoItem> dataList) {
             mContentData = dataList;
-            mAdapter.refreshData(dataList);
+            mAdapter.setData(dataList);
         }
 
         @Override
@@ -161,10 +162,9 @@ public  class InfomationFragment extends BaseFragment {
         }
 
 
-
         @Override
-        public void onItemClick(BaseType.InfoItem item) {
-            mPresenter.onEnterDetail(item);
+        public void onItemClick(BaseType.InfoItem data, int position) {
+            mPresenter.onEnterDetail(data);
         }
 
 
@@ -179,7 +179,7 @@ public  class InfomationFragment extends BaseFragment {
                 lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 if (lastVisibleItem == totalItemCount - 1){
                     int loadMoreState = mAdapter.getLoadMoreViewState();
-                    if (loadMoreState == InfomationAdapter.ILoadMoreViewState.LMVS_NORMAL){
+                    if (loadMoreState == ILoadMoreViewState.LMVS_NORMAL){
                         mPresenter.onLoadMore();
                     }
                 }

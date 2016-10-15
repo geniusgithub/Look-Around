@@ -2,7 +2,7 @@ package com.geniusgithub.lookaround;
 
 import android.content.Context;
 
-import com.geniusgithub.lookaround.maincontent.infomation.InfomationFragment;
+import com.geniusgithub.lookaround.maincontent.content.ContentFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -17,7 +17,7 @@ public class FragmentControlCenter {
 	private static  FragmentControlCenter instance;
 	private Context mContext;
 	
-	private Map<String,InfomationFragment> mFragmentModelMaps= new HashMap<String, InfomationFragment>();
+	private Map<String, ContentFragment> mFragmentModelMaps= new HashMap<String, ContentFragment>();
 	
 
 	private FragmentControlCenter(Context context) {
@@ -31,10 +31,10 @@ public class FragmentControlCenter {
 		return instance;
 	}
 
-	public InfomationFragment getCommonFragmentEx(BaseType.ListItem object){
-		InfomationFragment fragment = mFragmentModelMaps.get(object.mTypeID);
+	public ContentFragment getCommonFragmentEx(BaseType.ListItem object){
+		ContentFragment fragment = mFragmentModelMaps.get(object.mTypeID);
 		if (fragment == null){
-			fragment = new InfomationFragment(object);
+			fragment = new ContentFragment(object);
 			mFragmentModelMaps.put(object.mTypeID, fragment);
 		}
 		

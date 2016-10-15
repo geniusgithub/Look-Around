@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.maincontent.infomation;
+package com.geniusgithub.lookaround.maincontent.content;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,8 @@ import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.detailcontent.DetailActivity;
 import com.geniusgithub.lookaround.detailcontent.DetailCache;
-import com.geniusgithub.lookaround.maincontent.infomation.InfomationContract.IPresenter;
+import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
+import com.geniusgithub.lookaround.maincontent.content.InfomationContract.IPresenter;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -58,7 +59,7 @@ public class InfomationPresenter implements IPresenter, InfoRequestProxy.IReques
     @Override
     public void onLoadMore() {
         mInfoRequestProxy.requestMoreInfo();
-        mView.updateLoadMoreViewState(InfomationAdapter.ILoadMoreViewState.LMVS_LOADING);
+        mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_LOADING);
     }
 
     @Override
@@ -125,14 +126,14 @@ public class InfomationPresenter implements IPresenter, InfoRequestProxy.IReques
         log.i("onSuccess isLoadMore = " + isLoadMore + ", isLoadDataComplete = " + isLoadDataComplete);
         if (isLoadMore){
             if (isLoadDataComplete){
-                mView.updateLoadMoreViewState(InfomationAdapter.ILoadMoreViewState.LMVS_OVER);
+                mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_OVER);
             }else{
-                mView.updateLoadMoreViewState(InfomationAdapter.ILoadMoreViewState.LMVS_NORMAL);
+                mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_NORMAL);
             }
 
         }else{
             mView.showLoadView(false);
-            mView.updateLoadMoreViewState(InfomationAdapter.ILoadMoreViewState.LMVS_NORMAL);
+            mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_NORMAL);
         }
     }
 
@@ -140,7 +141,7 @@ public class InfomationPresenter implements IPresenter, InfoRequestProxy.IReques
     public void onRequestFailure(boolean isLoadMore) {
         CommonUtil.showToast(R.string.toast_getdata_fail, mContext);
         if (isLoadMore){
-            mView.updateLoadMoreViewState(InfomationAdapter.ILoadMoreViewState.LMVS_NORMAL);
+            mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_NORMAL);
         }else{
             mView.showLoadView(false);
         }
@@ -155,7 +156,7 @@ public class InfomationPresenter implements IPresenter, InfoRequestProxy.IReques
     public void onAnylizeFailure(boolean isLoadMore) {
         CommonUtil.showToast(R.string.toast_anylizedata_fail, mContext);
         if (isLoadMore){
-            mView.updateLoadMoreViewState(InfomationAdapter.ILoadMoreViewState.LMVS_NORMAL);
+            mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_NORMAL);
         }else{
             mView.showLoadView(false);
         }

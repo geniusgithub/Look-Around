@@ -17,7 +17,7 @@ import com.geniusgithub.lookaround.NavigationViewEx;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.base.BaseActivity;
-import com.geniusgithub.lookaround.maincontent.infomation.InfomationFragment;
+import com.geniusgithub.lookaround.maincontent.content.ContentFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.setting.SettingActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity {
         private NavChannelAdapter mAdapter;
 
 
-        private InfomationFragment mContentFragment;
+        private ContentFragment mContentFragment;
         private FragmentControlCenter mControlCenter;
 
 
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity {
             map.put(BaseType.ListItem.KEY_TITLE, item.mTitle);
             LAroundApplication.getInstance().onEvent("UMID0020", map);
 
-            InfomationFragment fragmentEx = mControlCenter.getCommonFragmentEx(item);
+            ContentFragment fragmentEx = mControlCenter.getCommonFragmentEx(item);
             switchContent(fragmentEx);
         }
 
@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity {
 
         }
 
-        public void switchContent(final InfomationFragment fragment) {
+        public void switchContent(final ContentFragment fragment) {
             mContentFragment = fragment;
 
             getFragmentManager().beginTransaction().replace(R.id.content, mContentFragment).commit();

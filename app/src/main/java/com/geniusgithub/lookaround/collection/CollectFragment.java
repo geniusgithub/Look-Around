@@ -87,7 +87,7 @@ public  class CollectFragment extends BaseFragment {
 
 
 
-    private class CollectView implements CollectContract.IView, com.geniusgithub.lookaround.collection.IContentItemClick, IDialogInterface {
+    private class CollectView implements CollectContract.IView, OnContentItemClickListener, IDialogInterface {
 
         private Context mContext;
         private CollectContract.IPresenter mPresenter;
@@ -123,7 +123,7 @@ public  class CollectFragment extends BaseFragment {
 
         @Override
         public void updateInfomationView(List<BaseType.InfoItemEx> dataList) {
-            mAdapter.refreshData(dataList);
+            mAdapter.setData(dataList);
         }
 
         @Override
@@ -147,9 +147,10 @@ public  class CollectFragment extends BaseFragment {
         }
 
 
+
         @Override
-        public void onItemClick(BaseType.InfoItemEx item) {
-            mPresenter.onEnterDetail(item);
+        public void onItemClick(BaseType.InfoItemEx data, int position) {
+            mPresenter.onEnterDetail(data);
         }
 
         @Override
