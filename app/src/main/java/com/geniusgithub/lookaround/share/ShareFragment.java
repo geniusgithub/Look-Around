@@ -34,6 +34,8 @@ import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
@@ -55,13 +57,23 @@ public class ShareFragment extends BaseFragment implements Handler.Callback, Tex
 
     private static final int MAX_TEXT_LENGTH = 140;
 
+    @BindView(R.id.btn_cancelimage)
+    public Button mBtnCancelImage;
 
-    private Button mBtnCancelImage;
-    private ImageView mIVShareImage;
-    private EditText mETContent;
-    private TextView mTVTarget;
-    private TextView mTVLive;
-    private View phoneFrameView;
+    @BindView(R.id.iv_pic)
+    public ImageView mIVShareImage;
+
+    @BindView(R.id.et_content)
+    public EditText mETContent;
+
+    @BindView(R.id.tv_target)
+    public TextView mTVTarget;
+
+    @BindView(R.id.tv_live)
+    public TextView mTVLive;
+
+    @BindView(R.id.fl_phoneframe)
+    public View phoneFrameView;
 
 
     private int notifyIcon;
@@ -189,15 +201,7 @@ public class ShareFragment extends BaseFragment implements Handler.Callback, Tex
 
 
     private void onUIReady(View view){
-        setNotification(R.drawable.logo_icon,"Look Around");
-
-        mBtnCancelImage = (Button)view.findViewById(R.id.btn_cancelimage);
-        mIVShareImage = (ImageView) view.findViewById(R.id.iv_pic);
-        mETContent = (EditText)view. findViewById(R.id.et_content);
-        mTVTarget = (TextView) view.findViewById(R.id.tv_target);
-        mTVLive = (TextView) view.findViewById(R.id.tv_live);
-        phoneFrameView =view. findViewById(R.id.fl_phoneframe);
-
+        ButterKnife.bind(this, view);
 
         mBtnCancelImage.setOnClickListener(this);
         mETContent.addTextChangedListener(this);
@@ -206,6 +210,8 @@ public class ShareFragment extends BaseFragment implements Handler.Callback, Tex
     }
 
     private void initData(){
+        setNotification(R.drawable.logo_icon,"Look Around");
+
         reqMap = ShareItem.reqMap;
         mPlatform = ShareSDK.getPlatform(getParentActivity(), (String) reqMap.get("platform"));
         Object object = reqMap.get("text");

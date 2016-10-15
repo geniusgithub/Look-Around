@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,19 @@ import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WebViewFragment extends BaseFragment {
     private static final CommonLog log = LogFactory.createLog();
 
-
     public static final String INTENT_EXTRA_URL = "INTENT_EXTRA_URL";
 
+    @BindView(R.id.webView)
+    public WebView mWebView;
 
-    private Toolbar toolbar;
-    private WebView mWebView;
-    private View progressBar;
-
+    @BindView(R.id.show_request_progress_bar)
+    public View progressBar;
 
     private ScanWebViewClient mWeiboWebViewClient;
 
@@ -49,10 +50,7 @@ public class WebViewFragment extends BaseFragment {
 
 
     private void onUIReady(View view){
-
-
-        mWebView = (WebView) view.findViewById(R.id.webView);
-        progressBar = view.findViewById(R.id.show_request_progress_bar);
+        ButterKnife.bind(this, view);
 
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);

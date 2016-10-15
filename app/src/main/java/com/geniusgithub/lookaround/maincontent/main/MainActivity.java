@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends BaseActivity {
     private static final CommonLog log = LogFactory.createLog();
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -85,21 +88,24 @@ public class MainActivity extends BaseActivity {
         mMainPresenter.onUiCreate(this);
     }
 
-    private class MainView implements MainContract.IView, AdapterView.OnItemClickListener, NavigationViewEx.INavClickListener {
+    public class MainView implements MainContract.IView, AdapterView.OnItemClickListener, NavigationViewEx.INavClickListener {
 
 
         private MainContract.IPresenter mPresenter;
         private View mRootView;
 
-        private NavigationViewEx navigationView;
-        private DrawerLayout drawerLayout;
-        private Toolbar toolbar;
+        @BindView(R.id.navigationView)
+        public NavigationViewEx navigationView;
 
+        @BindView(R.id.drawerLayout)
+        public DrawerLayout drawerLayout;
+
+        @BindView(R.id.toolbar)
+        public Toolbar toolbar;
 
         private ListView mListView;
         private List<BaseType.ListItem> mDataList = new ArrayList<BaseType.ListItem>();
         private NavChannelAdapter mAdapter;
-
 
         private ContentFragment mContentFragment;
         private FragmentControlCenter mControlCenter;
@@ -113,7 +119,7 @@ public class MainActivity extends BaseActivity {
         @Override
         public void setupView(View rootView) {
             mRootView = rootView;
-
+            ButterKnife.bind(this, rootView);
             initToolBar();
             initDrawLayout();
             initFragmentControl();
@@ -150,7 +156,7 @@ public class MainActivity extends BaseActivity {
         }
 
         private void initToolBar() {
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
+
             setSupportActionBar(toolbar);
 
             final ActionBar ab = getSupportActionBar();
@@ -159,12 +165,12 @@ public class MainActivity extends BaseActivity {
         }
 
         private void initDrawLayout() {
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
             ActionBarDrawerToggle mDrawerToggle =
                     new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.open, R.string.close);
             mDrawerToggle.syncState();
             drawerLayout.addDrawerListener(mDrawerToggle);
-            navigationView = (NavigationViewEx) findViewById(R.id.navigationView);
+
             if (navigationView != null) {
                 setupDrawerContent(navigationView);
             }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
+import com.geniusgithub.lookaround.base.adapter.OnItemClickListener;
 import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -26,8 +27,8 @@ public  class ContentFragment extends BaseFragment {
     private List<BaseType.InfoItem> mContentData = new ArrayList<BaseType.InfoItem>();
 
     private View mRootView;
-    private InfomationPresenter mInfomationPresenter;
-    private InfomationContract.IView mInfomationView;
+    private ContentPresenter mContentPresenter;
+    private ContentContract.IView mInfomationView;
     private boolean isFirstResume = true;
 
     public ContentFragment(BaseType.ListItem data){
@@ -60,11 +61,11 @@ public  class ContentFragment extends BaseFragment {
     private void onUIReady(View view){
         mRootView = view.findViewById(R.id.ll_rootview);
 
-        mInfomationPresenter = new InfomationPresenter();
+        mContentPresenter = new ContentPresenter();
         mInfomationView = new InfomationView(getActivity());
         mInfomationView.setupView(mRootView);
-        mInfomationPresenter.bindView(mInfomationView);
-        mInfomationPresenter.onUiCreate(getActivity(), mTypeData, mContentData);
+        mContentPresenter.bindView(mInfomationView);
+        mContentPresenter.onUiCreate(getActivity(), mTypeData, mContentData);
     }
 
 
@@ -72,7 +73,7 @@ public  class ContentFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (isFirstResume){
-            mInfomationPresenter.onResume();
+            mContentPresenter.onResume();
             isFirstResume = false;
         }
 
@@ -80,18 +81,22 @@ public  class ContentFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        mInfomationPresenter.onUiDestroy();
+        mContentPresenter.onUiDestroy();
         super.onDestroy();
     }
 
 
+    public  interface OnContentItemClickListener extends OnItemClickListener<BaseType.InfoItem> {
+
+    }
+
     public BaseType.ListItem getTypeData(){
         return  mTypeData;
     }
-    private class InfomationView implements InfomationContract.IView,  SwipeRefreshLayout.OnRefreshListener, OnContentItemClickListener {
+    private class InfomationView implements ContentContract.IView,  SwipeRefreshLayout.OnRefreshListener, OnContentItemClickListener {
 
         private Context mContext;
-        private InfomationContract.IPresenter mPresenter;
+        private ContentContract.IPresenter mPresenter;
         private View mRootView;
 
 
@@ -109,7 +114,7 @@ public  class ContentFragment extends BaseFragment {
         }
 
         @Override
-        public void bindPresenter(InfomationContract.IPresenter presenter) {
+        public void bindPresenter(ContentContract.IPresenter presenter) {
             mPresenter = presenter;
         }
 

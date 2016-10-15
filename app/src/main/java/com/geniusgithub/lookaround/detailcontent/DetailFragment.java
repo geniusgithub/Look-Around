@@ -1,6 +1,7 @@
 package com.geniusgithub.lookaround.detailcontent;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.base.ToolbarFragmentActivity;
-import com.geniusgithub.lookaround.cache.SimpleImageLoader;
+import com.geniusgithub.lookaround.component.ImageLoader;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
@@ -24,6 +25,9 @@ import com.google.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public  class DetailFragment extends BaseFragment {
 
@@ -108,12 +112,39 @@ public  class DetailFragment extends BaseFragment {
 
 
 
-    private class DetailView implements DetailContract.IView,  View.OnClickListener,
+    public class DetailView implements DetailContract.IView,  View.OnClickListener,
             android.view.ext.SatelliteMenu.SateliteClickedListener{
 
         private Context mContext;
         private DetailContract.IPresenter mPresenter;
         private View mRootView;
+
+        @BindView(R.id.btn_readorign)
+        public Button mBtnReadOrign;
+
+        @BindView(R.id.tv_title)
+        public TextView mTVTitle;
+
+        @BindView(R.id.tv_artist)
+        public TextView mTVArtist;
+
+        @BindView(R.id.tv_content)
+        public TextView mTVContent;
+
+        @BindView(R.id.tv_time)
+        public TextView mTVTime;
+
+        @BindView(R.id.tv_source)
+        public TextView mTVSource;
+
+        @BindView(R.id.iv_content)
+        public ImageView mIVContent;
+
+        @BindView(R.id.SatelliteMenu)
+        public android.view.ext.SatelliteMenu SatelliteMenu;
+
+        @BindView(R.id.adView)
+        public AdView adView;
 
         private final static int SINA_ID = 1;
         private final static int TENCENT_ID = 2;
@@ -121,19 +152,7 @@ public  class DetailFragment extends BaseFragment {
         private final static int WECHAT_MOM_ID = 4;
         private final static int QZONE = 5;
 
-
-        private Button mBtnReadOrign;
-        private TextView mTVTitle;
-        private TextView mTVArtist;
-        private TextView mTVContent;
-        private TextView mTVTime;
-        private TextView mTVSource;
-        private ImageView mIVContent;
-        private android.view.ext.SatelliteMenu SatelliteMenu;
-        private AdView adView;
-
-
-        private SimpleImageLoader mImageLoader;
+        private Drawable mPlaceHolder;
 
         public DetailView(Context context){
             mContext = context;
@@ -147,19 +166,11 @@ public  class DetailFragment extends BaseFragment {
         @Override
         public void setupView(View view) {
             mRootView = view;
-            mBtnReadOrign = (Button) view.findViewById(R.id.btn_readorign);
-            mTVTitle = (TextView) view.findViewById(R.id.tv_title);
-            mTVArtist = (TextView) view.findViewById(R.id.tv_artist);
-            mTVContent = (TextView) view.findViewById(R.id.tv_content);
-            mTVTime = (TextView) view.findViewById(R.id.tv_time);
-            mTVSource = (TextView) view.findViewById(R.id.tv_source);
-            mIVContent = (ImageView) view.findViewById(R.id.iv_content);
-            SatelliteMenu = (android.view.ext.SatelliteMenu) view.findViewById(R.id.SatelliteMenu);
-            adView = (AdView) view.findViewById(R.id.adView);
+            ButterKnife.bind(this, view);
+
             mBtnReadOrign.setOnClickListener(this);
             mIVContent.setOnClickListener(this);
 
-            mImageLoader = new SimpleImageLoader(getParentActivity());
             List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
             items.add(new SatelliteMenuItem(SINA_ID, R.drawable.logo_sina));
             items.add(new SatelliteMenuItem(TENCENT_ID, R.drawable.logo_tencentweibo));
@@ -169,6 +180,8 @@ public  class DetailFragment extends BaseFragment {
             SatelliteMenu.addItems(items);
             SatelliteMenu.setOnItemClickedListener(this);
 
+         //   mPlaceHolder = mContext.getResources().getDrawable(R.drawable.load_img);
+            mPlaceHolder = null;
         }
 
         @Override
@@ -185,7 +198,7 @@ public  class DetailFragment extends BaseFragment {
             mTVContent.setText(object.mContent);
             mTVTime.setText(object.mTime);
             mTVContent.setText(object.mContent);
-            mImageLoader.DisplayImage(object.getImageURL(0), mIVContent);
+            ImageLoader.loadSource(mContext, object.getImageURL(0), mIVContent, mPlaceHolder);
             if (object.getThumnaiImageCount() == 0){
                 mIVContent.setVisibility(View.GONE);
             }

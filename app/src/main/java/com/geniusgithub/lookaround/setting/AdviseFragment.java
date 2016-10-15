@@ -28,6 +28,8 @@ import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
@@ -44,10 +46,15 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
     private static final int MAX_TEXT_LENGTH = 100;
 
     private Toolbar toolbar;
-    private EditText mETContent;
-    private TextView mTVTarget;
-    private TextView mTVLive;
 
+    @BindView(R.id.et_content)
+    public EditText mETContent;
+
+    @BindView(R.id.tv_target)
+    public TextView mTVTarget;
+
+    @BindView(R.id.tv_live)
+    public TextView mTVLive;
 
     private int notifyIcon;
     private String notifyTitle;
@@ -144,18 +151,14 @@ public class AdviseFragment extends BaseFragment implements Handler.Callback, Te
 
 
     private void onUIReady(View view){
-        setNotification(R.drawable.logo_icon,"Look Around");
-
-        mETContent = (EditText) view.findViewById(R.id.et_content);
-        mTVTarget = (TextView) view.findViewById(R.id.tv_target);
-        mTVLive = (TextView) view.findViewById(R.id.tv_live);
+        ButterKnife.bind(this, view);
         mETContent.addTextChangedListener(this);
 
         initData();
-
     }
 
     private void initData(){
+        setNotification(R.drawable.logo_icon,"Look Around");
         mPlatform = ShareSDK.getPlatform(getParentActivity(), SinaWeibo.NAME);
         PlatformDb db = mPlatform.getDb();
         String nickname = db.get("nickname");

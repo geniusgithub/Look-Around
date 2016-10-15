@@ -65,8 +65,8 @@ public class ContentItemView2<T extends ContentItemModel> extends ContentIiemVie
             ivContent3.setVisibility(View.VISIBLE);
         }
 
-        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(0), ivContent1, null);
-        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(1), ivContent2, null);
-        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(2), ivContent3, null);
+        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(0), ivContent1, mPlaceHolder);
+        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(1), ivContent2, mPlaceHolder);
+        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(2), ivContent3, mPlaceHolder);
     }
 }

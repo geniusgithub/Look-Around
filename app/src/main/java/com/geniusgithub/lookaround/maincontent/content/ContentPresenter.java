@@ -10,7 +10,7 @@ import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.detailcontent.DetailActivity;
 import com.geniusgithub.lookaround.detailcontent.DetailCache;
 import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
-import com.geniusgithub.lookaround.maincontent.content.InfomationContract.IPresenter;
+import com.geniusgithub.lookaround.maincontent.content.ContentContract.IPresenter;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
 import com.geniusgithub.lookaround.util.CommonLog;
@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InfomationPresenter implements IPresenter, InfoRequestProxy.IRequestResult {
+public class ContentPresenter implements IPresenter, InfoRequestProxy.IRequestResult {
 
 
     private static final CommonLog log = LogFactory.createLog();
 
     private Context mContext;
-    private InfomationContract.IView mView;
+    private ContentContract.IView mView;
     private BaseType.ListItem mTypeData;
 
     private boolean loginStatus = false;
@@ -41,7 +41,7 @@ public class InfomationPresenter implements IPresenter, InfoRequestProxy.IReques
 
     ///////////////////////////////////////     presenter callback begin
     @Override
-    public void bindView(InfomationContract.IView view) {
+    public void bindView(ContentContract.IView view) {
         mView = view;
         mView.bindPresenter(this);
     }

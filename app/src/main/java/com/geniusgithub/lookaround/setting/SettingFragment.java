@@ -18,14 +18,28 @@ import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.FileHelper;
 import com.geniusgithub.lookaround.util.FileManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SettingFragment extends BaseFragment implements View.OnClickListener {
 
-    private View mBindView;
-    private View mMyPushView;
-    private View mMyCollectView;
-    private View mClieaCacheView;
-    private View mAboutView;
-    private ImageView mIVUpageIcon;
+    @BindView(R.id.ll_bindaccount)
+    public  View mBindView;
+
+    @BindView(R.id.ll_mypush)
+    public View mMyPushView;
+
+    @BindView(R.id.ll_mycollect)
+    public View mMyCollectView;
+
+    @BindView(R.id.ll_clearcache)
+    public View mClieaCacheView;
+
+    @BindView(R.id.ll_about)
+    public View mAboutView;
+
+    @BindView(R.id.iv_updateicon)
+    public ImageView mIVUpageIcon;
 
     @Nullable
     @Override
@@ -62,13 +76,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void onUIReady(View view){
-        mBindView = view.findViewById(R.id.ll_bindaccount);
-        mMyPushView = view.findViewById(R.id.ll_mypush);
-        mMyCollectView = view.findViewById(R.id.ll_mycollect);
-        mClieaCacheView = view.findViewById(R.id.ll_clearcache);
-        mAboutView = view.findViewById(R.id.ll_about);
-        mIVUpageIcon = (ImageView)view.findViewById(R.id.iv_updateicon);
-
+        ButterKnife.bind(this, view);
 
         mBindView.setOnClickListener(this);
         mMyPushView.setOnClickListener(this);

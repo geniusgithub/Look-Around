@@ -7,7 +7,7 @@ import com.geniusgithub.lookaround.model.BaseType;
 
 import java.util.List;
 
-public class InfomationContract {
+public class ContentContract {
     public interface IView extends BaseView<IPresenter> {
         public void showFailView(boolean bShow);
         public void showLoadView(boolean bShow);

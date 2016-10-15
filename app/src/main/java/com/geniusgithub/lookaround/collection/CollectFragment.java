@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
+import com.geniusgithub.lookaround.base.adapter.OnItemClickListener;
 import com.geniusgithub.lookaround.dialog.DialogBuilder;
 import com.geniusgithub.lookaround.dialog.IDialogInterface;
 import com.geniusgithub.lookaround.model.BaseType;
@@ -21,6 +22,9 @@ import com.geniusgithub.lookaround.util.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public  class CollectFragment extends BaseFragment {
 
@@ -86,13 +90,18 @@ public  class CollectFragment extends BaseFragment {
     }
 
 
+    public  interface OnContentItemClickListener extends OnItemClickListener<BaseType.InfoItemEx> {
 
-    private class CollectView implements CollectContract.IView, OnContentItemClickListener, IDialogInterface {
+    }
+
+    public class CollectView implements CollectContract.IView, OnContentItemClickListener, IDialogInterface {
 
         private Context mContext;
         private CollectContract.IPresenter mPresenter;
 
-        private RecyclerView mListView;
+        @BindView(R.id.recycle_listview)
+        public RecyclerView mListView;
+
         private LinearLayoutManager mLayoutManager;
         private CollectionAdapter mAdapter;
 
@@ -108,7 +117,8 @@ public  class CollectFragment extends BaseFragment {
 
         @Override
         public void setupView(View view) {
-            mListView = (RecyclerView) view.findViewById(R.id.recycle_listview);
+            ButterKnife.bind(this, view);
+
             mListView.setHasFixedSize(true);
             mListView.setNestedScrollingEnabled(false);
             mLayoutManager = new LinearLayoutManager(getParentActivity());

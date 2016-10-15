@@ -20,6 +20,14 @@ public class ImageLoader {
         Glide.with(context).load(url).crossFade().placeholder(defaultDrawable).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv);
     }
 
+    public static void loadSource(Context context, String url, ImageView iv) {    //使用Glide加载原图片,不使用占位图
+        loadSource(context, url, iv, null);
+    }
+
+    public static void loadSource(Context context, String url, ImageView iv, Drawable defaultDrawable) {    //使用Glide加载原图片,使用占位图
+        Glide.with(context).load(url).crossFade().placeholder(defaultDrawable).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv);
+    }
+
     public static void clearTask(Context context){
             Glide.with(context).onDestroy();
     }

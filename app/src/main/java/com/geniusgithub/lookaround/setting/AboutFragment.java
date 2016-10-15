@@ -32,17 +32,31 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AboutFragment extends BaseFragment implements View.OnClickListener,
                                                             IRequestDataPacketCallback,
                                                             IDialogInterface{
     private static final CommonLog log = LogFactory.createLog();
 
-    private  View mAdviseView;
-    private View mAttentionWeiboView;
-    private View mCheckUpdateView;
-    private ImageView mIVUpageIcon;
-    private ImageView mLogoIcon;
-    private TextView mTVVersion;
+    @BindView(R.id.ll_advise)
+    public  View mAdviseView;
+
+    @BindView(R.id.ll_attention)
+    public View mAttentionWeiboView;
+
+    @BindView(R.id.ll_checkupdate)
+    public View mCheckUpdateView;
+
+    @BindView(R.id.iv_updateicon)
+    public ImageView mIVUpageIcon;
+
+    @BindView(R.id.iv_logo)
+    public ImageView mLogoIcon;
+
+    @BindView(R.id.tv_version)
+    public TextView mTVVersion;
 
     private ClientEngine mClientEngine;
     private PublicType.CheckUpdateResult object = null;
@@ -133,14 +147,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
 
 
     private void onUIReady(View view){
-        mAdviseView = view.findViewById(R.id.ll_advise);
-        mAttentionWeiboView = view.findViewById(R.id.ll_attention);
-        mCheckUpdateView = view.findViewById(R.id.ll_checkupdate);
-        mIVUpageIcon = (ImageView)view.findViewById(R.id.iv_updateicon);
-        mIVUpageIcon = (ImageView)view.findViewById(R.id.iv_updateicon);
-        mLogoIcon = (ImageView)view.findViewById(R.id.iv_logo);
-        mTVVersion = (TextView) view.findViewById(R.id.tv_version);
-
+        ButterKnife.bind(this, view);
 
         mAttentionWeiboView.setOnClickListener(this);
         mCheckUpdateView.setOnClickListener(this);

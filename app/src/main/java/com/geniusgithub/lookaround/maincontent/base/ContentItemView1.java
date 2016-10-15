@@ -52,6 +52,6 @@ public class ContentItemView1<T extends ContentItemModel> extends ContentIiemVie
         int thumailImageCount = data.getThumnaiImageCount();
         tvImageCount.setText(String.valueOf(thumailImageCount));
 
-        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(0), ivContent, null);
+        ImageLoader.loadThumail(mContext, data.getThumnaiImageURL(0), ivContent, mPlaceHolder);
     }
 }

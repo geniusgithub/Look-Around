@@ -1,8 +1,10 @@
 package com.geniusgithub.lookaround.maincontent.base;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.adapter.MulViewTypeFooterAdapter;
 
 import java.util.List;
@@ -14,9 +16,11 @@ public class ContentAdapter<T extends ContentItemModel> extends MulViewTypeFoote
     private final int BANNER_VIEW1_TYPE = 1;
     private final int BANNER_VIEW2_TYPE = 2;
 
+    protected Drawable mPlaceHolder;
 
     public ContentAdapter(Context context, List<T> data) {
         super(context, data);
+        mPlaceHolder = context.getResources().getDrawable(R.drawable.load_img);
     }
 
     @Override
@@ -66,11 +70,13 @@ public class ContentAdapter<T extends ContentItemModel> extends MulViewTypeFoote
 
     private ContentIiemView createBanner1View(Context context) {
         ContentIiemView view = new ContentItemView1(context);
+        view.setPlaceHolder(mPlaceHolder);
         return view;
     }
 
     private ContentIiemView createBanner2View(Context context) {
         ContentIiemView view = new ContentItemView2(context);
+        view.setPlaceHolder(mPlaceHolder);
         return view;
     }
 
