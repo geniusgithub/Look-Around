@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.cache.FileCache;
+import com.geniusgithub.lookaround.component.DownloadImageCacheTask;
+import com.geniusgithub.lookaround.component.FileManager;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
 import com.geniusgithub.lookaround.datastore.DaoSession;
 import com.geniusgithub.lookaround.datastore.InfoItemDao;
@@ -19,6 +20,7 @@ import com.geniusgithub.lookaround.share.ShareActivity;
 import com.geniusgithub.lookaround.share.ShareItem;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.FileHelper;
 import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.HashMap;
@@ -42,7 +44,9 @@ public class DetailPresenter implements  DetailContract.IPresenter {
     private InfoItemDao infoItemDao;
     private SQLiteDatabase db;
 
-    private FileCache fileCache;
+    private DownloadImageCacheTask mDownLoadImageTask;
+    private String mSavePath;
+
     private BaseType.ListItem mTypeItem = new BaseType.ListItem();
     private BaseType.InfoItemEx mInfoItem = new BaseType.InfoItemEx();
     private boolean isCollect = false;
@@ -70,8 +74,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         ShareItem.setText(mInfoItem.mContent);
         if (imageURL != null){
             ShareItem.setImageUrl(imageURL);
-            String sharPath = fileCache.getSavePath(imageURL);
-            ShareItem.setShareImagePath(sharPath);
+            ShareItem.setShareImagePath(mSavePath);
         }
         ShareItem.setPlatform(SinaWeibo.NAME);
         goShareActivity();
@@ -87,9 +90,8 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         //	ShareItem.setTitleUrl("http://blog.csdn.net/lancees");
         ShareItem.setText(mInfoItem.mContent);
         if (imageURL != null){
-            String sharPath = fileCache.getSavePath(imageURL);
-            ShareItem.setImagePath(sharPath);
-            ShareItem.setShareImagePath(sharPath);
+            ShareItem.setImagePath(imageURL);
+            ShareItem.setShareImagePath(mSavePath);
 
         }
 
@@ -109,8 +111,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         ShareItem.setText(mInfoItem.mContent);
         if (imageURL != null){
             ShareItem.setImageUrl(imageURL);
-            String sharPath = fileCache.getSavePath(imageURL);
-            ShareItem.setShareImagePath(sharPath);
+            ShareItem.setShareImagePath(mSavePath);
         }
         ShareItem.setPlatform(QZone.NAME);
 
@@ -128,9 +129,8 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         ShareItem.setTitle(mInfoItem.mTitle);
         ShareItem.setText(mInfoItem.mContent);
         if (imageURL != null){
-            String sharPath = fileCache.getSavePath(imageURL);
             ShareItem.setImageUrl(imageURL);
-            ShareItem.setShareImagePath(sharPath);
+            ShareItem.setShareImagePath(mSavePath);
         }
         ShareItem.setUrl(mInfoItem.mSourceUrl);
         ShareItem.setPlatform(Wechat.NAME);
@@ -148,9 +148,8 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         ShareItem.setTitle(mInfoItem.mTitle);
         ShareItem.setText(mInfoItem.mContent);
         if (imageURL != null){
-            String sharPath = fileCache.getSavePath(imageURL);
             ShareItem.setImageUrl(imageURL);
-            ShareItem.setShareImagePath(sharPath);
+            ShareItem.setShareImagePath(mSavePath);
         }
         ShareItem.setUrl(mInfoItem.mSourceUrl);
         ShareItem.setPlatform(WechatMoments.NAME);
@@ -208,7 +207,6 @@ public class DetailPresenter implements  DetailContract.IPresenter {
     private void initData(){
         DetailCache mDetailCache = DetailCache.getInstance();
         mTypeItem = mDetailCache.getTypeItem();
-        fileCache = new FileCache(mContext);
         mInfoItem = mDetailCache.getInfoItem();
         log.i("mTypeItem --> \n" + mTypeItem.getShowString());
 
@@ -216,6 +214,14 @@ public class DetailPresenter implements  DetailContract.IPresenter {
 
         mView.updateToolTitle(mTypeItem.mTitle);
         mView.updateInfoItemEx(mInfoItem);
+
+
+        FileHelper.createDirectory(FileManager.getDownloadFileSaveDir());
+
+        String url = mInfoItem.getImageURL(0);
+        mSavePath = FileManager.getDownloadFileSavePath(url);
+        mDownLoadImageTask = new DownloadImageCacheTask(mContext, mSavePath);
+        mDownLoadImageTask.execute(url);
     }
     private void inidDataBase(){
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mContext, "lookaround-db", null);

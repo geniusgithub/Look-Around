@@ -8,7 +8,7 @@ import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.maincontent.main.MainActivity;
 import com.geniusgithub.lookaround.datastore.LocalConfigSharePreference;
-import com.geniusgithub.lookaround.dialog.IDialogInterface;
+import com.geniusgithub.lookaround.base.ui.IDialogInterface;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
 import com.geniusgithub.lookaround.network.BaseRequestPacket;

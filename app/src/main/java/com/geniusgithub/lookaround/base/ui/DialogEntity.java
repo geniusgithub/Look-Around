@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.dialog;
+package com.geniusgithub.lookaround.base.ui;
 
 import android.content.Context;
 

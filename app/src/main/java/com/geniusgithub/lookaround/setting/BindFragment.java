@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
-import com.geniusgithub.lookaround.dialog.DialogBuilder;
-import com.geniusgithub.lookaround.dialog.IDialogInterface;
+import com.geniusgithub.lookaround.base.ui.DialogBuilder;
+import com.geniusgithub.lookaround.base.ui.IDialogInterface;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;

@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.proxy;
+package com.geniusgithub.lookaround.maincontent;
 
 import android.content.Context;
 

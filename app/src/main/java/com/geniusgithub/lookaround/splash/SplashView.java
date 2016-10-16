@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 
-import com.geniusgithub.lookaround.dialog.DialogBuilder;
-import com.geniusgithub.lookaround.dialog.IDialogInterface;
+import com.geniusgithub.lookaround.base.ui.DialogBuilder;
+import com.geniusgithub.lookaround.base.ui.IDialogInterface;
 import com.geniusgithub.lookaround.model.PublicType;
 
 public class SplashView implements SplashContract.IView, IDialogInterface {

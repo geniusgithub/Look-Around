@@ -13,10 +13,9 @@ import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.collection.CollectionActivity;
+import com.geniusgithub.lookaround.component.CacheManager;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.FileHelper;
-import com.geniusgithub.lookaround.util.FileManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,38 +118,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         LAroundApplication.getInstance().onEvent("UM004");
         CommonUtil.showToast(R.string.toast_clear_success, getParentActivity());
 
-        clearImageCache();
-
-    }
-
-    private ClearThread thread = null;
-    private void clearImageCache(){
-        if (thread == null){
-            thread = new ClearThread();
-            thread.start();
-        }else{
-            if (!thread.isAlive()){
-                thread = new ClearThread();
-                thread.start();
-            }
-        }
-
-    }
-
-
-    private class ClearThread extends Thread{
-
-        @Override
-        public void run() {
-            String path = FileManager.getCacheFileSavePath();
-
-            long time1 = System.currentTimeMillis();
-
-            FileHelper.deleteDirectory(path);
-
-            long time2 = System.currentTimeMillis();
-        }
-
+        CacheManager.getInstance().clearCache();
     }
 
 

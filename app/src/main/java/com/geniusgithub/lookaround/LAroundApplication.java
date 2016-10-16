@@ -21,13 +21,12 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-
+import com.geniusgithub.lookaround.component.CacheManager;
 import com.geniusgithub.lookaround.maincontent.main.MainActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.splash.SplashActivity;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.LogFactory;
-import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -72,8 +71,9 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 	private boolean isLogin = false;
 	
 	private PublicType.CheckUpdateResult updateObject = null;
-	
-	
+
+	private CacheManager mCacheManager;
+
 	public synchronized static LAroundApplication getInstance(){
 		return mInstance;
 	}
@@ -84,10 +84,11 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 		log.e("LAroundApplication  onCreate!!!");
 		mInstance = this;
 		startBackgroundService();
+
+		mCacheManager = CacheManager.newInstance(this);
+
 		MobclickAgent.setDebugMode(true);
-		
-		TCAgent.init(this);
-		TCAgent.setReportUncaughtExceptions(true);
+
 		ShareSDK.initSDK(this);
 	}
 	
@@ -143,7 +144,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 		log.e("eventID = " + eventID);
 		
 		MobclickAgent.onEvent(this, eventID);
-		TCAgent.onEvent(this, eventID);
+
 	}
 
 	@Override
@@ -151,21 +152,20 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 		log.e("eventID = " + eventID);
 	
 		MobclickAgent.onEvent(this, eventID, map);
-		TCAgent.onEvent(this, eventID, "", map);
+
 	}
 	
 	public static void onPause(Activity context){
 		MobclickAgent.onPause(context);
-		TCAgent.onPause(context);
+
 	}
 	
 	public static void onResume(Activity context){
 		MobclickAgent.onResume(context);
-		TCAgent.onResume(context);
+
 	}
 	
 	public static void onCatchError(Context context){
 
-		TCAgent.setReportUncaughtExceptions(true);
 	}
 }

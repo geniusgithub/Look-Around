@@ -35,6 +35,7 @@ public class PhotoBrowseFragment extends BaseFragment {
     private PhotoBrowsePresenter mPhotoBrowsePresenter;
     private PhotoBrowseContact.IView mPhotoBrowseView;
 
+    private String mCurUrl = "";
 
     @Nullable
     @Override
@@ -62,7 +63,7 @@ public class PhotoBrowseFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-   //     inflater.inflate(R.menu.browse_options_menu, menu);
+        inflater.inflate(R.menu.browse_options_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -81,7 +82,7 @@ public class PhotoBrowseFragment extends BaseFragment {
                 getActivity().finish();
                 break;
             case R.id.menu_download:
-                mPhotoBrowsePresenter.downLoad();
+                mPhotoBrowsePresenter.startDownLoad(mCurUrl);
                 break;
         }
 
@@ -130,7 +131,7 @@ public class PhotoBrowseFragment extends BaseFragment {
 
         @Override
         public void initBrowseData( List<String> data, int curIndex) {
-
+            mCurUrl = data.get(curIndex);
             mDataSize = data.size();
             mBrowseAdapter.updateData(data);
             mViewPager.setCurrentItem(curIndex + mBrowseAdapter.getMiddlePos());
@@ -144,7 +145,7 @@ public class PhotoBrowseFragment extends BaseFragment {
 
         @Override
         public void onPageSelected(int position) {
-            String item = mBrowseAdapter.getItem(position);
+            mCurUrl = mBrowseAdapter.getItem(position);
             int curItem = mViewPager.getCurrentItem() % mDataSize;
             updateToolTitle(curItem, mDataSize);
         }

@@ -4,14 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.geniusgithub.lookaround.LAroundApplication;
+import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.component.DownloadImageCacheTask;
+import com.geniusgithub.lookaround.component.FileManager;
 import com.geniusgithub.lookaround.detailcontent.DetailCache;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonUtil;
+import com.geniusgithub.lookaround.util.FileHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoBrowsePresenter implements PhotoBrowseContact.IPresenter {
+public class PhotoBrowsePresenter implements PhotoBrowseContact.IPresenter, DownloadImageCacheTask.onDownloadCallback{
 
     public static final String TAG = PhotoBrowsePresenter.class.getSimpleName();
 
@@ -79,41 +83,34 @@ public class PhotoBrowsePresenter implements PhotoBrowseContact.IPresenter {
 
     }
     ///////////////////////////////////////     lifecycle or ui operator end
-
-
-    public void downLoad() {
-        LAroundApplication.getInstance().onEvent("SAVE01");
-        boolean isSDCard = CommonUtil.hasSDCard();
-      /*  if (!isSDCard){
-            CommonUtil.showToast(R.string.toast_save_fail, getParentActivity());
-            return ;
-        }
-
-        if (mCurPos >= mItem.mImageUrlList.size()){
-
-            return ;
-        }
-
-        if (!FileHelper.createDirectory(FileManager.getDownloadFileSavePath())){
-
-            return ;
-        }
-
-
-        FileCache fileCache = new FileCache(getParentActivity());
-        String url = mItem.mImageUrlList.get(mCurPos);
-        String fromPath = fileCache.getSavePath(url);
-
-
-        String toPath = FileManager.getDownloadFileSavePath() + String.valueOf(url.hashCode());
-        boolean ret = FileHelper.saveBitmap(fromPath, toPath);
-        if (ret){
-            String text = getResources().getString(R.string.toast_save_success) + "," +
-                    getResources().getString(R.string.toast_savefile_end) + toPath + ".jpg";
-
-            CommonUtil.showToast(text, getParentActivity());
+    @Override
+    public void onDownloadComplete(boolean isSuccess, String savePath) {
+        String text = "";
+        if (isSuccess){
+            text  = mContext.getResources().getString(R.string.toast_save_success) + "," +
+                    mContext.getResources().getString(R.string.toast_savefile_end) + savePath;
         }else{
-            CommonUtil.showToast(R.string.toast_save_fail2, getParentActivity());
-        }*/
+            text = mContext.getResources().getString(R.string.toast_save_fail2);
+        }
+
+       CommonUtil.showToast(text, mContext);
     }
+
+    public void startDownLoad(String url) {
+        LAroundApplication.getInstance().onEvent("SAVE01");
+
+        if (!FileHelper.createDirectory(FileManager.getDownloadFileSaveDir())){
+            CommonUtil.showToast(R.string.toast_save_fail2, mContext);
+            return ;
+        }
+
+        String savePath  = FileManager.getDownloadFileSavePath(url);
+        DownloadImageCacheTask task = new DownloadImageCacheTask(mContext, savePath);
+        task.bindDownloadCallback(this);
+        task.execute(url);
+
+
+    }
+
+
 }

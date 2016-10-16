@@ -12,7 +12,7 @@ import com.geniusgithub.lookaround.detailcontent.DetailCache;
 import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
 import com.geniusgithub.lookaround.maincontent.content.ContentContract.IPresenter;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.proxy.InfoRequestProxy;
+import com.geniusgithub.lookaround.maincontent.InfoRequestProxy;
 import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
 import com.geniusgithub.lookaround.util.LogFactory;

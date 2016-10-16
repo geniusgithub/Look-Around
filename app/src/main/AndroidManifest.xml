@@ -71,6 +71,11 @@
         
         <service android:name="com.geniusgithub.lookaround.BackgroundService" android:enabled="true">
 		</service>
+
+        <meta-data
+            android:name="com.geniusgithub.lookaround.component.MyGlideModule"
+            android:value="GlideModule" >
+        </meta-data>
 		
         <service
             android:name="com.umeng.common.net.DownloadingService"
@@ -200,46 +205,8 @@
             android:screenOrientation="portrait" />
 
 
-
-        <activity
-            android:name="com.geniusgithub.lookaround.test.TestProtocolActivity"
-            android:label="@string/app_name" >
-            <!--             <intent-filter> -->
-            <!--                 <action android:name="android.intent.action.MAIN" /> -->
-            <!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!--             </intent-filter> -->
-        </activity>
-
-        <activity
-            android:name="com.geniusgithub.lookaround.test.TestDaoActivity"
-            android:label="@string/app_name" >
-            <!--             <intent-filter> -->
-            <!--                 <action android:name="android.intent.action.MAIN" /> -->
-            <!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!--             </intent-filter> -->
-        </activity>
-
         <activity
             android:name="com.geniusgithub.lookaround.test.TestWeiboActivity"
-            android:label="@string/app_name" >
-            <!--             <intent-filter> -->
-            <!--                 <action android:name="android.intent.action.MAIN" /> -->
-            <!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!--             </intent-filter> -->
-        </activity>
-
-        <activity
-            android:name="com.geniusgithub.lookaround.test.TestShareActivity"
-            android:label="@string/app_name" >
-            <!--             <intent-filter> -->
-            <!--                 <action android:name="android.intent.action.MAIN" /> -->
-            <!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!--             </intent-filter> -->
-        </activity>
-
-
-        <activity
-            android:name="com.geniusgithub.lookaround.test.TestADActivity"
             android:label="@string/app_name" >
             <!--             <intent-filter> -->
             <!--                 <action android:name="android.intent.action.MAIN" /> -->

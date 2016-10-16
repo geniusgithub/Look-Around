@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.geniusgithub.lookaround.R;
+import com.geniusgithub.lookaround.util.AlwaysLog;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ class PhotoBrowsePagerAdapter extends PagerAdapter {
 
         String item = getItem(position);
 
+        AlwaysLog.i(TAG, "photo browse url:" + item);
         loadSource(mContext, item, viewHolder);
 
     }

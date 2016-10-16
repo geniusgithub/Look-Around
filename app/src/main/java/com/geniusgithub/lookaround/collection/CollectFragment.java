@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.base.adapter.OnItemClickListener;
-import com.geniusgithub.lookaround.dialog.DialogBuilder;
-import com.geniusgithub.lookaround.dialog.IDialogInterface;
+import com.geniusgithub.lookaround.base.ui.DialogBuilder;
+import com.geniusgithub.lookaround.base.ui.IDialogInterface;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonUtil;
 
