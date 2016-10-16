@@ -34,7 +34,6 @@ Android OS 5.0 and up<br />
 Tested with: Samsung, HTC, HuaWei Phone and so on...
 
 ##Contributing
-------------------------------
 Feel free to drop me pull requests. If you plan to implement something more than a few lines, then open the pull request early so that there aren't any nasty surprises later.
 If you want to add something that will require some for of persistence incl. persistent configuration or API keys, etc., then open a pull request/issue especially early!
 
@@ -50,7 +49,6 @@ Your support is my motivation, I will continue to strive to do better
 
 
 ##License
-
 Copyright (c) 2016 geniusgithub
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
