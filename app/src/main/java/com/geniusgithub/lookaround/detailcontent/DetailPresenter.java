@@ -11,9 +11,9 @@ import com.geniusgithub.lookaround.cache.FileCache;
 import com.geniusgithub.lookaround.datastore.DaoMaster;
 import com.geniusgithub.lookaround.datastore.DaoSession;
 import com.geniusgithub.lookaround.datastore.InfoItemDao;
-import com.geniusgithub.lookaround.detailcontent.other.PictureBrowerActivity;
-import com.geniusgithub.lookaround.detailcontent.other.WebViewActivity;
-import com.geniusgithub.lookaround.detailcontent.other.WebViewFragment;
+import com.geniusgithub.lookaround.detailcontent.browse.PhotoBrowerActivity;
+import com.geniusgithub.lookaround.detailcontent.web.WebViewActivity;
+import com.geniusgithub.lookaround.detailcontent.web.WebViewFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.share.ShareActivity;
 import com.geniusgithub.lookaround.share.ShareItem;
@@ -173,7 +173,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         log.e("enterPhoneView ");
         LAroundApplication.getInstance().onEvent("UMID0003");
         Intent intent = new Intent();
-        intent.setClass(mContext, PictureBrowerActivity.class);
+        intent.setClass(mContext, PhotoBrowerActivity.class);
         mContext.startActivity(intent);
     }
     ///////////////////////////////////////     presenter callback end

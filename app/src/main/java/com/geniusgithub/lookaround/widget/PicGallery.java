@@ -1,3 +1,4 @@
+/*
 package com.geniusgithub.lookaround.widget;
 
 import android.content.Context;
@@ -9,8 +10,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Gallery;
-
-import com.geniusgithub.lookaround.detailcontent.other.PictureBrowseFragment;
 
 
 public class PicGallery extends Gallery {
@@ -214,3 +213,4 @@ public class PicGallery extends Gallery {
 	int kEvent = KEY_INVALID; //invalid
 	public static final int KEY_INVALID = -1;
 }
+*/

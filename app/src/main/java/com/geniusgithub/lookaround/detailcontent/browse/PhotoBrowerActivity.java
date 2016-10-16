@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.detailcontent.other;
+package com.geniusgithub.lookaround.detailcontent.browse;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.view.MenuItem;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseActivity;
 
-public class PictureBrowerActivity extends BaseActivity {
+public class PhotoBrowerActivity extends BaseActivity {
 
-    private final String TAG_FRAGMENT = "Content_Fragment";
+    private final String TAG_FRAGMENT = "Browse_Fragment";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class PictureBrowerActivity extends BaseActivity {
 
 
     public Fragment newContentFragment() {
-        return new PictureBrowseFragment();
+        return new PhotoBrowseFragment();
     }
 
     @Override

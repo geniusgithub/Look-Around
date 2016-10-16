@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.detailcontent.other;
+package com.geniusgithub.lookaround.detailcontent.web;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

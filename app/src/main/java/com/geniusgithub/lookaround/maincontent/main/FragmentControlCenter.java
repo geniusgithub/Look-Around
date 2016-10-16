@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround;
+package com.geniusgithub.lookaround.maincontent.main;
 
 import android.content.Context;
 

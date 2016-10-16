@@ -11,11 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.geniusgithub.lookaround.FragmentControlCenter;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.NavigationViewEx;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.adapter.NavChannelAdapter;
 import com.geniusgithub.lookaround.base.BaseActivity;
 import com.geniusgithub.lookaround.maincontent.content.ContentFragment;
 import com.geniusgithub.lookaround.model.BaseType;

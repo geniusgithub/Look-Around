@@ -113,12 +113,12 @@
       
         
         <activity
-            android:name=".detailcontent.other.PictureBrowerActivity"
+            android:name=".detailcontent.browse.PhotoBrowerActivity"
             android:theme="@style/AppThemeLight">
         </activity>
         
        <activity
-            android:name=".detailcontent.other.WebViewActivity"
+            android:name=".detailcontent.web.WebViewActivity"
             android:theme="@style/AppThemeLight">
         </activity>
          

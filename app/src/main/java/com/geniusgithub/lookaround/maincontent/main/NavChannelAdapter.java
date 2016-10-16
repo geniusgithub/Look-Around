@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.adapter;
+package com.geniusgithub.lookaround.maincontent.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
