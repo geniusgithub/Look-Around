@@ -1,4 +1,4 @@
-package com.geniusgithub.lookaround.util;
+package com.geniusgithub.common.util;
 
 import android.util.Log;
 

@@ -3,16 +3,16 @@ package com.geniusgithub.lookaround.network;
 
 import android.content.Context;
 
+import com.geniusgithub.common.util.AlwaysLog;
 import com.geniusgithub.lookaround.model.ServerUrlBuilder;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 public class ClientEngine {
 
 
-	private static final CommonLog log = LogFactory.createLog();
+	private static final String TAG = ClientEngine.class.getSimpleName();
+
 	private static ClientEngine mInstance;
 	
 	private Context mContext;
@@ -40,16 +40,16 @@ public class ClientEngine {
 	{
 		String url = ServerUrlBuilder.getServerURL(packet.action);
 		if (url.equals("")){
-			log.e("can't get serverURL by action : " + packet.action);
+			AlwaysLog.e(TAG, "can't get serverURL by action : " + packet.action);
 			return false;
 		}
 		
 		if (packet.object == null){
-			log.e("BaseRequestPacket.object = null!!!");
+			AlwaysLog.e(TAG, "BaseRequestPacket.object = null!!!");
 			return false;
 		}
 		
-		log.e("httpGetRequest url = " + url);
+		AlwaysLog.d(TAG, "httpGetRequest url = " + url);
 		RequestParams param = new RequestParams(packet.object.toStringMap());
 
 		HttpResponseHandler handler = new HttpResponseHandler(packet.action, callback, null, packet.extra);	
@@ -62,16 +62,16 @@ public class ClientEngine {
 	{
 		String url = ServerUrlBuilder.getServerURL(packet.action);
 		if (url.equals("")){
-			log.e("can't get serverURL by action : " + packet.action);
+			AlwaysLog.e(TAG, "can't get serverURL by action : " + packet.action);
 			return false;
 		}
 		
 		if (packet.object == null){
-			log.e("BaseRequestPacket.object = null!!!");
+			AlwaysLog.e(TAG, "BaseRequestPacket.object = null!!!");
 			return false;
 		}
 		
-		log.e("httpPostRequestEx url = " + url);
+		AlwaysLog.d(TAG, "httpPostRequestEx url = " + url);
 		RequestParams param = new RequestParams(packet.object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(packet.action, callback, null, packet.extra);	
@@ -85,16 +85,16 @@ public class ClientEngine {
 	{
 		String url = ServerUrlBuilder.getServerURL(packet.action);
 		if (url.equals("")){
-			log.e("can't get serverURL by action : " + packet.action);
+			AlwaysLog.e(TAG, "can't get serverURL by action : " + packet.action);
 			return false;
 		}
 		
 		if (packet.object == null){
-			log.e("BaseRequestPacket.object = null!!!");
+			AlwaysLog.e(TAG, "BaseRequestPacket.object = null!!!");
 			return false;
 		}
 		
-		log.e("httpGetRequest url = " + url);
+		AlwaysLog.e(TAG, "httpGetRequest url = " + url);
 		RequestParams param = new RequestParams(packet.object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(packet.action, null, callback, packet.extra);	
@@ -107,16 +107,16 @@ public class ClientEngine {
 	{
 		String url = ServerUrlBuilder.getServerURL(packet.action);
 		if (url.equals("")){
-			log.e("can't get serverURL by action : " + packet.action);
+			AlwaysLog.e(TAG, "can't get serverURL by action : " + packet.action);
 			return false;
 		}
 		
 		if (packet.object == null){
-			log.e("BaseRequestPacket.object = null!!!");
+			AlwaysLog.e(TAG, "BaseRequestPacket.object = null!!!");
 			return false;
 		}
 		
-		log.e("httpPostRequestEx url = " + url);
+		AlwaysLog.i(TAG, "httpPostRequestEx url = " + url);
 		RequestParams param = new RequestParams(packet.object.toStringMap());
 		
 		HttpResponseHandler handler = new HttpResponseHandler(packet.action, null, callback, packet.extra);	

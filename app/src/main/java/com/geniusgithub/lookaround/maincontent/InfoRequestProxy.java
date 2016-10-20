@@ -2,6 +2,7 @@ package com.geniusgithub.lookaround.maincontent;
 
 import android.content.Context;
 
+import com.geniusgithub.common.util.AlwaysLog;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.model.PublicTypeBuilder;
@@ -9,8 +10,6 @@ import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import org.json.JSONException;
 
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class InfoRequestProxy implements IRequestDataPacketCallback{
 	
-	private static final CommonLog log = LogFactory.createLog();
+	private static final String TAG = InfoRequestProxy.class.getSimpleName();
 	
 	private final static int FLAG_REFRESH = 0;
 	private final static int FLAG_LOADMORE = 1;
@@ -50,12 +49,12 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 	}
 	
 	public void requestRefreshInfo(){
-		log.i("requestRefreshInfo");
+		AlwaysLog.i(TAG, "requestRefreshInfo");
 		getInfoByPage(0, FLAG_REFRESH);
 	}
 	
 	public void requestMoreInfo(){
-		log.i("requestMoreInfo");
+		AlwaysLog.i(TAG, "requestMoreInfo");
 		getInfoByPage(mPage + 1, FLAG_LOADMORE);
 	}
 	
@@ -122,7 +121,7 @@ public class InfoRequestProxy implements IRequestDataPacketCallback{
 		
 		try {
 			object.parseJson(dataPacket.data);
-			log.i("mDataList.size = " + object.mDataList.size());
+			AlwaysLog.i(TAG, "mDataList.size = " + object.mDataList.size());
 			
 			if (type == FLAG_REFRESH){
 				mContentData = object.mDataList;

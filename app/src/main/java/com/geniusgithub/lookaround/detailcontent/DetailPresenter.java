@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.geniusgithub.common.util.AlwaysLog;
+import com.geniusgithub.common.util.FileHelper;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.component.DownloadImageCacheTask;
@@ -18,10 +20,7 @@ import com.geniusgithub.lookaround.detailcontent.web.WebViewFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.share.ShareActivity;
 import com.geniusgithub.lookaround.share.ShareItem;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.FileHelper;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.HashMap;
 
@@ -33,8 +32,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 public class DetailPresenter implements  DetailContract.IPresenter {
 
-
-    private static final CommonLog log = LogFactory.createLog();
+    private final static String TAG = DetailPresenter.class.getSimpleName();
     private Context mContext;
     private boolean loginStatus;
     private DetailContract.IView mView;
@@ -159,7 +157,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
 
     @Override
     public void enterWebView() {
-        log.i("enterWebView ");
+
         LAroundApplication.getInstance().onEvent("UMID0009");
         Intent intent = new Intent();
         intent.setClass(mContext, WebViewActivity.class);
@@ -169,7 +167,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
 
     @Override
     public void enterPhoneView() {
-        log.e("enterPhoneView ");
+
         LAroundApplication.getInstance().onEvent("UMID0003");
         Intent intent = new Intent();
         intent.setClass(mContext, PhotoBrowerActivity.class);
@@ -184,7 +182,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         mContext = context;
         loginStatus = LAroundApplication.getInstance().getLoginStatus();
         if (!loginStatus){
-            log.e("loginStatus is false ,jump to welcome view!!!");
+
             LAroundApplication.getInstance().startToMainActivity();
             if (context instanceof Activity){
                 ((Activity)context).finish();
@@ -208,7 +206,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         DetailCache mDetailCache = DetailCache.getInstance();
         mTypeItem = mDetailCache.getTypeItem();
         mInfoItem = mDetailCache.getInfoItem();
-        log.i("mTypeItem --> \n" + mTypeItem.getShowString());
+        AlwaysLog.i(TAG, "mTypeItem --> \n" + mTypeItem.getShowString());
 
         inidDataBase();
 
@@ -239,7 +237,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
     }
 
     public void collect(){
-        log.i("collect");
+        AlwaysLog.i(TAG, "collect");
         HashMap<String, String> map = new HashMap<String, String>();
         map.put(BaseType.ListItem.KEY_TYPEID, mTypeItem.mTypeID);
         map.put(BaseType.ListItem.KEY_TITLE, mInfoItem.mTitle);
@@ -248,7 +246,7 @@ public class DetailPresenter implements  DetailContract.IPresenter {
         infoItemDao.insert(mInfoItem);
         CommonUtil.showToast(R.string.toast_collect_success, mContext);
         isCollect = true;
-        log.i("insert mInfoItem = \n" + mInfoItem.toString());
+        AlwaysLog.i(TAG, "insert mInfoItem = \n" + mInfoItem.toString());
         if (mContext instanceof  Activity){
            ((Activity) mContext).invalidateOptionsMenu();;
         }

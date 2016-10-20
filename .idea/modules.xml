@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LookAround.iml" filepath="$PROJECT_DIR$/LookAround.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.geniusgithub.common/com.geniusgithub.common.iml" filepath="$PROJECT_DIR$/com.geniusgithub.common/com.geniusgithub.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/satellite-menu/satellite-menu.iml" filepath="$PROJECT_DIR$/satellite-menu/satellite-menu.iml" />
     </modules>
   </component>

@@ -2,16 +2,14 @@ package com.geniusgithub.lookaround.model;
 
 import android.content.Context;
 
-import com.geniusgithub.lookaround.util.CommonLog;
+
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.util.SecuteUtil;
 
 
 
 public class PublicTypeBuilder {
 
-	private static final CommonLog log = LogFactory.createLog();
 	
 	private static final String TOKEN_KEY = "6B3767B7-CDF3-1016-A586-DC073C5C0F62";
 	

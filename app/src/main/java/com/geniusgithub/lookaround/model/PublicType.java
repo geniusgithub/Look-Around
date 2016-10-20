@@ -1,7 +1,5 @@
 package com.geniusgithub.lookaround.model;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +14,6 @@ import org.apache.http.message.BasicNameValuePair;*/
 
 public class PublicType {
 
-	private static final CommonLog log = LogFactory.createLog();
 	
 	// 用户注册
 	public final static int USER_REGISTER_MASID = 0x0001;

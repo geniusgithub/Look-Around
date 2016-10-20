@@ -28,9 +28,7 @@ import android.widget.Toast;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.base.ToolbarFragmentActivity;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.HashMap;
 
@@ -49,7 +47,6 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 public class ShareFragment extends BaseFragment implements Handler.Callback, TextWatcher,
                                             View.OnClickListener {
 
-    private static final CommonLog log = LogFactory.createLog();
 
     private static final int MSG_TOAST = 1;
     private static final int MSG_ACTION_CCALLBACK = 2;
@@ -223,7 +220,7 @@ public class ShareFragment extends BaseFragment implements Handler.Callback, Tex
         updateTVLive();
 
         sharePath = ShareItem.getShareImagePath();
-        log.e("sharePath = " + sharePath);
+
         if (sharePath == null){
             showShareImage(false);
         }else{
@@ -246,7 +243,7 @@ public class ShareFragment extends BaseFragment implements Handler.Callback, Tex
         }
 
         String name = mPlatform.getName();
-        log.e("mPlatform name = " + name);
+
         String value = "分享至";
         if (name.equals(QZone.NAME)){
             value += "QQ空间";
@@ -260,7 +257,6 @@ public class ShareFragment extends BaseFragment implements Handler.Callback, Tex
             value += "微信朋友圈";
         }
 
-        log.i("share title = " + value);
         updateToolTitle(value);
     }
 

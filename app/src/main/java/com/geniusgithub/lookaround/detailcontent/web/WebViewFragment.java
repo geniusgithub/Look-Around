@@ -13,14 +13,11 @@ import android.webkit.WebViewClient;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WebViewFragment extends BaseFragment {
-    private static final CommonLog log = LogFactory.createLog();
 
     public static final String INTENT_EXTRA_URL = "INTENT_EXTRA_URL";
 
@@ -74,7 +71,6 @@ public class WebViewFragment extends BaseFragment {
             String url = intent.getStringExtra(INTENT_EXTRA_URL);
             if(url != null){
                 mWebView.loadUrl(url);
-                log.e("webview url = " + url);
                 return ;
             }
         }
@@ -114,7 +110,7 @@ public class WebViewFragment extends BaseFragment {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            log.e("shouldOverrideUrlLoading url = " + url);
+
             showProgress();
             view.loadUrl(url);
             return super.shouldOverrideUrlLoading(view, url);
@@ -124,14 +120,12 @@ public class WebViewFragment extends BaseFragment {
         public void onReceivedError(WebView view, int errorCode, String description,
                                     String failingUrl) {
 
-            log.e("onReceivedError failingUrl = " + failingUrl);
             super.onReceivedError(view, errorCode, description, failingUrl);
         }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
-            log.e("onPageStarted url = " + url);
 
             super.onPageStarted(view, url, favicon);
 
@@ -139,7 +133,7 @@ public class WebViewFragment extends BaseFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            log.e("onPageFinished url = " + url);
+
             hideProgress();
             super.onPageFinished(view, url);
         }

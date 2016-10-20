@@ -2,11 +2,9 @@ package com.geniusgithub.lookaround.datastore;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.Map;
-
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
+
+import java.util.Map;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.AbstractDaoSession;
@@ -24,7 +22,6 @@ import de.greenrobot.dao.internal.DaoConfig;
  */
 public class DaoSession extends AbstractDaoSession {
 
-	private static final CommonLog log = LogFactory.createLog();
 	
     private final DaoConfig mInfoItemDaoConfig;
     private final InfoItemDao mInfoItemDao;

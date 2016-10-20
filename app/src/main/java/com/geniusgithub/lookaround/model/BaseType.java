@@ -1,8 +1,7 @@
 package com.geniusgithub.lookaround.model;
 
 import com.geniusgithub.lookaround.maincontent.base.ContentItemModel;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseType {
-	private static final CommonLog log = LogFactory.createLog();
+
 	// ListItem
 	public static class ListItem implements IParseJson{
 

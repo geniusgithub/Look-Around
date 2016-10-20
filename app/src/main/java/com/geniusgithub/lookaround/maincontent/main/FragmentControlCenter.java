@@ -4,15 +4,12 @@ import android.content.Context;
 
 import com.geniusgithub.lookaround.maincontent.content.ContentFragment;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentControlCenter {
 
-	private static final CommonLog log = LogFactory.createLog();
 	
 	private static  FragmentControlCenter instance;
 	private Context mContext;

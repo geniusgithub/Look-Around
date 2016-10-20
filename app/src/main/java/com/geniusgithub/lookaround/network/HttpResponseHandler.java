@@ -1,15 +1,14 @@
 package com.geniusgithub.lookaround.network;
 
+import com.geniusgithub.common.util.AlwaysLog;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
 public class HttpResponseHandler extends AsyncHttpResponseHandler{
 
-	private static final CommonLog log = LogFactory.createLog();
+	private static final String TAG = HttpResponseHandler.class.getSimpleName();
 	
 	private int mAction = 0;
 	private IRequestDataPacketCallback mDataPacketCallback;
@@ -67,7 +66,7 @@ public class HttpResponseHandler extends AsyncHttpResponseHandler{
 	@Override
 	public void onFailure(Throwable error, String content) {
 		
-		log.d("mAction = " + mAction + ", onFailure! error = " + error.getMessage() + "\ncontent = " + content);
+		AlwaysLog.d(TAG, "mAction = " + mAction + ", onFailure! error = " + error.getMessage() + "\ncontent = " + content);
 		if (isDataPacketAction(mAction)){
 			if (mDataPacketCallback == null){
 				return ;

@@ -5,12 +5,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
+import com.geniusgithub.common.util.AlwaysLog;
+
 
 public class BackgroundService extends Service{
 
-	private static final CommonLog log = LogFactory.createLog();
+	private final static String TAG = BackgroundService.class.getSimpleName();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -21,7 +21,7 @@ public class BackgroundService extends Service{
 	public void onCreate() {
 		super.onCreate();
 		
-		log.e("BackgroundService onCreate...");
+		AlwaysLog.i(TAG, "BackgroundService onCreate...");
 	}
 	
 	

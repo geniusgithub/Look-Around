@@ -18,9 +18,7 @@ import com.geniusgithub.lookaround.base.BaseActivity;
 import com.geniusgithub.lookaround.maincontent.content.ContentFragment;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.setting.SettingActivity;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
-    private static final CommonLog log = LogFactory.createLog();
+
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private Context mContext;
@@ -127,7 +125,6 @@ public class MainActivity extends BaseActivity {
         public void updateNavView(List<BaseType.ListItem> dataList) {
             mDataList = dataList;
             int size = mDataList.size();
-            log.i("mDataList.size = " + size);
             mAdapter.refreshData(mDataList);
             if (size > 0) {
                 mContentFragment = mControlCenter.getCommonFragmentEx(mDataList.get(0));

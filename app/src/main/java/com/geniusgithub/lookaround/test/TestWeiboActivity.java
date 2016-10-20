@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.geniusgithub.common.util.AlwaysLog;
 import com.geniusgithub.lookaround.R;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.share.ShareActivity;
 import com.geniusgithub.lookaround.share.ShareItem;
 
@@ -31,8 +30,8 @@ import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 public class TestWeiboActivity extends Activity implements OnClickListener, PlatformActionListener{
 
-	private static final CommonLog log = LogFactory.createLog();
-	
+	private static final String TAG = TestWeiboActivity.class.getSimpleName();
+
 	private static final String FILE_NAME = "/pic.png";
 	public static String TEST_IMAGE;
 	
@@ -187,20 +186,20 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 
 	@Override
 	public void onCancel(Platform arg0, int arg1) {
-		log.e("onCancel");
+
 		
 	}
 
 
 	@Override
 	public void onComplete(Platform plat, int action, HashMap<String, Object> map) {
-		log.e("onComplete Platform = " + plat.getName() + ", action = " + action);
+		AlwaysLog.i(TAG, "onComplete Platform = " + plat.getName() + ", action = " + action);
 		
 		
 		for ( Entry<String, Object> ent : map.entrySet()) {
 			String key = ent.getKey();
 			Object value = ent.getValue();
-			log.e("key = " + key + "\nvalue = " + value.toString() + "\n");
+			AlwaysLog.d(TAG, "key = " + key + "\nvalue = " + value.toString() + "\n");
 		}
 		
 	}
@@ -208,7 +207,7 @@ public class TestWeiboActivity extends Activity implements OnClickListener, Plat
 
 	@Override
 	public void onError(Platform arg0, int arg1, Throwable arg2) {
-		log.e("onError");
+		AlwaysLog.e(TAG, "onError");
 		
 	}
 

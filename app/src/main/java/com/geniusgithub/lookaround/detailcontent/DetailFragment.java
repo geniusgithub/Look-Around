@@ -19,8 +19,6 @@ import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.base.ToolbarFragmentActivity;
 import com.geniusgithub.lookaround.component.ImageLoader;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.google.ads.AdView;
 
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ import butterknife.ButterKnife;
 
 public  class DetailFragment extends BaseFragment {
 
-    private static final CommonLog log = LogFactory.createLog();
 
     private View mRootView;
     private DetailPresenter mDetailPresenter;
@@ -230,7 +227,6 @@ public  class DetailFragment extends BaseFragment {
 
         @Override
         public void eventOccured(int id) {
-            log.i("Clicked on " + id);
 
             switch(id){
                 case SINA_ID:

@@ -24,9 +24,7 @@ import android.widget.Toast;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +35,7 @@ import cn.sharesdk.framework.utils.UIHandler;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 
 public class AdviseFragment extends BaseFragment implements Handler.Callback, TextWatcher {
-    private static final CommonLog log = LogFactory.createLog();
+
 
     private static final int MSG_TOAST = 1;
     private static final int MSG_ACTION_CCALLBACK = 2;

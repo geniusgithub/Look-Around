@@ -1,1 +1,1 @@
-include ':app' , ':satellite-menu'
+include ':app', ':com.geniusgithub.common', ':satellite-menu'

@@ -15,9 +15,7 @@ import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.base.ui.DialogBuilder;
 import com.geniusgithub.lookaround.base.ui.IDialogInterface;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.widget.SwitchButton;
 
 import cn.sharesdk.framework.Platform;
@@ -29,8 +27,6 @@ import cn.sharesdk.tencent.weibo.TencentWeibo;
 
 public class BindFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener,
         Handler.Callback, IDialogInterface {
-    private static final CommonLog log = LogFactory.createLog();
-
 
     private SwitchButton mCBSina;
     private SwitchButton mCBTencent;

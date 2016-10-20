@@ -13,9 +13,7 @@ import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
 import com.geniusgithub.lookaround.maincontent.content.ContentContract.IPresenter;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.maincontent.InfoRequestProxy;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +21,6 @@ import java.util.List;
 
 public class ContentPresenter implements IPresenter, InfoRequestProxy.IRequestResult {
 
-
-    private static final CommonLog log = LogFactory.createLog();
 
     private Context mContext;
     private ContentContract.IView mView;
@@ -123,7 +119,6 @@ public class ContentPresenter implements IPresenter, InfoRequestProxy.IRequestRe
         mView.updateInfomationView(mContentData);
 
 
-        log.i("onSuccess isLoadMore = " + isLoadMore + ", isLoadDataComplete = " + isLoadDataComplete);
         if (isLoadMore){
             if (isLoadDataComplete){
                 mView.updateLoadMoreViewState(ILoadMoreViewState.LMVS_OVER);
@@ -169,7 +164,6 @@ public class ContentPresenter implements IPresenter, InfoRequestProxy.IRequestRe
 
 
     private void dealyToRequest(){
-            log.i("dealyToRequest");
 
             mHandler.postDelayed(new Runnable() {
                 @Override

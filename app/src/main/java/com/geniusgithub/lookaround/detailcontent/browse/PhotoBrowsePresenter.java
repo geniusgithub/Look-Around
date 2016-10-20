@@ -3,6 +3,7 @@ package com.geniusgithub.lookaround.detailcontent.browse;
 import android.content.Context;
 import android.content.Intent;
 
+import com.geniusgithub.common.util.FileHelper;
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.component.DownloadImageCacheTask;
@@ -10,7 +11,6 @@ import com.geniusgithub.lookaround.component.FileManager;
 import com.geniusgithub.lookaround.detailcontent.DetailCache;
 import com.geniusgithub.lookaround.model.BaseType;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.FileHelper;
 
 import java.util.ArrayList;
 import java.util.List;

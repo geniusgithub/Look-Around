@@ -2,12 +2,9 @@ package com.geniusgithub.lookaround.detailcontent;
 
 
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 public class DetailCache {
 
-	private static final CommonLog log = LogFactory.createLog();
 	
 	private static DetailCache mInstance;
 

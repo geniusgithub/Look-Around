@@ -2,12 +2,10 @@ package com.geniusgithub.lookaround.share;
 
 import java.util.HashMap;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 public class ShareItem {
 	
-	private static final CommonLog log = LogFactory.createLog();
+
 	
 	public static HashMap<String, Object> reqMap = new HashMap<String, Object>();
 	
@@ -55,13 +53,13 @@ public class ShareItem {
 	/** imagePath是本地的图片路径，除Linked-In外的所有平台都支持这个字段 */
 	public static void setImagePath(String imagePath) {
 		reqMap.put("imagePath", imagePath);
-		log.e("imagePath = " + imagePath);
+
 	}
 
 	/** imageUrl是图片的网络路径，新浪微博、人人网、QQ空间和Linked-In支持此字段 */
 	public static void setImageUrl(String imageUrl) {
 		reqMap.put("imageUrl", imageUrl);
-		log.e("imageUrl = " + imageUrl);
+
 	}
 
 	/** musicUrl仅在微信（及朋友圈）中使用，是音乐文件的直接地址 */

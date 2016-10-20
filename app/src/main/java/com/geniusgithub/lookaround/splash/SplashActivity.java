@@ -9,15 +9,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
+import com.geniusgithub.common.util.AlwaysLog;
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.base.BaseActivity;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.geniusgithub.lookaround.util.PermissionsUtil;
 
 public class SplashActivity extends BaseActivity implements SplashPresenter.ISplashCallback{
 
-    private static final CommonLog log = LogFactory.createLog();
+    private final static String TAG = SplashActivity.class.getSimpleName();
 
     private View rootView;
     private SplashPresenter mPresenter;
@@ -138,11 +137,11 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.ISpl
 
     private void doStoragePermission(int[] grantResults){
         if (grantResults[0] == PackageManager.PERMISSION_DENIED){
-            log.e("doStoragePermission is denied!!!" );
+            AlwaysLog.e(TAG, "doStoragePermission is denied!!!" );
             Dialog dialog = PermissionsUtil.createPermissionSettingDialog(this, "存储权限");
             dialog.show();
         }else if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            log.i("doStoragePermission, is granted!!!" );
+            AlwaysLog.i(TAG, "doStoragePermission, is granted!!!" );
             requestSpecialPermissions(PermissionsUtil.PHONE, REQUEST_PHONE_PERMISSION);
         }
 
@@ -150,11 +149,11 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.ISpl
 
     private void doPhonePermission(int[] grantResults){
         if (grantResults[0] == PackageManager.PERMISSION_DENIED){
-            log.e("doPhonePermission is denied!!!" );
+            AlwaysLog.e(TAG, "doPhonePermission is denied!!!" );
             Dialog dialog = PermissionsUtil.createPermissionSettingDialog(this, "读电话权限");
             dialog.show();
         }else if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            log.i("doPhonePermission, is granted!!!" );
+            AlwaysLog.i(TAG, "doPhonePermission, is granted!!!" );
             tryToLogin();
         }
 

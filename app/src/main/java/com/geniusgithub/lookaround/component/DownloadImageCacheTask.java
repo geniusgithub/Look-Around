@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
-import com.geniusgithub.lookaround.util.AlwaysLog;
+import com.geniusgithub.common.util.AlwaysLog;
 
 import java.io.File;
 import java.io.FileInputStream;

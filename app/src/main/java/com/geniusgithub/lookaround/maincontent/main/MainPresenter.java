@@ -5,12 +5,11 @@ import android.content.Context;
 
 import com.geniusgithub.lookaround.LAroundApplication;
 import com.geniusgithub.lookaround.model.PublicType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
+
 
 public class MainPresenter implements MainContract.IPresenter {
 
-    private static final CommonLog log = LogFactory.createLog();
+
     private Context mContext;
     private MainContract.IView mView;
 
@@ -36,7 +35,7 @@ public class MainPresenter implements MainContract.IPresenter {
 
         loginStatus = LAroundApplication.getInstance().getLoginStatus();
         if (!loginStatus) {
-            log.e("loginStatus is false ,jump to welcome view!!!");
+
             LAroundApplication.getInstance().startToSplashActivity();
             if (mContext instanceof Activity){
                 ((Activity)mContext).finish();

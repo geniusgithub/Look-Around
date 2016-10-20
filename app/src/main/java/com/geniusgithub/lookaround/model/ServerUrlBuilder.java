@@ -1,11 +1,7 @@
 package com.geniusgithub.lookaround.model;
 
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
 public class ServerUrlBuilder {
 
-	private static final CommonLog log = LogFactory.createLog();
 	
 	public static final String baseURL = "http://www.runapp.cn/Topics/public/";
 //	public static final String baseURL = "http://192.168.1.108/Topics/public/App/";

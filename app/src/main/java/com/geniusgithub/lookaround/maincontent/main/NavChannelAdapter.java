@@ -9,15 +9,12 @@ import android.widget.TextView;
 
 import com.geniusgithub.lookaround.R;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NavChannelAdapter extends BaseAdapter{
 
-	private static final CommonLog log = LogFactory.createLog();
 	
 	private List<BaseType.ListItem> data = new ArrayList<BaseType.ListItem>();
 	

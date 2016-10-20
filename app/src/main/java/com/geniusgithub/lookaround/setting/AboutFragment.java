@@ -24,9 +24,7 @@ import com.geniusgithub.lookaround.network.BaseRequestPacket;
 import com.geniusgithub.lookaround.network.ClientEngine;
 import com.geniusgithub.lookaround.network.IRequestDataPacketCallback;
 import com.geniusgithub.lookaround.network.ResponseDataPacket;
-import com.geniusgithub.lookaround.util.CommonLog;
 import com.geniusgithub.lookaround.util.CommonUtil;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import org.json.JSONException;
 
@@ -38,7 +36,6 @@ import butterknife.ButterKnife;
 public class AboutFragment extends BaseFragment implements View.OnClickListener,
                                                             IRequestDataPacketCallback,
                                                             IDialogInterface{
-    private static final CommonLog log = LogFactory.createLog();
 
     @BindView(R.id.ll_advise)
     public  View mAdviseView;
@@ -95,7 +92,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onSuccess(int requestAction, ResponseDataPacket dataPacket,
                           Object extra) {
-        log.e("onSuccess! requestAction = " + requestAction + ", dataPacket ==> \n" + dataPacket.toString());
+
 
         switch(requestAction){
             case PublicType.CHECK_UPDATE_MSGID:
@@ -108,7 +105,6 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onRequestFailure(int requestAction, String content, Object extra) {
-        log.e("onRequestFailure --> requestAction = " + requestAction);
 
         CommonUtil.showToast(R.string.toast_getdata_fail, getParentActivity());
     }
@@ -116,7 +112,6 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onAnylizeFailure(int requestAction, String content, Object extra) {
-        log.e("onAnylizeFailure! requestAction = " + requestAction + "\ncontent = " + content);
 
     }
 
@@ -126,13 +121,12 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
             updateDialog.dismiss();
         }
 
-        log.e("object:" + object);
         if (object != null){
             Intent intents = new Intent(Intent.ACTION_VIEW);
             intents.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intents.setData(Uri.parse(object.mAppUrl));
             startActivity(intents);
-            log.e("jump to url:" + object.mAppUrl);
+
         }
 
     }
@@ -280,7 +274,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener,
                 sBuffer.append("\n");
             }
         }
-        log.e("msg = " + sBuffer.toString());
+
         Dialog dialog = DialogBuilder.buildNormalDialog(getParentActivity(), "版本更新" + object.mVerName, sBuffer.toString(), this);
         return dialog;
     }

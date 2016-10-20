@@ -21,12 +21,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.geniusgithub.common.util.AlwaysLog;
 import com.geniusgithub.lookaround.component.CacheManager;
 import com.geniusgithub.lookaround.maincontent.main.MainActivity;
 import com.geniusgithub.lookaround.model.PublicType;
 import com.geniusgithub.lookaround.splash.SplashActivity;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -61,7 +60,7 @@ import cn.sharesdk.framework.ShareSDK;
  */
 public class LAroundApplication extends Application  implements ItatisticsEvent{
 
-	private static final CommonLog log = LogFactory.createLog();
+	private static final String TAG = LAroundApplication.class.getSimpleName();
 	
 	private static LAroundApplication mInstance;
 
@@ -81,7 +80,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		log.e("LAroundApplication  onCreate!!!");
+		AlwaysLog.i(TAG, "LAroundApplication  onCreate!!!");
 		mInstance = this;
 		startBackgroundService();
 
@@ -141,7 +140,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 
 	@Override
 	public void onEvent(String eventID) {
-		log.e("eventID = " + eventID);
+		AlwaysLog.i(TAG, "eventID = " + eventID);
 		
 		MobclickAgent.onEvent(this, eventID);
 
@@ -149,7 +148,7 @@ public class LAroundApplication extends Application  implements ItatisticsEvent{
 
 	@Override
 	public void onEvent(String eventID, HashMap<String, String> map) {
-		log.e("eventID = " + eventID);
+		AlwaysLog.i(TAG, "eventID = " + eventID);
 	
 		MobclickAgent.onEvent(this, eventID, map);
 

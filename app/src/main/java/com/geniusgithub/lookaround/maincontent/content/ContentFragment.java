@@ -14,15 +14,12 @@ import com.geniusgithub.lookaround.base.BaseFragment;
 import com.geniusgithub.lookaround.base.adapter.OnItemClickListener;
 import com.geniusgithub.lookaround.maincontent.base.ILoadMoreViewState;
 import com.geniusgithub.lookaround.model.BaseType;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public  class ContentFragment extends BaseFragment {
 
-    private static final CommonLog log = LogFactory.createLog();
     private BaseType.ListItem mTypeData;
     private List<BaseType.InfoItem> mContentData = new ArrayList<BaseType.InfoItem>();
 

@@ -1,15 +1,12 @@
 package com.geniusgithub.lookaround.network;
 
+import com.geniusgithub.lookaround.model.IParseJson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.geniusgithub.lookaround.model.IParseJson;
-import com.geniusgithub.lookaround.util.CommonLog;
-import com.geniusgithub.lookaround.util.LogFactory;
-
 public class ResponseDataPacket implements IParseJson{
-	
-	private static final CommonLog log = LogFactory.createLog();
+
 	
 	public final static String KEY_RESULT = "Result";
 	public final static String KEY_DATA = "Data";
